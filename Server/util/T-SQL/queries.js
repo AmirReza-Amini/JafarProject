@@ -2,6 +2,13 @@ const { LoadText } = require('../utility')
 
 
 module.exports = {
+    BASIC_INFO:{
+        VESSEL:{
+            getVesselTypes:LoadText(__dirname + '/basic-info/vessel/get-vessel-types.sql'),
+            getVesselsList:LoadText(__dirname + '/basic-info/vessel/get-vessels-list.sql'),
+            updateVessel:LoadText(__dirname + '/basic-info/vessel/update-vessel.sql')
+        }
+    },
     VOYAGE: {
         loadLastVoyages: LoadText(__dirname + '/voyage/load-last-voyages.sql'),
     },

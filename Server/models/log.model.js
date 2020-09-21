@@ -14,4 +14,5 @@ const logSchema = new mongoose.Schema({
 });
 
 const logModel = con.model(`${new Date().toLocaleDateString().split('/').join('_')}`, logSchema);
+
 module.exports = logModel;

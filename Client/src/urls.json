@@ -1,0 +1,15 @@
+{
+    "Vessels": "/basicInfo/vessels",
+    "ShippingLines": "/basicInfo/shippingLines",
+    "Voyages": "/basicInfo/voyages",
+    
+    "Users": "/admin/users",
+    "Dashboard": "/admin/dashboard",
+    
+    "Logout": "/logout",
+    "Login": "/login",
+    
+    "Home": "/"
+}
+
+

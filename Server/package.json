@@ -14,8 +14,9 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "md5": "^2.2.1",
-    "mongoose": "^5.4.20",
+    "mongoose": "^5.9.23",
     "mssql": "^6.2.1",
+    "nodemon": "^2.0.4",
     "socket.io": "^2.3.0",
     "sworm": "^3.8.0"
   }

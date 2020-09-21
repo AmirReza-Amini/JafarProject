@@ -4,6 +4,8 @@ const { SendResponse } = require("../../util/utility");
 const queries = require("../../util/T-SQL/queries");
 const setting = require("../../app-setting");
 const sworm = require("sworm");
+const _ = require("lodash");
+const md5 = require("md5");
 const db = sworm.db(setting.db.sqlConfig);
 
 var country = db.model({
@@ -16,10 +18,11 @@ var country = db.model({
 
 router.route('/')
     .get(async (req, res) => {
+
         console.log("req", req)
-        let result = await db.query("SELECT * FROM dbo.Countries AS C")
-        console.log("result", result)
-        SendResponse(req, res, { capitan: result })
+        let result = await db.query("SELECT * from Countries")
+
+        SendResponse(req, res, result)
     })
     .post(async (req, res) => {
         var newCountry = country();
