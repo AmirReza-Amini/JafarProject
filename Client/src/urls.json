@@ -2,8 +2,9 @@
     "Vessels": "/basicInfo/vessels",
     "ShippingLines": "/basicInfo/shippingLines",
     "Voyages": "/basicInfo/voyages",
+    "Countries": "/basicInfo/countries",
     
-    "Users": "/admin/users",
+    "Users": "/admin/users", 
     "Dashboard": "/admin/dashboard",
     
     "Logout": "/logout",

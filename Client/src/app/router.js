@@ -12,6 +12,7 @@ import urls from '../urls.json';
  const LazyVesselsPage = lazy(() => import("../views/pages/basic-info/vesselsPage"));
 const LazyShippingLinesPage = lazy(() => import("../views/pages/basic-info/shippingLinesPage"));
 const LazyVoyagesPage = lazy(() => import("../views/pages/basic-info/voyagesPage"));
+const LazyCountriesPage = lazy(() => import("../views/pages/basic-info/countriesPage"));
 // const LazyLoadOperationsPage = lazy(() => import("../views/pages/loadOperationPage"));
 const LazyLoginPage = lazy(() => import("../views/pages/loginPage"));
 // const LazyDamagePage = lazy(() => import("../views/pages/damagePage"));
@@ -99,6 +100,15 @@ class Router extends Component {
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyVoyagesPage {...matchprops} />
+              </Suspense>
+            )}
+          />
+              <MainLayoutRoutes
+            exact
+            path={urls.Countries}
+            render={(matchprops) => (
+              <Suspense fallback={<Spinner />}>
+                <LazyCountriesPage {...matchprops} />
               </Suspense>
             )}
           />

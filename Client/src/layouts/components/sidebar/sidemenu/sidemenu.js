@@ -76,6 +76,9 @@ class SideMenuContent extends Component {
           <NavLink to={urls.Voyages} exact className="item" activeclassname="active">
             <span className="menu-item-text">Voyages</span>
           </NavLink>
+          <NavLink to={urls.Countries} exact className="item" activeclassname="active">
+            <span className="menu-item-text">Countries</span>
+          </NavLink>
         </SideMenu.MenuMultiItems>
 
         <SideMenu.MenuSingleItem badgeColor="danger">
