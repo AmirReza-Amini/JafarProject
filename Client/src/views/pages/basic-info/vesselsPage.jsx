@@ -17,6 +17,7 @@ import {
     getVessels,
     deleteVessel,
     editVessel,
+    addNewVesselInfo,
     getVesselTypes, editVesselInfo
 } from "../../../services/vesselService";
 
@@ -63,7 +64,6 @@ const VesselsPage = (props) => {
     const onSubmitEditVessel = (values, props) => {
 
         if (values === state.currentRow) return;
-        console.log("Form Submit Data", values, state.currentRow);
         let parameters = {
             vesselId: values.id,
             vesselType: values.selectVesselType.value,
@@ -79,7 +79,26 @@ const VesselsPage = (props) => {
             console.log('response', response);
             if (response.data.result) {
                 toast.success(response.data.data[0]);
-                setState(prevState => ({ ...prevState, currentRow: {} }));
+                const lstVessels = [...state.ListOfVessels];
+                const index = _(lstVessels).findIndex(c => c.vesselId === values.id)
+                lstVessels[index] = { ...lstVessels[index] };
+                lstVessels[index].key = values.id;
+                lstVessels[index].vesselId = values.id;
+                lstVessels[index].vesselName = values.vesselName;
+                lstVessels[index].vesselType = values.selectVesselType.value;
+                lstVessels[index].vesselTypeName = values.selectVesselType.label;
+                lstVessels[index].grossTonage = values.grossTonage;
+                lstVessels[index].flag = values.selectFlag.value;
+                lstVessels[index].flagName = values.selectFlag.label;
+                lstVessels[index].nationality = values.selectNationality.value;
+                lstVessels[index].nationalityName = values.selectNationality.label;
+                lstVessels[index].vesselLength = values.vesselLength;
+                lstVessels[index].numberOfBays = values.numOfBays;
+                lstVessels[index].activeCraneQty = values.activeCraneQty;
+                lstVessels[index].callSign = values.callSign;
+                console.log('from submuit', lstVessels[index])
+
+                setState(prevState => ({ ...prevState, ListOfVessels: lstVessels, currentRow: {} }));
                 editToggle();
             }
             else {
@@ -87,7 +106,56 @@ const VesselsPage = (props) => {
             }
         }).catch(error => { })
     };
+    const onSubmitCreateVessel = (values, props) => { 
+        console.log('values',values);
+        let parameters = {
+            vesselType: values.selectVesselType.value,
+            grossTonage: values.grossTonage,
+            flag: values.selectFlag.value,
+            nationality: values.selectNationality.value,
+            vesselLength: values.vesselLength,
+            numOfBays: values.numOfBays,
+            activeCraneQty: values.activeCraneQty,
+            callSign: values.callSign,
+            vesselName:values.vesselName
+        };
+        addNewVesselInfo(parameters).then(response => {
+            console.log('response', response);
+            if (response.data.result) {
+                toast.success(response.data.data[0]);
+                 const lstVessels = [...state.ListOfVessels];
+                 getVessels().then(res => {
+                    if (res.data.result) {
+                        console.log('vessels', res);
+                        const tempList = res.data.data.map(item => {
+                            return {
+                                key: item.VesselId,
+                                vesselId: item.VesselId,
+                                vesselName: item.VesselName,
+                                vesselType: item.VesselType,
+                                vesselTypeName: item.VesselTypeName,
+                                grossTonage: item.GrossTonage,
+                                flag: item.Flag,
+                                flagName: item.FlagName,
+                                nationality: item.Nationality,
+                                nationalityName: item.NationalityName,
+                                vesselLength: item.VesselLength,
+                                numberOfBays: item.NumOfBays,
+                                activeCraneQty: item.ActiveCraneQty,
+                                callSign: item.CallSign
+                            }
+                        })
+                        setState(prevState => ({ ...prevState, ListOfVessels: tempList }))
+                    }
+                }).catch(err => { });
 
+                createToggle();
+            }
+            else {
+                toast.error(response.data.data[0])
+            }
+        }).catch(error => { })
+    };
     //#endregion ---------------------------------------------------------------
 
 
@@ -345,7 +413,7 @@ const VesselsPage = (props) => {
                                     </h4>
                                     </Col>
                                     <Col>
-                                        <Button color="success" type="button" onClick={() => createToggle()}>Add New Vessel</Button>
+                                        <Button color="success" type="button" onClick={handleCreateVessel}>Add New Vessel</Button>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -531,15 +599,162 @@ const VesselsPage = (props) => {
                 <ModalHeader toggle={createToggle}>Create New Vessel</ModalHeader>
                 <ModalBody>
 
+                    <Formik
+                        initialValues={initialValues}
+                        validationSchema={validationSchema}
+                        onSubmit={(values) => {
+                            onSubmitCreateVessel(values, props);
+                        }}
+                        validateOnBlur={true}
+                        enableReinitialize
+                    >
+                        {(formik) => {
+                            console.log("Formik props values", formik.values);
+                            return (
+                                <React.Fragment>
+                                    <Form>
+                                        <div className="form-body">
+                                        <Row>
+                                                <Col md="12">
+                                                    <FormikControl
+                                                        control="inputMaskDebounce"
+                                                        name="vesselName"
+                                                        className="ltr"
+                                                        type='text'
+                                                        label="vessel Name"
+                                                        defaultValue={
+                                                            state.currentRow.vesselLength
+                                                        }
+                                                    />
+                                                </Col>                                                
+                                            </Row>
+                                            <Row>
+                                                <Col md="6">
+                                                    <FormikControl
+                                                        control="customSelect"
+                                                        name="selectVesselType"
+                                                        selectedValue={
+                                                            state.currentRow.selectVesselType
+                                                        }
+                                                        options={state.ListOfVesselTypes}
+                                                        label="Vessel Type"
+                                                        onSelectedChanged={
+                                                            handleVesselTypeSelectedChanged
+                                                        }
+                                                    />
+                                                </Col>
+                                                <Col md="6">
+                                                    <FormikControl
+                                                        control="customSelect"
+                                                        name="selectNationality"
+                                                        selectedValue={
+                                                            state.currentRow.selectNationality
+                                                        }
+                                                        options={state.ListOfNationalities}
+                                                        label="Nationality"
+                                                        onSelectedChanged={
+                                                            handleNationalitySelectedChanged
+                                                        }
+                                                    />
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col md="6">
+                                                    <FormikControl
+                                                        control="inputMaskDebounce"
+                                                        name="vesselLength"
+                                                        className="ltr"
+                                                        type='number'
+                                                        label="vessel Length"
+                                                        defaultValue={
+                                                            state.currentRow.vesselLength
+                                                        }
+                                                    />
+                                                </Col>
+                                                <Col md="6">
+                                                    <FormikControl
+                                                        control="inputMaskDebounce"
+                                                        type="number"
+                                                        name="numOfBays"
+                                                        className="ltr"
+                                                        label='Num Of Bays'
+                                                        defaultValue={
+                                                            state.currentRow.numOfBays
+                                                        }
+                                                    />
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col md="6">
+                                                    <FormikControl
+                                                        control="inputMaskDebounce"
+                                                        type="number"
+                                                        name="activeCraneQty"
+                                                        className="ltr"
+                                                        label="Active Crane Qty"
+                                                        defaultValue={
+                                                            state.currentRow.activeCraneQty
+                                                        }
+                                                    />
+                                                </Col>
+                                                <Col md="6">
+                                                    <FormikControl
+                                                        control="inputMaskDebounce"
+                                                        type="number"
+                                                        name="grossTonage"
+                                                        className="ltr"
+                                                        label="Gross Tonage"
+                                                        defaultValue={
+                                                            state.currentRow.grossTonage
+                                                        }
+                                                    />
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                <Col md="6">
+                                                    <FormikControl
+                                                        control="inputMaskDebounce"
+                                                        type="text"
+                                                        name="callSign"
+                                                        className="ltr"
+                                                        label="Call Sign"
+                                                        defaultValue={
+                                                            state.currentRow.callSign
+                                                        }
+                                                    />
+                                                </Col>
+                                                <Col md="6">
+                                                    <FormikControl
+                                                        control="customSelect"
+                                                        name="selectFlag"
+                                                        selectedValue={
+                                                            state.currentRow.selectFlag
+                                                        }
+                                                        options={state.ListOfFlags}
+                                                        label="Flag"
+                                                        onSelectedChanged={
+                                                            handleFlagSelectedChanged
+                                                        }
+                                                    />
+                                                </Col>
+                                            </Row>
+                                        </div>
+                                        <div className="form-actions center">
+                                            <Button color="primary" type="submit" className="mr-1" >
+                                                <CheckSquare size={16} color="#FFF" /> Save
+                         </Button>
+                                            <Button color="warning" type="button" onClick={handleCancelCreateVessel} >
+                                                <X size={16} color="#FFF" /> Cancel
+                            </Button>
+
+                                        </div>
+                                    </Form>
+                                </React.Fragment>
+                            );
+                        }}
+                    </Formik>
                 </ModalBody>
-                <ModalFooter>
-                    <Button color="primary" >
-                        Save
-              </Button>{" "}
-                    <Button color="secondary" onClick={handleCancelCreateVessel}>
-                        Cancel
-              </Button>
-                </ModalFooter>
+
             </Modal>
         </React.Fragment>
     );

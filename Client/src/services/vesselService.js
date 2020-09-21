@@ -20,6 +20,11 @@ export const deleteVesselInfo = (vesselId) => {
 }
 
 export const editVesselInfo = (vesselInfo) => {
-    console.log('editVessel', vesselInfo)
-    return http.put(apiEndpoint, vesselInfo);
+      return http.put(apiEndpoint, vesselInfo);
 }
+
+export const addNewVesselInfo = (vesselInfo) => {
+    console.log('AddVessel', vesselInfo)
+    return http.post(apiEndpoint, vesselInfo);
+}
+
