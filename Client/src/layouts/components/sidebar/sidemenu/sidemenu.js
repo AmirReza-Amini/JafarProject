@@ -1,15 +1,13 @@
 // import external modules
 import React, { Component } from "react";
 
-import { Home, LogIn, ChevronRight } from "react-feather";
+import { Home, LogIn, ChevronRight, Paperclip, FileText } from "react-feather";
 import { NavLink } from "react-router-dom";
 
 // Styling
 import "../../../../assets/scss/components/sidebar/sidemenu/sidemenu.scss";
 // import internal(own) modules
 import SideMenu from "../sidemenuHelper";
-import * as auth from "../../../../services/authService";
-import config from '../../../../config.json';
 import urls from '../../../../urls.json';
 import ReactRevealText from 'react-reveal-text'
 
@@ -63,26 +61,42 @@ class SideMenuContent extends Component {
 
         <SideMenu.MenuMultiItems
           name="Basic Information"
-          Icon={<Home size={18} />}
+          Icon={<FileText size={18} />}
           ArrowRight={<ChevronRight size={16} />}
           collapsedSidebar={this.props.collapsedSidebar}
         >
-          <NavLink to={urls.Vessels} exact className="item" activeclassname="active">
+          <NavLink to={urls.BasicInfo.Vessels} exact className="item" activeclassname="active">
             <span className="menu-item-text">Vessels</span>
           </NavLink>
-          <NavLink to={urls.ShippingLines} exact className="item" activeclassname="active">
+          <NavLink to={urls.BasicInfo.ShippingLines} exact className="item" activeclassname="active">
             <span className="menu-item-text">Shipping Lines</span>
           </NavLink>
-          <NavLink to={urls.Voyages} exact className="item" activeclassname="active">
+          <NavLink to={urls.BasicInfo.Voyages} exact className="item" activeclassname="active">
             <span className="menu-item-text">Voyages</span>
           </NavLink>
-          <NavLink to={urls.Countries} exact className="item" activeclassname="active">
+          <NavLink to={urls.BasicInfo.Countries} exact className="item" activeclassname="active">
             <span className="menu-item-text">Countries</span>
           </NavLink>
         </SideMenu.MenuMultiItems>
+     
+          <SideMenu.MenuMultiItems
+            name="Garbage collection bill"
+            Icon={<Paperclip size={18} />}
+            ArrowRight={<ChevronRight size={16} />}
+            collapsedSidebar={this.props.collapsedSidebar}
+          >
+            <NavLink to={urls.billing.garbageCollection.invoice} exact className="item" activeclassname="active">
+              <span className="menu-item-text">Invoice</span>
+            </NavLink>
+            <NavLink to={urls.billing.garbageCollection.tariff} exact className="item" activeclassname="active" >
+              <span className="menu-item-text">Tariff</span>
+            </NavLink>
+          </SideMenu.MenuMultiItems>
+
+
 
         <SideMenu.MenuSingleItem badgeColor="danger">
-          <NavLink to={urls.Logout} activeclassname="active">
+          <NavLink to={urls.auth.Logout} activeclassname="active">
             <i className="menu-icon">
               <LogIn size={18} />
             </i>
@@ -96,10 +110,10 @@ class SideMenuContent extends Component {
           ArrowRight={<ChevronRight size={16} />}
           collapsedSidebar={this.props.collapsedSidebar}
         >
-          <NavLink to={urls.Dashboard} exact className="item" activeclassname="active">
+          <NavLink to={urls.admin.Dashboard} exact className="item" activeclassname="active">
             <span className="menu-item-text">Dashboard</span>
           </NavLink>
-          <NavLink to={urls.Users} exact className="item" activeclassname="active">
+          <NavLink to={urls.admin.Users} exact className="item" activeclassname="active">
             <span className="menu-item-text">Users</span>
           </NavLink>
         </SideMenu.MenuMultiItems>
