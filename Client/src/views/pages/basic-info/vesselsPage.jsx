@@ -56,7 +56,7 @@ const VesselsPage = (props) => {
     //#region SUBMIT FORMIK ----------------------------------------------------
 
 
-    const onSubmitEditVessel = (values, props) => {
+    const onSubmitEditVessel = (values) => {
 
         if (values === state.currentRow) return;
         let parameters = {
@@ -99,10 +99,10 @@ const VesselsPage = (props) => {
             else {
                 toast.error(response.data.data[0])
             }
-        }).catch(error => { })
+        }).catch(() => { })
     };
-    const onSubmitCreateVessel = (values, props) => {
-        console.log('values', values);
+    const onSubmitCreateVessel = (values) => { 
+        console.log('values',values);
         let parameters = {
             vesselType: values.selectVesselType.value,
             grossTonage: values.grossTonage,
@@ -118,8 +118,7 @@ const VesselsPage = (props) => {
             console.log('response', response);
             if (response.data.result) {
                 toast.success(response.data.data[0]);
-                const lstVessels = [...state.ListOfVessels];
-                getVessels().then(res => {
+                 getVessels().then(res => {
                     if (res.data.result) {
                         console.log('vessels', res);
                         const tempList = res.data.data.map(item => {
@@ -142,14 +141,14 @@ const VesselsPage = (props) => {
                         })
                         setState(prevState => ({ ...prevState, ListOfVessels: tempList }))
                     }
-                }).catch(err => { });
+                }).catch(() => { });
 
                 createToggle();
             }
             else {
                 toast.error(response.data.data[0])
             }
-        }).catch(error => { })
+        }).catch(() => { })
     };
     //#endregion ---------------------------------------------------------------
 
@@ -267,7 +266,7 @@ const VesselsPage = (props) => {
                 })
                 setState(prevState => ({ ...prevState, ListOfVessels: tempList }))
             }
-        }).catch(err => { });
+        }).catch(() => { });
         // getVesselTypes().then(res => {
         //     if (res.data.result) {
         //         setState({ ListOfVesselTypes: res.data.data });
@@ -279,14 +278,14 @@ const VesselsPage = (props) => {
                 const temp = res.data.data.map(item => { return { label: item.CountryName + '-' + item.Symbol, value: item.CountryId } })
                 setState(prevState => ({ ...prevState, ListOfNationalities: temp, ListOfFlags: temp }))
             }
-        }).catch(err => { });
+        }).catch(() => { });
         getVesselTypes().then(res => {
             if (res.data.result) {
                 console.log('vesselTypes', res)
                 //setState({ ...state,ListOfNationalities: res.data.data, ListOfFlags: res.data.data });
                 setState(prevState => ({ ...prevState, ListOfVesselTypes: res.data.data.map(item => { return { label: item.VesselTypeName, value: item.VesselType } }) }))
             }
-        }).catch(err => { });
+        }).catch(() => { });
     }, []);
 
     //#endregion -------------------------------------------------------------
@@ -344,13 +343,13 @@ const VesselsPage = (props) => {
         setState(prevState => ({ ...prevState, currentRow: {} }))
         createToggle();
     }
-    const handleVesselTypeSelectedChanged = (value) => {
+    const handleVesselTypeSelectedChanged = () => {
         //console.log('asdfasdfa', value)
     }
-    const handleNationalitySelectedChanged = (value) => {
+    const handleNationalitySelectedChanged = () => {
         //console.log('asdfasdfa', value)
     }
-    const handleFlagSelectedChanged = (value) => {
+    const handleFlagSelectedChanged = () => {
 
     }
 

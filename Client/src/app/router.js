@@ -12,14 +12,13 @@ import urls from '../urls.json';
  const LazyVesselsPage = lazy(() => import("../views/pages/basic-info/vesselsPage"));
 const LazyShippingLinesPage = lazy(() => import("../views/pages/basic-info/shippingLinesPage"));
 const LazyVoyagesPage = lazy(() => import("../views/pages/basic-info/voyagesPage"));
-// const LazyLoadOperationsPage = lazy(() => import("../views/pages/loadOperationPage"));
+const LazyCountriesPage = lazy(() => import("../views/pages/basic-info/countriesPage"));
 const LazyLoginPage = lazy(() => import("../views/pages/loginPage"));
-// const LazyDamagePage = lazy(() => import("../views/pages/damagePage"));
-// const LazyLoadUnloadPage = lazy(() => import("../views/pages/statistics/loadUnloadStatisticsPage"));
-// const LazyStowagePage = lazy(() => import("../views/pages/stowagePage"));
 const LazyUsersPage = lazy(() => import("../views/pages/usersPage"));
 const LazyLogout = lazy(() => import("../views/pages/logoutPage"));
 const LazyMaintainance = lazy(() => import("../views/pages/maintainance"));
+const LazyGarbageCollectionBill = lazy(() => import("../views/pages/billing/garbage-collection/garbageCollectionBillPage"));
+const LazyGarbageCollectionTariff = lazy(() => import("../views/pages/billing/garbage-collection/garbageCollectionTariffPage"));
 
 // Full Layout
 const LazyHome = lazy(() => import("../views/dashboard/ecommerceDashboard"));
@@ -50,7 +49,7 @@ class Router extends Component {
           />
           <MainLayoutRoutes
             exact
-            path={urls.Users}
+            path={urls.admin.Users}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyUsersPage {...matchprops} />
@@ -59,7 +58,7 @@ class Router extends Component {
           />
           <MainLayoutRoutes
             exact
-            path={urls.Dashboard}
+            path={urls.admin.Dashboard}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyMaintainance {...matchprops} />
@@ -68,7 +67,7 @@ class Router extends Component {
           />
           <LoginLayoutRoute
             exact
-            path={urls.Login}
+            path={urls.auth.Login}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyLoginPage {...matchprops} />
@@ -77,7 +76,7 @@ class Router extends Component {
           />
           <MainLayoutRoutes
             exact
-            path={urls.Vessels}
+            path={urls.BasicInfo.Vessels}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyVesselsPage {...matchprops} />
@@ -86,7 +85,7 @@ class Router extends Component {
           />
            <MainLayoutRoutes
             exact
-            path={urls.ShippingLines}
+            path={urls.BasicInfo.ShippingLines}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyShippingLinesPage {...matchprops} />
@@ -95,10 +94,37 @@ class Router extends Component {
           />
           <MainLayoutRoutes
             exact
-            path={urls.Voyages}
+            path={urls.BasicInfo.Voyages}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyVoyagesPage {...matchprops} />
+              </Suspense>
+            )}
+          />
+              <MainLayoutRoutes
+            exact
+            path={urls.BasicInfo.Countries}
+            render={(matchprops) => (
+              <Suspense fallback={<Spinner />}>
+                <LazyCountriesPage {...matchprops} />
+              </Suspense>
+            )}
+          />
+         <MainLayoutRoutes
+            exact
+            path={urls.billing.garbageCollection.invoice}
+            render={(matchprops) => ( 
+              <Suspense fallback={<Spinner />}>
+                <LazyGarbageCollectionBill {...matchprops} />
+              </Suspense>
+            )}
+          />
+              <MainLayoutRoutes
+            exact
+            path={urls.billing.garbageCollection.tariff}
+            render={(matchprops) => ( 
+              <Suspense fallback={<Spinner />}>
+                <LazyGarbageCollectionTariff {...matchprops} />
               </Suspense>
             )}
           />

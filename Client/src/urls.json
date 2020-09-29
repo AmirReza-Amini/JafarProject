@@ -1,15 +1,27 @@
 {
-    "Vessels": "/basicInfo/vessels",
-    "ShippingLines": "/basicInfo/shippingLines",
-    "Voyages": "/basicInfo/voyages",
-    
-    "Users": "/admin/users",
-    "Dashboard": "/admin/dashboard",
-    
-    "Logout": "/logout",
-    "Login": "/login",
-    
+    "BasicInfo": {
+        "Vessels": "/basicInfo/vessels",
+        "ShippingLines": "/basicInfo/shippingLines",
+        "Voyages": "/basicInfo/voyages",
+        "Countries": "/basicInfo/countries"
+    },
+    "billing": {
+        "garbageCollection": {
+            "invoice": "/invoices/garbage-collection/issue",
+            "tariff": "/invoices/garbage-collection/tariff"
+        },
+        "vesselStoppage": {
+            "invoice": "/invoices/vessel-stoppage/issue",
+            "tariff": "/invoices/vessel-stoppage/tariff"
+        }
+    },
+    "auth": {
+        "Logout": "/logout",
+        "Login": "/login"
+    },
+    "admin": {
+        "Users": "/admin/users",
+        "Dashboard": "/admin/dashboard"
+    },
     "Home": "/"
 }
-
-
