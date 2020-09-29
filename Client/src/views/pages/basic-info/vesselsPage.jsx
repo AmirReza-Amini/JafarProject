@@ -1,22 +1,17 @@
-import React, { Fragment, useState, useEffect } from "react";
-import { Card, CardBody, Button, FormGroup, Row, Col, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-import { Table, Tag, Space, Checkbox, Switch, Radio } from 'antd';
+import React, { useState, useEffect } from "react";
+import { Card, CardBody, Button, FormGroup, Row, Col, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { Table, Tag, Space } from 'antd';
 import { Formik, Form } from "formik";
 import { ShoppingBag, Edit2, CheckSquare, X } from "react-feather";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import _, { result } from "lodash";
-import urls from '../../../urls.json'
-
-import CustomNavigation from "../../../components/common/customNavigation";
+import _ from "lodash";
 import FormikControl from "../../../components/common/formik/FormikControl";
 import antdClass from 'antd/dist/antd.css';
 import antdClass2 from "../../../assets/css/vendors/customAntdTable.css"
 
 import {
     getVessels,
-    deleteVessel,
-    editVessel,
     addNewVesselInfo,
     getVesselTypes, editVesselInfo
 } from "../../../services/vesselService";
@@ -106,8 +101,8 @@ const VesselsPage = (props) => {
             }
         }).catch(error => { })
     };
-    const onSubmitCreateVessel = (values, props) => { 
-        console.log('values',values);
+    const onSubmitCreateVessel = (values, props) => {
+        console.log('values', values);
         let parameters = {
             vesselType: values.selectVesselType.value,
             grossTonage: values.grossTonage,
@@ -117,14 +112,14 @@ const VesselsPage = (props) => {
             numOfBays: values.numOfBays,
             activeCraneQty: values.activeCraneQty,
             callSign: values.callSign,
-            vesselName:values.vesselName
+            vesselName: values.vesselName
         };
         addNewVesselInfo(parameters).then(response => {
             console.log('response', response);
             if (response.data.result) {
                 toast.success(response.data.data[0]);
-                 const lstVessels = [...state.ListOfVessels];
-                 getVessels().then(res => {
+                const lstVessels = [...state.ListOfVessels];
+                getVessels().then(res => {
                     if (res.data.result) {
                         console.log('vessels', res);
                         const tempList = res.data.data.map(item => {
@@ -300,33 +295,6 @@ const VesselsPage = (props) => {
 
     const handleEditVessel = (vesselData) => {
         const Vessel = { ..._(state.ListOfVessels).filter(c => c.vesselId === vesselData.vesselId).first() };
-        // userInfo.userCode = 123456;
-        // const permissions = [..._(this.state.ListOfUsers).filter(c => c._id == userData._id).first().permissions];
-        // permissions[0] = { ...permissions[0] };
-        // permissions[0].name = "XXXX";
-        // userInfo.permissions = permissions;
-
-        // setEditState({
-        //     selectNationality: {
-        //         label: Vessel.vesselTypeName,
-        //         value: Vessel.vesselType
-        //     },
-        //     selectVesselType: {
-        //         label: Vessel.nationalityName,
-        //         value: Vessel.nationality
-        //     },
-        //     selectFlag: {
-        //         label: Vessel.flagName,
-        //         value: Vessel.flag
-        //     },
-        //     callSign: Vessel.callSign,
-        //     vesselName: Vessel.vesselName,
-        //     vesselLength: Vessel.vesselLength,
-        //     numOfBays: Vessel.numberOfBays,
-        //     activeCraneQty: Vessel.activeCraneQty,
-        //     grossTonage: Vessel.grossTonage,
-        //     id:Vessel.vesselId
-        // })
         const temp = {
             selectVesselType: {
                 label: Vessel.vesselTypeName,
@@ -614,7 +582,7 @@ const VesselsPage = (props) => {
                                 <React.Fragment>
                                     <Form>
                                         <div className="form-body">
-                                        <Row>
+                                            <Row>
                                                 <Col md="12">
                                                     <FormikControl
                                                         control="inputMaskDebounce"
@@ -626,7 +594,7 @@ const VesselsPage = (props) => {
                                                             state.currentRow.vesselLength
                                                         }
                                                     />
-                                                </Col>                                                
+                                                </Col>
                                             </Row>
                                             <Row>
                                                 <Col md="6">

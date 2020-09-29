@@ -7,6 +7,7 @@ import CheckboxGroup from './CheckboxGroup';
 import CustomSelect from './CustomSelect';
 import InputMaskDebounce from './InputMaskDebounce';
 import CustomButtonGroup from './CustomButtonGroup';
+import CustomDateTimePicker from './CustomDateTimePicker';
 
 const FormikControl = (props) => {
     const { control, ...rest } = props;
@@ -18,7 +19,8 @@ const FormikControl = (props) => {
         case 'checkbox': return <CheckboxGroup {...rest} />
         case 'customSelect': return <CustomSelect {...rest} />
         case 'inputMaskDebounce': return <InputMaskDebounce {...rest}/>
-        case 'customButtonGroup':return <CustomButtonGroup {...rest}/>
+        case 'customButtonGroup':return <CustomButtonGroup {...rest}/>        
+        case 'customDateTimePicker': return <CustomDateTimePicker {...rest} />
         default: return null
     }
 }

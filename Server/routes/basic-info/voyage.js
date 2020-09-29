@@ -8,7 +8,9 @@ const db = sworm.db(setting.db.sqlConfig);
 
 router.route('/')
     .get(async (req, res) => {
-        SendResponse(req, res, { capitan: 'loaded' })
+        console.log("resulrdfsfsfsdfdsddfsddddddddddddddddddddddddddddsssssssssssssssssssssssset", req.body)
+        let result = await db.query(queries.BASIC_INFO.VOYAGE.getVoyageList)
+        SendResponse(req, res, result)
     })
     .post(async (req, res) => {
         SendResponse(req, res, { capitan: 'Added' })

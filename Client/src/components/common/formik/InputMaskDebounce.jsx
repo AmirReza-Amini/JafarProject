@@ -62,7 +62,7 @@ class InputMaskDebounce extends Component {
             //console.log(this.state);
             //console.log('mask debounce props', Fieldprops);
             return (
-              <div>
+              <React.Fragment>
                 <ReactInputMask
                   type={defaultType}
                   mask={this.state.mask}
@@ -76,7 +76,7 @@ class InputMaskDebounce extends Component {
                 {meta.touched && (meta.error) ? (
                   <div className="error">{meta.error}</div>
                 ) : null}
-              </div>
+              </React.Fragment>
             );
           }}
         </Field>

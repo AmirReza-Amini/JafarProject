@@ -8,6 +8,15 @@ module.exports = {
             getVesselsList:LoadText(__dirname + '/basic-info/vessel/get-vessels-list.sql'),
             updateVessel:LoadText(__dirname + '/basic-info/vessel/update-vessel.sql'),
             insertVessel:LoadText(__dirname + '/basic-info/vessel/insert-vessel.sql')
+        },
+        SHIPPINGLINE:{
+            getShippingLinesList:LoadText(__dirname + '/basic-info/shippingLine/get-shippingLines-list.sql'),
+            updateShippingLine:LoadText(__dirname + '/basic-info/shippingLine/update-shippingLine.sql'),
+            insertShippingLine:LoadText(__dirname + '/basic-info/shippingLine/insert-shippingLine.sql')
+        },
+        VOYAGE:{
+            getVoyageList:LoadText(__dirname + '/basic-info/voyage/get-voyages-list.sql'),
+
         }
     },
     VOYAGE: {
