@@ -5,10 +5,19 @@ const queries = require("../../util/T-SQL/queries");
 const setting = require("../../app-setting");
 const sworm = require("sworm");
 const db = sworm.db(setting.db.sqlConfig);
-
+var port = db.model({
+    table: 'Ports',
+    addPort: function (newPort) {
+        this.portName = newPort.name,
+            this.symbol = newPort.symbol || '---'
+    }
+});
 router.route('/')
     .get(async (req, res) => {
-        SendResponse(req, res, { capitan: 'loaded' })
+        console.log("req", req)
+        let result = await db.query("SELECT * from Ports")
+
+        SendResponse(req, res, result)
     })
     .post(async (req, res) => {
         SendResponse(req, res, { capitan: 'Added' })

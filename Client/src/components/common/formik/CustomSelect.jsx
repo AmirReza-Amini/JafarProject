@@ -2,11 +2,24 @@ import React from "react";
 import { Field } from "formik";
 import { FormGroup, Label } from "reactstrap";
 import Select from "react-select";
+import { useState } from "react";
 
 const CustomSelect = (props) => {
- // console.log('custom select',props)
-  const { label, name, options,className, selectedValue, placeholder, isMulti, ...rest } = props;
-  const classN = className ? className : 'ltr';
+  const {
+    label,
+    name,
+    options,
+    className,
+    selectedValue,
+    placeholder,
+    isMulti,
+    ...rest
+  } = props;
+  // const [temp,setTemp]=useState([])
+  // setTimeout(() => {
+  //   setTemp(options)
+  // }, 5000);
+  const classN = className ? className : "ltr";
   return (
     <FormGroup>
       {label !== null && label !== "" && <Label for={name}>{label}</Label>}
@@ -18,7 +31,11 @@ const CustomSelect = (props) => {
             <div>
               <Select
                 isMulti={isMulti ? true : false}
-                className={isMulti ? `basic-single ${classN}` : `basic-multi-select ${classN}`}
+                className={
+                  isMulti
+                    ? `basic-single ${classN}`
+                    : `basic-multi-select ${classN}`
+                }
                 classNamePrefix="select"
                 defaultValue={selectedValue}
                 name={name}
@@ -26,8 +43,7 @@ const CustomSelect = (props) => {
                 placeholder={placeholder}
                 onChange={(value) => {
                   form.setFieldValue(name, value);
-                  //if (props.onSelectedChanged)
-                  props.onSelectedChanged(value);
+                  if (props.onSelectedChanged) props.onSelectedChanged(value);
                 }}
                 onBlur={() => form.setFieldTouched(name, true)}
               />

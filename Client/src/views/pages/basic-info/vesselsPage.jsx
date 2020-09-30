@@ -6,7 +6,6 @@ import { ShoppingBag, Edit2, CheckSquare, X } from "react-feather";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import _ from "lodash";
-
 import FormikControl from "../../../components/common/formik/FormikControl";
 import antdClass from 'antd/dist/antd.css';
 import antdClass2 from "../../../assets/css/vendors/customAntdTable.css"
@@ -113,7 +112,7 @@ const VesselsPage = (props) => {
             numOfBays: values.numOfBays,
             activeCraneQty: values.activeCraneQty,
             callSign: values.callSign,
-            vesselName:values.vesselName
+            vesselName: values.vesselName
         };
         addNewVesselInfo(parameters).then(response => {
             console.log('response', response);
@@ -295,33 +294,6 @@ const VesselsPage = (props) => {
 
     const handleEditVessel = (vesselData) => {
         const Vessel = { ..._(state.ListOfVessels).filter(c => c.vesselId === vesselData.vesselId).first() };
-        // userInfo.userCode = 123456;
-        // const permissions = [..._(this.state.ListOfUsers).filter(c => c._id == userData._id).first().permissions];
-        // permissions[0] = { ...permissions[0] };
-        // permissions[0].name = "XXXX";
-        // userInfo.permissions = permissions;
-
-        // setEditState({
-        //     selectNationality: {
-        //         label: Vessel.vesselTypeName,
-        //         value: Vessel.vesselType
-        //     },
-        //     selectVesselType: {
-        //         label: Vessel.nationalityName,
-        //         value: Vessel.nationality
-        //     },
-        //     selectFlag: {
-        //         label: Vessel.flagName,
-        //         value: Vessel.flag
-        //     },
-        //     callSign: Vessel.callSign,
-        //     vesselName: Vessel.vesselName,
-        //     vesselLength: Vessel.vesselLength,
-        //     numOfBays: Vessel.numberOfBays,
-        //     activeCraneQty: Vessel.activeCraneQty,
-        //     grossTonage: Vessel.grossTonage,
-        //     id:Vessel.vesselId
-        // })
         const temp = {
             selectVesselType: {
                 label: Vessel.vesselTypeName,
@@ -609,7 +581,7 @@ const VesselsPage = (props) => {
                                 <React.Fragment>
                                     <Form>
                                         <div className="form-body">
-                                        <Row>
+                                            <Row>
                                                 <Col md="12">
                                                     <FormikControl
                                                         control="inputMaskDebounce"
@@ -621,7 +593,7 @@ const VesselsPage = (props) => {
                                                             state.currentRow.vesselLength
                                                         }
                                                     />
-                                                </Col>                                                
+                                                </Col>
                                             </Row>
                                             <Row>
                                                 <Col md="6">

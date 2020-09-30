@@ -8,8 +8,9 @@ const db = sworm.db(setting.db.sqlConfig);
 
 router.route('/:id?')
     .get(async (req, res) => {
-        let voyageData = (await db.query(queries.VOYAGE.loadVoyageDataById, { voyageId: req.params.id }))[0];
-        SendResponse(req, res, ConvertProperties(voyageData, ['ETA', 'ATA', 'ETD', 'ATD'], ToPersian))
+//ConvertProperties(voyageData, ['ETA', 'ATA', 'ETD', 'ATD'], ToPersian)
+        let result = await db.query(queries.VOYAGE.getVoyageList)
+        SendResponse(req, res, result)
     })
     .post(async (req, res) => {
         SendResponse(req, res, { capitan: 'Added' })

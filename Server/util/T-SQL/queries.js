@@ -2,24 +2,23 @@ const { LoadText } = require('../utility')
 
 
 module.exports = {
-    BASIC_INFO: {
-        VESSEL: {
-            getVesselTypes: LoadText(__dirname + '/basic-info/vessel/get-vessel-types.sql'),
-            getVesselsList: LoadText(__dirname + '/basic-info/vessel/get-vessels-list.sql'),
-            updateVessel: LoadText(__dirname + '/basic-info/vessel/update-vessel.sql'),
-            insertVessel: LoadText(__dirname + '/basic-info/vessel/insert-vessel.sql')
+    BASIC_INFO:{
+        VESSEL:{
+            getVesselTypes:LoadText(__dirname + '/basic-info/vessel/get-vessel-types.sql'),
+            getVesselsList:LoadText(__dirname + '/basic-info/vessel/get-vessels-list.sql'),
+            updateVessel:LoadText(__dirname + '/basic-info/vessel/update-vessel.sql'),
+            insertVessel:LoadText(__dirname + '/basic-info/vessel/insert-vessel.sql')
         },
-        CURRENCY: {
-            loadLastCurrency: LoadText(__dirname + '/basic-info/currency/load-last-currency.sql')
-        }
+        SHIPPINGLINE:{
+            getShippingLinesList:LoadText(__dirname + '/basic-info/shippingLine/get-shippingLines-list.sql'),
+            updateShippingLine:LoadText(__dirname + '/basic-info/shippingLine/update-shippingLine.sql'),
+            insertShippingLine:LoadText(__dirname + '/basic-info/shippingLine/insert-shippingLine.sql')
+        }        
     },
     VOYAGE: {
-        loadLastVoyages: LoadText(__dirname + '/voyage/load-last-voyages.sql'),
+        getVoyageList:LoadText(__dirname + '/basic-info/voyage/get-voyages-list.sql'),
         loadVoyageDwellById: LoadText(__dirname + '/voyage/load-voyage-dwell-by-id.sql'),
         loadVoyageDataById: LoadText(__dirname + '/voyage/load-voyage-data-by-id.sql')
-    },
-    EQUIPMENT: {
-        fetchEquipmentsForUnload: LoadText(__dirname + '/equipment/fetch-equipments-for-unload.sql')
     },
     OPERATOR: {
         fetchOperatorInfoBasedOnCode: LoadText(__dirname + '/operator/fetch-operator-info-based-on-code.sql')
