@@ -1,4 +1,5 @@
 const Log = require('./Logger');
+const pc = require('ara-persian-cal')
 const fs = require('fs');
 
 map = (source, dest, excludeList = []) => {
@@ -27,8 +28,37 @@ loadText = (filePath) => {
     return fs.readFileSync(filePath, { encoding: 'utf-8' })
 }
 
+generateInvoiceNo = (number, prefix) => {
+    let currentYear = pc.ToPersian(new Date()).substring(2, 4);
+    if (number) {
+        console.log("generateInvoiceNo -> number", number)
+        let lastYear = number.InvoiceNo.substring(2, 4);
+        if (lastYear == currentYear)
+            return prefix + (parseInt(number.InvoiceNo.substring(2, 12)) + 1)
+    }
+    return prefix + currentYear + '00000001'
+}
+
+toPersian = (garegorianDate) => {
+    let cleanedDate = garegorianDate
+        .toISOString()
+        .replace('T', ' ')
+        .replace('Z', ' ');
+    return pc.ToPersian(cleanedDate, 'YYYY/MM/DD HH:mm')
+}
+
+convertProperties = (object, keys, method) => {
+    keys.forEach(key => {
+        object[key] = method(object[key])
+    });
+    return object;
+}
+
 module.exports = {
     Map: map,
     LoadText: loadText,
-    SendResponse: sendResponse
+    SendResponse: sendResponse,
+    GenerateInvoiceNo: generateInvoiceNo,
+    ToPersian: toPersian,
+    ConvertProperties: convertProperties
 }
