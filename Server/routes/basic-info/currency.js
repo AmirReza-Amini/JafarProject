@@ -8,7 +8,51 @@ const db = sworm.db(setting.db.sqlConfig);
 
 router.route('/')
     .get(async (req, res) => {
-        SendResponse(req, res, { capitan: 'loaded' })
+        let menu2 = [
+            { name: 'Gate', key: 'gate', child: [] },
+            {
+                name: 'billing', key: 'billing', child: [
+                    { name: 'Warehouse', key: 'warehouse', child: [] },
+                    {
+                        name: 'Strip', key: 'strip', child: [
+                            { name: 'create', key: 'strip-create', child: [] },
+                            { name: 'edit', key: 'strip-edit', child: [] },
+                            { name: 'delete', key: 'strip-delete', child: [] },
+                            { name: 'print', key: 'strip-print', child: [] }
+                        ]
+                    }
+                ]
+            }
+        ]
+        
+        
+        let permissionList = [
+            { name: 'gate', isGranted: true },
+            { name: 'billing', isGranted: false },
+            { name: 'warehouse', isGranted: true },
+            { name: 'strip', isGranted: true },
+            { name: 'strip-delete', isGranted: false }
+        ]
+        
+        let permissions = permissionList
+            .filter(m => m.isGranted == false)
+            .map(n => n.name);
+        
+        let result = [];
+        permissions.forEach(p => { result = filterData(menu2, p) })
+        
+        console.log(JSON.stringify(result))
+        
+        
+        function filterData(data, key) {
+            var r = data.filter(function (o) {
+                if (o.child)
+                    o.child = filterData(o.child, key);
+                return o.key != key
+            })
+            return r;
+        }
+        SendResponse(req, res, result)
     })
     .post(async (req, res) => {
         SendResponse(req, res, { capitan: 'Added' })
