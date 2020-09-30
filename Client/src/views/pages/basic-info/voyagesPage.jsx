@@ -19,7 +19,7 @@ import _ from "lodash";
 import FormikControl from "../../../components/common/formik/FormikControl";
 import antdClass from "antd/dist/antd.css";
 import antdClass2 from "../../../assets/css/vendors/customAntdTable.css";
-import moment from 'jalali-moment'
+import moment from "jalali-moment";
 
 import {
   addNewVoyageInfo,
@@ -213,20 +213,8 @@ const VoyagesPage = (props) => {
           console.log("vessels", res);
           const tempList = res.data.data.map((item) => {
             return {
-              key: item.VesselId,
-              vesselId: item.VesselId,
-              vesselName: item.VesselName,
-              vesselType: item.VesselType,
-              vesselTypeName: item.VesselTypeName,
-              grossTonage: item.GrossTonage,
-              flag: item.Flag,
-              flagName: item.FlagName,
-              nationality: item.Nationality,
-              nationalityName: item.NationalityName,
-              vesselLength: item.VesselLength,
-              numberOfBays: item.NumOfBays,
-              activeCraneQty: item.ActiveCraneQty,
-              callSign: item.CallSign,
+              value: item.VesselId,
+              label: item.VesselName,
             };
           });
           setState((prevState) => ({ ...prevState, ListOfVessels: tempList }));
@@ -300,13 +288,15 @@ const VoyagesPage = (props) => {
       },
       eta: Voyage.estimatedTimeArrival,
       ata: Voyage.actualTimeArrival,
-      etd: Voyage.estimatedTimeArrival,
-      atd: Voyage.actualTimeArrival,
+      etd: Voyage.estimatedTimeDeparture,
+      atd: Voyage.actualTimeDeparture,
       voyageStatus: Voyage.voyageStatus,
       outgoingVoyageNo: Voyage.outgoingVoyageNo,
       incomingVoyageNo: Voyage.incomingVoyageNo,
       id: Voyage.voyageId,
     };
+
+    console.log("form edit voyage ", temp);
     setState((prevState) => ({ ...prevState, currentRow: temp }));
     editToggle();
   };
@@ -338,20 +328,26 @@ const VoyagesPage = (props) => {
     setState((prevState) => ({ ...prevState, currentRow: {} }));
     createToggle();
   };
-  const handleVesselSelectedChanged = () => {};
+  const handleVesselSelectedChanged = (value) => {
+    console.log("from hande vessel ", value);
+  };
   const handleOwnerSelectedChanged = () => {};
   const handleAgentSelectedChanged = () => {};
   const handlePreviousPortSelectedChanged = () => {};
   const handleOriginPortSelectedChanged = () => {};
   const handleNextPortSelectedChanged = () => {};
   const dtChange1 = (value) => {
-
-    console.log('dtChange1', moment(`${value.year}/${value.month}/${value.day}` ,'jYYYY/jM/jD HH:mm').format('YYYY-M-D HH:mm:ss'));
-}
-const dtChange2 = (value) => {
-
-    console.log('dtChange2', `${value.year}/${value.month}/${value.day}`);
-}
+    console.log(
+      "dtChange1",
+      moment(
+        `${value.year}/${value.month}/${value.day}`,
+        "jYYYY/jM/jD HH:mm"
+      ).format("YYYY-M-D HH:mm:ss")
+    );
+  };
+  const dtChange2 = (value) => {
+    console.log("dtChange2", value);
+  };
 
   return (
     <React.Fragment>
@@ -405,7 +401,7 @@ const dtChange2 = (value) => {
         backdrop="static"
       >
         <ModalHeader toggle={editToggle}>
-          Edit Voyage: {state.currentRow.voyageNoIn}
+          Edit Voyage: {state.currentRow.incomingVoyageNo}
         </ModalHeader>
         <ModalBody>
           <Formik
@@ -427,7 +423,11 @@ const dtChange2 = (value) => {
                           <FormikControl
                             control="customSelect"
                             name="selectVessel"
-                            selectedValue={state.currentRow.selectVessel}
+                            selectedValue={()=>{
+                              setTimeout(() => {
+                                return state.currentRow.selectVessel
+                              }, 3000);
+                            }}
                             options={state.ListOfVessels}
                             label="Vessel Name"
                           />
@@ -505,26 +505,36 @@ const dtChange2 = (value) => {
                         </Col>
                       </Row>
                       <Row>
-                        <Col md='6'>
+                        <Col md="6">
                           <FormikControl
                             control="customDateTimePicker"
                             name="eta"
-                            locale = 'en'
-                            label = 'Estimated Time Arrival'
+                            locale="en"
+                            label="Estimated Time Arrival"
                             placeholder="Select Enter Date"
+                            selectedValue={
+                              state.currentRow && state.currentRow.eta
+                                ? state.currentRow.eta
+                                : null
+                            }
                             //defaultValue={{ day: 14, month: 7, year: 1399 }}
                             onSelectedChanged={dtChange1}
-                            />
+                          />
                         </Col>
                         <Col md="6">
                           <FormikControl
                             control="customDateTimePicker"
                             name="ate"
-                            label = 'Actual Time Arrival'
+                            label="Actual Time Arrival"
                             placeholder="Select Enter Date"
+                            selectedValue={
+                              state.currentRow && state.currentRow.ata
+                                ? state.currentRow.ata
+                                : null
+                            }
                             //defaultValue={{ day: 10, month: 6, year: 1399 }}
                             onSelectedChanged={dtChange2}
-                            />
+                          />
                         </Col>
                       </Row>
                       <Row>
@@ -532,24 +542,32 @@ const dtChange2 = (value) => {
                           <FormikControl
                             control="customDateTimePicker"
                             name="etd"
-                            label = 'Estimated Time Departure'
+                            label="Estimated Time Departure"
                             placeholder="Select Enter Date"
+                            selectedValue={
+                              state.currentRow && state.currentRow.etd
+                                ? state.currentRow.etd
+                                : null
+                            }
                             //defaultValue={{ day: 14, month: 7, year: 1399 }}
                             onSelectedChanged={dtChange1}
-                            />
+                          />
                         </Col>
                         <Col md="6">
                           <FormikControl
                             control="customDateTimePicker"
                             name="atd"
-                            label = 'Actual Time Departure'
+                            label="Actual Time Departure"
                             placeholder="Select Enter Date"
-                            //defaultValue={{ day: 10, month: 6, year: 1399 }}
+                            selectedValue={
+                              state.currentRow && state.currentRow.atd
+                                ? state.currentRow.atd
+                                : null
+                            }
                             onSelectedChanged={dtChange2}
                           />
                         </Col>
                       </Row>
-                      
                     </div>
                     <div className="form-actions center">
                       <Button color="primary" type="submit" className="mr-1">

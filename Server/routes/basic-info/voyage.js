@@ -8,7 +8,7 @@ const db = sworm.db(setting.db.sqlConfig);
 
 router.route('/')
     .get(async (req, res) => {
-        console.log("resulrdfsfsfsdfdsddfsddddddddddddddddddddddddddddsssssssssssssssssssssssset", req.body)
+        console.log("gdfgdfgdfg", req.body)
         let result = await db.query(queries.BASIC_INFO.VOYAGE.getVoyageList)
         SendResponse(req, res, result)
     })
