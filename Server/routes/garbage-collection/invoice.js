@@ -23,46 +23,63 @@ router.route('/:id?')
     })
     .post(async (req, res) => {
 
-        //#region Load Voyage detail
-        let { Dwell, GrossTonage } = (await db.query(queries.VOYAGE.loadVoyageDwellById, {
-            VoyageId: req.body.voyageId
-        }))[0]
-        //#endregion
+        try {
+            //#region Load Voyage detail
+            let voyage = (await db.query(queries.VOYAGE.loadVoyageDwellById, {
+                VoyageId: req.body.voyageId
+            }))
+            if (voyage.length == 0)
+                return SendResponse(req, res, 'Voyage not found', false, 404)
+            let { Dwell, GrossTonage } = voyage[0];
+            //#endregion
 
-        //#region Load Tariff
-        let tariff = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadTariff, { tonage: GrossTonage }))[0];
+            //#region Load Tariff
+            let tariff = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadTariff, { tonage: GrossTonage }))[0];
 
-        if (!tariff)
-            return SendResponse(req, res, 'Tariff data not found', false, 404)
+            if (!tariff)
+                return SendResponse(req, res, 'Tariff data not found', false, 404)
 
-        let currency = (await db.query(queries.BASIC_INFO.CURRENCY.loadLastCurrency))[0];
-        if (!currency)
-            return SendResponse(req, res, 'Currency data not found', false, 404)
+            let currency = (await db.query(queries.BASIC_INFO.CURRENCY.loadLastCurrency))[0];
+            if (!currency)
+                return SendResponse(req, res, 'Currency data not found', false, 404)
 
-        let lastInvoiceNo = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastBill))[0];
-        //#endregion
+            let lastInvoiceNo = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastBill))[0];
+            //#endregion
 
-        //#region calculate bill
+            //#region calculate bill
 
-        let invoice = {
-            tariffId: tariff.GarbageCollectionTariffDetailId,
-            dwell: Dwell,
-            priceD: Dwell * tariff.Price,
-            priceR: Dwell * tariff.Price * currency.Rate,
-            voyageId: req.body.voyageId,
-            currencyId: currency.CurrencyId,
-            invoiceNo: GenerateInvoiceNo(lastInvoiceNo, 'GC'),
-            userId: '220'
+            let invoice = {
+                tariffId: tariff.GarbageCollectionTariffDetailId,
+                dwell: Dwell,
+                priceD: Dwell * tariff.Price,
+                priceR: Dwell * tariff.Price * currency.Rate,
+                voyageId: req.body.voyageId,
+                currencyId: currency.CurrencyId,
+                invoiceNo: GenerateInvoiceNo(lastInvoiceNo, 'GC'),
+                userId: '220'
+            }
+            console.log("req.body.isPreInvoice", req.body.isPreInvoice)
+            if (!req.body.isPreInvoice)
+                await db.query(queries.BILLING.GARBAGE_COLLECTION.calculateBill, invoice);
+            //#endregion
+
+            SendResponse(req, res, invoice)
         }
-        console.log("req.body.isPreInvoice", req.body.isPreInvoice)
-        if (!req.body.isPreInvoice)
-            await db.query(queries.BILLING.GARBAGE_COLLECTION.calculateBill, invoice);
-        //#endregion
-
-        SendResponse(req, res, invoice)
+        catch (ex) {
+            SendResponse(req, res, ex.originalError.message, false)
+        }
     })
     .put(async (req, res) => {
-        SendResponse(req, res, { capitan: 'Updated' })
+        //body: {status,invoiceId}
+        try {
+            await db.query(queries.BILLING.GARBAGE_COLLECTION.changeStatus, { status: req.body.status, id: req.body.invoiceId })
+            SendResponse(req, res, 'Invoice updated successfully')
+        }
+        catch (ex) {
+            SendResponse(req, res, ex.originalError.message, false)
+        }
+
+
     })
     .delete(async (req, res) => {
         SendResponse(req, res, { capitan: 'Deleted' })
