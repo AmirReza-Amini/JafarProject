@@ -4,6 +4,7 @@ const { SendResponse } = require("../../util/utility");
 const queries = require("../../util/T-SQL/queries");
 const setting = require("../../app-setting");
 const sworm = require("sworm");
+const { json } = require("express");
 const db = sworm.db(setting.db.sqlConfig);
 
 router.route('/')
@@ -27,8 +28,8 @@ router.route('/')
         
         
         let permissionList = [
-            { name: 'gate', isGranted: true },
-            { name: 'billing', isGranted: false },
+            { name: 'gate', isGranted: false },
+            { name: 'billing', isGranted: true },
             { name: 'warehouse', isGranted: true },
             { name: 'strip', isGranted: true },
             { name: 'strip-delete', isGranted: false }
@@ -40,11 +41,9 @@ router.route('/')
         
         let result = [];
         permissions.forEach(p => { result = filterData(menu2, p) })
-        
-        console.log(JSON.stringify(result))
-        
-        
+                
         function filterData(data, key) {
+            console.log('date',JSON.stringify(data)
             var r = data.filter(function (o) {
                 if (o.child)
                     o.child = filterData(o.child, key);
