@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardBody, Button, FormGroup, Row, Col, Modal, ModalHeader, ModalBody } from "reactstrap";
-import { Table, Tag, Space } from 'antd';
+import { Row, Col } from "reactstrap";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
@@ -8,7 +7,7 @@ import _ from "lodash";
 
 import FormikControl from "../../../../components/common/formik/FormikControl";
 
-import {garbageCollectionService} from '../../../../services/garbageCollectionService' 
+import * as  gcs from '../../../../services/garbageCollectionService';
 
 toast.configure({ bodyClassName: "customFont" });
 
@@ -28,44 +27,73 @@ const validationSchema = Yup.object({
 
 const GarbageCollectionTariffPage = (props) => {
 
-
     const [state, setState] = useState({
-        //ListOfUserTypes: [],
-
         ListOfTariffs: [],
         currentTariff: {},
         editModal: false,
         createModal: false
     });
-    
-const handleVesselTypeSelectedChanged = () => {
-    console.log("handleVesselTypeSelectedChanged -> Hello", 'Hello')
-}
+
+    useEffect(() => {
+        gcs.getAllTariffs().then(response => {
+            if (response.data.result) {
+                setState((prevState) => ({ ...prevState, ListOfTariffs: response.data.data }));
+            }
+            else {
+                return toast.error(response.data.data[0]);
+            }
+        })
+    }, [])
+
+    const onSubmit = (values) => {
+        console.log('formik submit values', values);
+    }
+
+    const handleVesselTypeSelectedChanged = () => {
+        console.log("handleVesselTypeSelectedChanged -> Hello", 'Hello')
+    }
     return (
         <React.Fragment>
             <h3>List of tariffs</h3>
-        <Form>
-            <div className="form-body">
-                <Row>
-                    <Col md="6">
-                        <FormikControl
-                            control="customSelect"
-                            name="selectVesselType"
-                            selectedValue={
-                                state.currentTariff
-                            }
-                            options={state.ListOfTariffs}
-                            label="Vessel Type"
-                            onSelectedChanged={
-                                handleVesselTypeSelectedChanged
-                            }
-                        />
-                    </Col>
-                </Row>
-            </div>
-        </Form>
-    </React.Fragment>
-        );
+            <Formik
+                initialValues={initialValues}
+                validationSchema={validationSchema}
+                onSubmit={(values) => { onSubmit(values); }}
+                validateOnBlur={true}
+                enableReinitialize
+            >
+                {
+                    (formikProps) => {
+                        console.log('formik props values', formikProps.values);
+                        return (
+                            <React.Fragment>
+                                <Form>
+                                    <div className="form-body">
+                                        <Row>
+                                            <Col md="6">
+                                                <FormikControl
+                                                    control="customSelect"
+                                                    name="selectVesselType"
+                                                    selectedValue={
+                                                        state.currentTariff
+                                                    }
+                                                    options={state.ListOfTariffs}
+                                                    label="Vessel Type"
+                                                    onSelectedChanged={
+                                                        handleVesselTypeSelectedChanged
+                                                    }
+                                                />
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Form>
+                            </React.Fragment>
+                        )
+                    }
+                }
+            </Formik>
+        </React.Fragment>
+    );
 }
 
 export default GarbageCollectionTariffPage;
