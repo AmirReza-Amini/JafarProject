@@ -72,7 +72,7 @@ class SideMenuContent extends Component {
     function filterData(data, key) {
       var r = data.filter(function (o) {
         if (o.child) o.child = filterData(o.child, key);
-        console.log('from filtr data ', o.child)
+        // console.log('from filtr data ', o.child)
         return o.key != key;
       });
       return r;

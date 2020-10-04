@@ -21,6 +21,8 @@ module.exports = {
     BILLING: {
         GARBAGE_COLLECTION: {
             loadTariff: LoadText(__dirname + '/billing/garbage-collection/load-tariff.sql'),
+            loadAllTariffs: LoadText(__dirname + '/billing/garbage-collection/load-all-tariffs.sql'),
+            loadTariffDetails: LoadText(__dirname + '/billing/garbage-collection/load-tariff-details.sql'),
             calculateBill: LoadText(__dirname + '/billing/garbage-collection/calculate-bill.sql'),
             loadLastBill: LoadText(__dirname + '/billing/garbage-collection/load-last-bill.sql'),
             loadById: LoadText(__dirname + '/billing/garbage-collection/load-bill-by-id.sql'),

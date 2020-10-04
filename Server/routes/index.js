@@ -4,8 +4,7 @@ module.exports = app => {
   app.use('/', require('./home'));
   require('./basic-info')(app);
   require('./authentication')(app);
-  require('./garbage-collection')(app);
-  require('./vessel-stoppage')(app);
+  require('./billing')(app);
   app.use('/app/log', require('./log'));
   app.use(errorLoger);
 }; 
