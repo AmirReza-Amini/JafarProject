@@ -19,48 +19,46 @@ toast.configure({ bodyClassName: "customFont" });
 //#region INITIAL VALUES ---------------------------------------------------
 
 const initialValues = {
-    description: "",
-    effectiveDate: ""
-};
-
-const validationSchema = Yup.object({
-    effectiveDate: Yup.date().min(new Date(), "Select most be greater than today!"),
-    description: Yup.string().max(50, 'Description must be <= 50 characters').required("Enter description!"),
-});
-
-
+    selectTariff: ''
+}
 
 const GarbageCollectionTariffPage = (props) => {
 
     const [state, setState] = useState({
         ListOfTariffs: [],
-        ListOfTariffDetails: [],
-        currentTariff: {}
+        ListOfTariffDetails: []
     });
 
-    useEffect(async () => {
-        let response = await gcs.GetAllTariffs();
-        if (response.data.result) {
-            let temp = response.data.data.map(m => {
-                return {
-                    label: m.Description,
-                    value: m.GarbageCollectionTariffId
-                }
-            })
-            setState((prevState) => ({ ...prevState, ListOfTariffs: temp }));
+    useEffect(() => {
+        async function fetchAllTariffs() {
+            const response = await gcs.GetAllTariffs();
+            if (response.data.result) {
+                let temp = response.data.data.map(m => {
+                    return {
+                        label: m.Description,
+                        value: m.GarbageCollectionTariffId,
+                    }
+                })
+                setState((prevState) => ({ ...prevState, ListOfTariffs: temp }));
+            }
+            else {
+                toast.error(response.data.data[0]);
+            }
         }
-        else {
-            return toast.error(response.data.data[0]);
-        }
-    }, [])
+        fetchAllTariffs();
 
-    const onSubmit = (values) => {
-        console.log('formik submit values', values);
-    }
+    }, [])
 
     const handleSelectedTariffChanged = async () => {
         let tariff = await gcs.GetTariffDetails(1);
-        setState((prevState) => ({ ...prevState, ListOfTariffDetails: tariff.data.data }));
+        tariff = tariff.data.data.map(item => {
+            return {
+                ...item,
+                key: item.GarbageCollectionTariffDetailId
+            }
+        })
+        console.log('tariff', tariff)
+        setState((prevState) => ({ ...prevState, ListOfTariffDetails: tariff }));
 
     }
 
@@ -95,14 +93,9 @@ const GarbageCollectionTariffPage = (props) => {
         <React.Fragment>
             <Formik
                 initialValues={initialValues}
-                validationSchema={validationSchema}
-                onSubmit={(values) => { onSubmit(values); }}
-                validateOnBlur={true}
-                enableReinitialize
             >
                 {
                     (formikProps) => {
-                        console.log('formik props values', formikProps.values);
                         return (
                             <React.Fragment>
                                 <Form>
@@ -112,10 +105,7 @@ const GarbageCollectionTariffPage = (props) => {
                                                 <FormikControl
                                                     control="customSelect"
                                                     name="selectTariff"
-                                                    selectedValue={
-                                                        state.currentTariff
-                                                    }
-                                                    options={state.ListOfTariffs}
+                                                    options={state.ListOfTariffs != null ? state.ListOfTariffs : null}
                                                     label="Garbage collections tariffs"
                                                     onSelectedChanged={
                                                         handleSelectedTariffChanged
@@ -125,9 +115,9 @@ const GarbageCollectionTariffPage = (props) => {
                                         </Row>
                                     </div>
                                 </Form>
-                                {state.ListOfTariffDetails.length == 0 
-                                ? <label>Select a tariff from list above</label> 
-                                : <Row className="row-eq-height">
+                                {state.ListOfTariffDetails.length == 0
+                                    ? <label>Select a tariff from list above</label>
+                                    : <Row className="row-eq-height">
                                         <Col sm="12" md="6">
                                             <Card>
                                                 <CardBody>
