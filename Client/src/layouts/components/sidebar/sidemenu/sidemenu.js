@@ -10,7 +10,8 @@ import "../../../../assets/scss/components/sidebar/sidemenu/sidemenu.scss";
 import SideMenu from "../sidemenuHelper";
 import urls from "../../../../urls.json";
 import ReactRevealText from "react-reveal-text";
-import { ListGroupItemHeading } from "reactstrap";
+import * as auth from "../../../../services/authService";
+import config from '../../../../config.json';
 
 class SideMenuContent extends Component {
   permissionList = [
@@ -57,22 +58,22 @@ class SideMenuContent extends Component {
   }
 
   componentWillMount() {
-    // if (!config.useAuthentication) {
-    //   this.setState({ isAdmin: true });
-    // }
-    // else {
-    //   const user = auth.getCurrentUser();
-    //   const isAdmin = user.userType === "Admin" ? true : false;
-    //   this.setState({ user, isAdmin });
-    //   const roles = user.permissions.filter(c => c.isGranted === true);
-    //   this.setState({ hasRoles: roles.length > 0 ? true : false });
-    //   //console.log('from side cwm')
-    // }
+    if (!config.useAuthentication) {
+      this.setState({ isAdmin: true });
+    }
+    else {
+      const user = auth.getCurrentUser();
+      const isAdmin = user.userType === "Admin" ? true : false;
+      this.setState({ user, isAdmin });
+      // const roles = user.permissions.filter(c => c.isGranted === true);
+      // this.setState({ hasRoles: roles.length > 0 ? true : false });
+      //console.log('from side cwm')
+    }
 
     function filterData(data, key) {
       var r = data.filter(function (o) {
         if (o.child) o.child = filterData(o.child, key);
-        //console.log('from filtr data ', o.child)
+        // console.log('from filtr data ', o.child)
         return o.key != key;
       });
       return r;

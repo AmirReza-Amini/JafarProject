@@ -1,71 +1,61 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../../models/user.model');
+const Users = require('../../models/users.model');
 const md5 = require('md5');
-const { tokenHashKey, jwtSecret, jwtExpireTime } = require('../../app-setting')
-const jwt = require('jsonwebtoken');
-const AES = require('crypto-js/aes');
-const auth = require('../../middleware/auth')
-const { SendResponse } = require('../../util/utility')
+const { SendResponse,GenerateAuthToken } = require('../../util/utility')
 
-router.post('/login', async (req, res) => {
+router.post('/', async (req, res) => {
+//console.log(req.body,md5(req.body.password))
+  let user = await Users.findOne({
+    userName: req.body.userName,
+    password: md5(req.body.password)
+  });
+console
+.log(user)
 
-  let doc = await User.findOne({
-    username: req.body.username,
-    password: md5(req.body.password).toUpperCase(),
-    isDeleted: false
-  }).populate('accessLevel');
-  if (doc) {
-    if (!doc.active)
-      SendResponse(req, res, { error: 'اکانت مورد نظر غیر فعال می باشد' }, false);
+  if (user) {
+    if (!user.isActive)
+      return SendResponse(req, res, "The user account is inactive", false, 200);
     else {
-      doc.logins.push(new Date());
-      await doc.save();
-      const token = jwt.sign({
-        id: doc._id,
-        lastName: doc.lastName,
-        firstName: doc.firstName,
-        accessLevel: doc.accessLevel,
-
-        contactInfo: doc.contactInfo
-      }, jwtSecret, { expiresIn: jwtExpireTime });
-
-      SendResponse(req, res, { token: AES.encrypt(token, tokenHashKey).toString(), id: doc._id, tt: token });
+      const token = GenerateAuthToken(user);
+      console.log('token',token); 
+      return SendResponse(req, res, { token: token });
     }
   } else
-    SendResponse(req, res, { error: 'کاربری با مشخصات وارد شده یافت نشد' }, false);
-});
-router.post('/login/verification', auth, async (req, res) => {
-  let token = req.body.token;
-  if (token) {
-    const verify = jwt.verify(token, jwtSecret);
-    SendResponse(req, res, { verify });
-  }
+    return SendResponse(req, res, "User not found", false, 401);
 });
 
-router.put('/changePassword/:id',
-  async (req, res) => {
-    let doc = await User.findOne({
-      _id: req.body._id,
-      isDeleted: false
-    }).populate('accessLevel');
-    await Log({ root: 'User.js', message: { title: `Password Changed for ${req.body._id}` } })
+// router.post('/login/verification', auth, async (req, res) => {
+//   let token = req.body.token;
+//   if (token) {
+//     const verify = jwt.verify(token, jwtSecret);
+//     SendResponse(req, res, { verify });
+//   }
+// });
 
-    if (doc.password !== md5(req.body.oldPassword).toUpperCase()) {
-      SendResponse(req, res, { error: 'رمز عبور فعلی صحیح نمیباشد' }, false)
-    } else {
-      doc.password = md5(req.body.password).toUpperCase()
-      await doc.save();
+// router.put('/changePassword/:id',
+//   async (req, res) => {
+//     let doc = await User.findOne({
+//       _id: req.body._id,
+//       isDeleted: false
+//     }).populate('accessLevel');
+//     await Log({ root: 'User.js', message: { title: `Password Changed for ${req.body._id}` } })
 
-      const token = jwt.sign({
-        id: doc._id,
-        lastName: doc.lastName,
-        firstName: doc.firstName,
-        accessLevel: doc.accessLevel,
-        contactInfo: doc.contactInfo
-      }, jwtSecret, { expiresIn: '30s' });
-      SendResponse(req, res, { token: AES.encrypt(token, tokenHashKey).toString() });
-    }
-  })
+//     if (doc.password !== md5(req.body.oldPassword).toUpperCase()) {
+//       SendResponse(req, res, { error: 'رمز عبور فعلی صحیح نمیباشد' }, false)
+//     } else {
+//       doc.password = md5(req.body.password).toUpperCase()
+//       await doc.save();
+
+//       const token = jwt.sign({
+//         id: doc._id,
+//         lastName: doc.lastName,
+//         firstName: doc.firstName,
+//         accessLevel: doc.accessLevel,
+//         contactInfo: doc.contactInfo
+//       }, jwtSecret, { expiresIn: '30s' });
+//       SendResponse(req, res, { token: AES.encrypt(token, tokenHashKey).toString() });
+//     }
+//   })
 
 module.exports = router;

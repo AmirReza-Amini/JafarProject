@@ -1,0 +1,1 @@
+SELECT GCT.GarbageCollectionTariffId ,GCT.Description FROM dbo.GarbageCollectionTariffs AS GCT

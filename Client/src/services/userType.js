@@ -1,7 +1,7 @@
 import http from "./httpService";
 import { apiUrl } from "../config.json";
 
-const apiEndpoint = apiUrl + "/userType";
+const apiEndpoint = apiUrl + "/auth/userType";
 
 
 export const getUserTypes = () => {

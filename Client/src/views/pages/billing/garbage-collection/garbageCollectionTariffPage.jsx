@@ -1,71 +1,160 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardBody, Button, FormGroup, Row, Col, Modal, ModalHeader, ModalBody } from "reactstrap";
+import { ShoppingBag, Edit2, CheckSquare, X } from "react-feather";
 import { Table, Tag, Space } from 'antd';
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
 import _ from "lodash";
+import antdClass from 'antd/dist/antd.css';
+import antdClass2 from "../../../../assets/css/vendors/customAntdTable.css";
+
 
 import FormikControl from "../../../../components/common/formik/FormikControl";
 
-import {garbageCollectionService} from '../../../../services/garbageCollectionService' 
+import * as  gcs from '../../../../services/garbageCollectionService';
 
 toast.configure({ bodyClassName: "customFont" });
 
 //#region INITIAL VALUES ---------------------------------------------------
 
 const initialValues = {
-    description: "",
-    effectiveDate: ""
-};
-
-const validationSchema = Yup.object({
-    effectiveDate: Yup.date().min(new Date(), "Select most be greater than today!"),
-    description: Yup.string().max(50, 'Description must be <= 50 characters').required("Enter description!"),
-});
-
-
+    selectTariff: ''
+}
 
 const GarbageCollectionTariffPage = (props) => {
 
-
     const [state, setState] = useState({
-        //ListOfUserTypes: [],
-
         ListOfTariffs: [],
-        currentTariff: {},
-        editModal: false,
-        createModal: false
+        ListOfTariffDetails: []
     });
-    
-const handleVesselTypeSelectedChanged = () => {
-    console.log("handleVesselTypeSelectedChanged -> Hello", 'Hello')
-}
+
+    useEffect(() => {
+        async function fetchAllTariffs() {
+            const response = await gcs.GetAllTariffs();
+            if (response.data.result) {
+                let temp = response.data.data.map(m => {
+                    return {
+                        label: m.Description,
+                        value: m.GarbageCollectionTariffId,
+                    }
+                })
+                setState((prevState) => ({ ...prevState, ListOfTariffs: temp }));
+            }
+            else {
+                toast.error(response.data.data[0]);
+            }
+        }
+        fetchAllTariffs();
+
+    }, [])
+
+    const handleSelectedTariffChanged = async () => {
+        let tariff = await gcs.GetTariffDetails(1);
+        tariff = tariff.data.data.map(item => {
+            return {
+                ...item,
+                key: item.GarbageCollectionTariffDetailId
+            }
+        })
+        console.log('tariff', tariff)
+        setState((prevState) => ({ ...prevState, ListOfTariffDetails: tariff }));
+
+    }
+
+    const RenderColor = (value) => {
+        switch (value) {
+            case 1: return 'green';
+            case 2: return 'green';
+            case 4: return 'orange';
+            case 10: return 'orange';
+            case 40: return 'red';
+            case 100: return "red";
+        }
+    }
+
+    const columns = [
+        {
+            title: 'Weight',
+            dataIndex: 'GrossWeight',
+            key: 'GrossWeight'
+        },
+        {
+            title: 'Price',
+            dataIndex: 'Price',
+            key: 'Price',
+            render: p => (
+                <Tag color={RenderColor(p)}>{
+                    p
+                }</Tag>
+            )
+        }]
     return (
         <React.Fragment>
-            <h3>List of tariffs</h3>
-        <Form>
-            <div className="form-body">
-                <Row>
-                    <Col md="6">
-                        <FormikControl
-                            control="customSelect"
-                            name="selectVesselType"
-                            selectedValue={
-                                state.currentTariff
-                            }
-                            options={state.ListOfTariffs}
-                            label="Vessel Type"
-                            onSelectedChanged={
-                                handleVesselTypeSelectedChanged
-                            }
-                        />
-                    </Col>
-                </Row>
-            </div>
-        </Form>
-    </React.Fragment>
-        );
+            <Formik
+                initialValues={initialValues}
+            >
+                {
+                    (formikProps) => {
+                        return (
+                            <React.Fragment>
+                                <Form>
+                                    <div className="form-body">
+                                        <Row>
+                                            <Col md="6">
+                                                <FormikControl
+                                                    control="customSelect"
+                                                    name="selectTariff"
+                                                    options={state.ListOfTariffs != null ? state.ListOfTariffs : null}
+                                                    label="Garbage collections tariffs"
+                                                    onSelectedChanged={
+                                                        handleSelectedTariffChanged
+                                                    }
+                                                />
+                                            </Col>
+                                        </Row>
+                                    </div>
+                                </Form>
+                                {state.ListOfTariffDetails.length == 0
+                                    ? <label>Select a tariff from list above</label>
+                                    : <Row className="row-eq-height">
+                                        <Col sm="12" md="6">
+                                            <Card>
+                                                <CardBody>
+                                                    <div className="form-body">
+                                                        <Row>
+                                                            <Col md='9'>
+
+                                                                <h4 className="form-section">
+                                                                    <ShoppingBag size={20} color="#212529" /> Tariff details
+                                    </h4>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
+                                                            <Col md="12">
+                                                                <FormGroup>
+                                                                    <Table
+                                                                        columns={columns}
+                                                                        dataSource={state.ListOfTariffDetails}
+                                                                        pagination={{ position: ["bottomCenter"] }}
+                                                                    />
+                                                                </FormGroup>
+                                                            </Col>
+                                                        </Row>
+
+                                                    </div>
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+                                    </Row>
+                                }
+                            </React.Fragment>
+                        )
+                    }
+                }
+            </Formik>
+        </React.Fragment>
+    );
 }
 
 export default GarbageCollectionTariffPage;
