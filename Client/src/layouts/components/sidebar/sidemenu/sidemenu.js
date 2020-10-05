@@ -10,7 +10,8 @@ import "../../../../assets/scss/components/sidebar/sidemenu/sidemenu.scss";
 import SideMenu from "../sidemenuHelper";
 import urls from "../../../../urls.json";
 import ReactRevealText from "react-reveal-text";
-import { ListGroupItemHeading } from "reactstrap";
+import * as auth from "../../../../services/authService";
+import config from '../../../../config.json';
 
 class SideMenuContent extends Component {
   permissionList = [
@@ -57,17 +58,17 @@ class SideMenuContent extends Component {
   }
 
   componentWillMount() {
-    // if (!config.useAuthentication) {
-    //   this.setState({ isAdmin: true });
-    // }
-    // else {
-    //   const user = auth.getCurrentUser();
-    //   const isAdmin = user.userType === "Admin" ? true : false;
-    //   this.setState({ user, isAdmin });
-    //   const roles = user.permissions.filter(c => c.isGranted === true);
-    //   this.setState({ hasRoles: roles.length > 0 ? true : false });
-    //   //console.log('from side cwm')
-    // }
+    if (!config.useAuthentication) {
+      this.setState({ isAdmin: true });
+    }
+    else {
+      const user = auth.getCurrentUser();
+      const isAdmin = user.userType === "Admin" ? true : false;
+      this.setState({ user, isAdmin });
+      // const roles = user.permissions.filter(c => c.isGranted === true);
+      // this.setState({ hasRoles: roles.length > 0 ? true : false });
+      //console.log('from side cwm')
+    }
 
     function filterData(data, key) {
       var r = data.filter(function (o) {
@@ -119,7 +120,7 @@ class SideMenuContent extends Component {
           ArrowRight={<ChevronRight size={16} />}
           collapsedSidebar={this.props.collapsedSidebar}
         >
-          {this.state.menu2 &&
+          {/* {this.state.menu2 &&
             this.state.menu2.map((item) => {
               return (
                 <NavLink
@@ -132,8 +133,8 @@ class SideMenuContent extends Component {
                   <span className="menu-item-text">{item.key}</span>
                 </NavLink>
               );
-            })}
-          {/* <NavLink to={urls.BasicInfo.Vessels} exact className="item" activeclassname="active">
+            })} */}
+          <NavLink to={urls.BasicInfo.Vessels} exact className="item" activeclassname="active">
             <span className="menu-item-text">Vessels</span>
           </NavLink>
           <NavLink to={urls.BasicInfo.ShippingLines} exact className="item" activeclassname="active">
@@ -144,7 +145,7 @@ class SideMenuContent extends Component {
           </NavLink>
           <NavLink to={urls.BasicInfo.Countries} exact className="item" activeclassname="active">
             <span className="menu-item-text">Countries</span>
-          </NavLink> */}
+          </NavLink>
         </SideMenu.MenuMultiItems>
 
         <SideMenu.MenuMultiItems

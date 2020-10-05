@@ -79,7 +79,7 @@ const VoyagesPage = (props) => {
       dataIndex: "incomingVoyageNo",
       key: "voyageNoIn",
       sorter: {
-        compare: (a, b) => a.voyageNoIn.localeCompare(b.voyageNoIn),
+        compare: (a, b) => a.incomingVoyageNo.localeCompare(b.incomingVoyageNo),
         multiple: 3,
       },
       sortDirections: ["ascend", "descend"],
@@ -90,7 +90,7 @@ const VoyagesPage = (props) => {
       dataIndex: "outgoingVoyageNo",
       key: "voyageNoOut",
       sorter: {
-        compare: (a, b) => a.voyageNoOut.localeCompare(b.voyageNoOut),
+        compare: (a, b) => a.outgoingVoyageNo.localeCompare(b.outgoingVoyageNo),
         multiple: 4,
       },
       sortDirections: ["ascend", "descend"],

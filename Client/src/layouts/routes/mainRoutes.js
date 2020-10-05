@@ -59,7 +59,7 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
          {...rest}
          path={path}
          render={matchProps => {
-            return <MainLayout>{render(matchProps)}</MainLayout>
+            //return <MainLayout>{render(matchProps)}</MainLayout>
             // console.log('asdfadsfasfda')
             // if (path === urls.Logout)
             //    return <MainLayout>{render(matchProps)}</MainLayout>
@@ -75,12 +75,12 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
                   return <MainLayout>{render(matchProps)}</MainLayout>
                }
                else {
-                  console.log('main rout', user)
+                  //console.log('main rout', user)
                   auth.logout();
                   return (<Redirect
                      to={{
                         pathname: "/login",
-                        state: { message: 'دسترسی غیر مجاز' }
+                        state: { message: "Access to this section is forbidden" }
                      }}
                   />)
                }
@@ -91,7 +91,6 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
                   state: { from: matchProps.location }
                }}
             />)
-
          }}
       />
    );

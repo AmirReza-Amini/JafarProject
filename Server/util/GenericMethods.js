@@ -37,7 +37,7 @@ getAll = async (entity, req, res, opt = {}) => {
 
     condition = opt.condition ? opt.condition : {}
 
-    condition.isDeleted = false;
+    //condition.isDeleted = false;
     filter = opt.filter ? opt.filter : {};
     take = opt.take ? opt.take : 0;
     skip = opt.skip ? opt.skip : 0;
@@ -49,7 +49,7 @@ getAll = async (entity, req, res, opt = {}) => {
         .skip(skip)
         .limit(take)
         .populate(populate);
-
+console.log('doc',doc)
     SendResponse(req, res, doc);
 }
 
