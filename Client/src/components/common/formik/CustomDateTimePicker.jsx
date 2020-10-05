@@ -1,22 +1,24 @@
 import React, { Component } from "react";
 import { Button, ButtonGroup, Label, Row, Col, FormGroup } from "reactstrap";
-import { Field } from "formik";
+import { Field, ErrorMessage } from "formik";
 import _ from "lodash";
 import DatePicker, { utils } from "react-modern-calendar-datepicker";
 import InputMaskDebounce from "./InputMaskDebounce";
 import { TimePicker } from "antd";
 import moment from "jalali-moment";
+import TextError from "./TextError";
 
 class CustomDateTimePicker extends Component {
   constructor(props) {
     super(props);
 
     const { selectedValue } = this.props;
+    console.log("props from ", this.props);
     this.state = {
-      selectedDate: null,
-      selectedTime: null
+      selectedDate: "",
+      selectedTime: "",
     };
-    if (selectedValue != null) {
+    if (selectedValue != null && selectedValue !== "") {
       const date = this.convertDateTo(selectedValue, "fa"); // 1392/6/31 23:59:59);
       var formatedDate = {
         year: parseInt(date[0]),
@@ -54,14 +56,11 @@ class CustomDateTimePicker extends Component {
     return miladiDate;
   };
   handleSelectedDateChanged = (value, form) => {
-    console.log("from handledate", value);
-
     const miladiDate = this.getMiladiDate(value);
     this.setState({
       selectedDate: value,
       selectedTime: this.state.selectedTime,
     });
-    console.log("handleSelectedDateChanged", value);
     if (this.props.onSelectedChanged)
       this.props.onSelectedChanged(miladiDate + " " + this.state.selectedTime);
 
@@ -86,38 +85,48 @@ class CustomDateTimePicker extends Component {
     return (
       <FormGroup>
         {label !== null && label !== "" && <Label for={name}>{label}</Label>}
-        <Field>
+        <Field name={name}>
           {(fieldProps) => {
-            const { form } = fieldProps;
+            const { form, meta } = fieldProps;
+            // console.log("meta ", meta);
             return (
-              <Row>
-                <Col md="6" sm="6" style={{ paddingRight: "1px" }}>
-                  <DatePicker
-                    wrapperClassName="form-control"
-                    value={this.state.selectedDate}
-                    onChange={(value) =>
-                      this.handleSelectedDateChanged(value, form)
-                    }
-                    colorPrimary="rgb(57, 124, 182)" // added this
-                    calendarClassName="custom-calendar" // and this
-                    calendarTodayClassName="custom-today-day" // also this
-                    locale="fa"
-                    inputClassName="customSize"
-                    inputPlaceholder={placeholder}
-                    shouldHighlightWeekends
-                  />
-                </Col>
-                <Col md="6" sm="6" style={{ padding: "1px 15px 1px 1px" }}>
-                  <TimePicker
-                    value={this.state.selectedTime?moment(this.state.selectedTime, "HH:mm:ss"):null}
-                    className="form-control"
-                    size="large"
-                    onChange={(time, TimeString) =>
-                      this.handleSelectedTimeChanged(TimeString, form)
-                    }
-                  />
-                </Col>
-              </Row>
+              <React.Fragment>
+                <Row>
+                  <Col md="6" sm="6" style={{ paddingRight: "1px" }}>
+                    <DatePicker
+                      wrapperClassName="form-control"
+                      value={this.state.selectedDate}
+                      onChange={(value) =>
+                        this.handleSelectedDateChanged(value, form)
+                      }
+                      colorPrimary="rgb(57, 124, 182)" // added this
+                      calendarClassName="custom-calendar" // and this
+                      calendarTodayClassName="custom-today-day" // also this
+                      locale="fa"
+                      inputClassName="customSize"
+                      inputPlaceholder={placeholder}
+                      shouldHighlightWeekends
+                    />
+                  </Col>
+                  <Col md="6" sm="6" style={{ padding: "1px 15px 1px 1px" }}>
+                    <TimePicker
+                      disabled={!this.state.selectedDate}
+                      value={
+                        this.state.selectedTime
+                          ? moment(this.state.selectedTime, "HH:mm:ss")
+                          : ""
+                      }
+                      className="form-control"
+                      size="large"
+                      onChange={(time, TimeString) =>
+                        this.handleSelectedTimeChanged(TimeString, form)
+                      }
+                      onBlur={() => form.setFieldTouched(name, true)}
+                    />
+                  </Col>
+                </Row>
+                <ErrorMessage name={name} component={TextError} />
+              </React.Fragment>
             );
           }}
         </Field>

@@ -49,7 +49,7 @@ router.route('/')
     .put(async (req, res) => {
         try {
             const data = req.body
-            console.log('befor' , req.body)
+            //console.log('befor' , req.body)
             let query = await db.query(queries.BASIC_INFO.VESSEL.updateVessel, {
                 vesselId: data.vesselId,
                 vesselType: data.vesselType,
@@ -66,6 +66,7 @@ router.route('/')
             console.log('after', query)
             return SendResponse(req, res, message, temp, 200)
         } catch (error) {
+            
             return SendResponse(req, res, 'Fail in updating vessel info',false, 500)
         }
     })

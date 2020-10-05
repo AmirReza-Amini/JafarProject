@@ -72,7 +72,7 @@ class SideMenuContent extends Component {
     function filterData(data, key) {
       var r = data.filter(function (o) {
         if (o.child) o.child = filterData(o.child, key);
-        console.log('from filtr data ', o.child)
+        //console.log('from filtr data ', o.child)
         return o.key != key;
       });
       return r;
@@ -119,7 +119,7 @@ class SideMenuContent extends Component {
           ArrowRight={<ChevronRight size={16} />}
           collapsedSidebar={this.props.collapsedSidebar}
         >
-          {this.state.menu2 &&
+          {/* {this.state.menu2 &&
             this.state.menu2.map((item) => {
               return (
                 <NavLink
@@ -132,8 +132,8 @@ class SideMenuContent extends Component {
                   <span className="menu-item-text">{item.key}</span>
                 </NavLink>
               );
-            })}
-          {/* <NavLink to={urls.BasicInfo.Vessels} exact className="item" activeclassname="active">
+            })} */}
+          <NavLink to={urls.BasicInfo.Vessels} exact className="item" activeclassname="active">
             <span className="menu-item-text">Vessels</span>
           </NavLink>
           <NavLink to={urls.BasicInfo.ShippingLines} exact className="item" activeclassname="active">
@@ -144,7 +144,7 @@ class SideMenuContent extends Component {
           </NavLink>
           <NavLink to={urls.BasicInfo.Countries} exact className="item" activeclassname="active">
             <span className="menu-item-text">Countries</span>
-          </NavLink> */}
+          </NavLink>
         </SideMenu.MenuMultiItems>
 
         <SideMenu.MenuMultiItems

@@ -10,12 +10,13 @@ import {
   ModalHeader,
   ModalBody,
 } from "reactstrap";
-import { Table, Tag, Space, DatePicker } from "antd";
+import { Table, Space, Switch } from "antd";
+import { CloseOutlined, CheckOutlined } from "@ant-design/icons";
 import { Formik, Form } from "formik";
 import { ShoppingBag, Edit2, CheckSquare, X } from "react-feather";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import _ from "lodash";
+import _, { isDate } from "lodash";
 import FormikControl from "../../../components/common/formik/FormikControl";
 import antdClass from "antd/dist/antd.css";
 import antdClass2 from "../../../assets/css/vendors/customAntdTable.css";
@@ -33,29 +34,107 @@ toast.configure({ bodyClassName: "customFont" });
 
 const initialValues = {
   selectVessel: "",
-  voyageNoIn: "",
-  voyageNoOut: "",
+  incomingVoyageNo: "",
+  outgoingVoyageNo: "",
   selectOwner: "",
   selectAgent: "",
-  eta: null,
-  ata: null,
-  etd: null,
-  atd: null,
-  status: "",
+  eta: "",
+  ata: "",
+  etd: "",
+  atd: "",
+  voyageStatus: "",
   selectOriginPort: "",
   selectPreviousPort: "",
   selectNextPort: "",
 };
-const validationSchema = Yup.object({
+const validationSchema = Yup.object().shape({
   selectVessel: Yup.string().required("Entet Vessel Name!"),
-  voyageNoIn: Yup.string().required("Enter Incoming Voyage Number!"),
-  selectOwner: Yup.string().required("Enter Owner Of Voyage"),
+  incomingVoyageNo: Yup.string().required("Enter Incoming Voyage Number!"),
+  selectOwner: Yup.string().required("Enter Owner Of Voyage!"),
   selectAgent: Yup.string().required("Enter Agent Of Voyage!"),
-  eta: Yup.string().required("Enter ETA Date!"),
-  status: Yup.string().required("Enter Voyage Status!"),
+  eta: Yup.string().required("Enter ETA Date!")
+  // atd: Yup.string()
+  //   .when("voyageStatus", {
+  //     is: false,
+  //     then: Yup.string().test("", "invalid date", (value) => //moment(value, "YYYY-MM-DD HH:mm:ss",true).isValid()
+      
+  //     {
+  //      const asd = moment(undefined).format('YYYY-MM-DD HH:mm:ss')
+
+  //    //   console.log('asd',asd,value)
+  //     }
+  //     )
+  //   }),
+  // voyageStatus: Yup.boolean().required("Select Voyage Status!"),
 });
 const VoyagesPage = (props) => {
-  const onSubmitEditVoyage = (values, props) => {};
+  const onSubmitEditVoyage = (values) => {
+
+   // console.log('from edit voyage', values)
+   // if (values === state.currentRow) return;
+    let parameters = {
+      voyageId: values.id,
+      voyageNoIn: values.incomingVoyageNo,
+      voyageNoOut : values.outgoingVoyageNo ,
+      voyageVessel : values.incomingVoyageNo + '/' + values.selectVessel.label  ,
+      vesselId : values.selectVessel.value ,
+      ownerId : values.selectOwner.value,
+      agentId :values.selectAgent.value,
+      estimatedTimeArrival : values.eta ,
+      actualTimeArrival :values.ata,
+      estimatedTimeDeparture :values.etd,
+      actualTimeDeparture : values.atd,
+      voyageStatus : values.voyageStatus ? 1:0,
+      originPort : values.selectOriginPort.value ,
+      previousPort : values.selectPreviousPort.value,
+      nextPort :values.selectNextPort.value 
+    };
+   // console.log('from edit voyage after', parameters)
+    editVoyageInfo(parameters)
+    .then((response) => {
+     // console.log('response',response)
+      if (response.data.result) {
+        toast.success(response.data.data[0]);
+        const lstVoyages = [...state.ListOfVoyages];
+        const index = _(lstVoyages).findIndex(
+          (c) => c.voyageId === values.id
+        );      
+        lstVoyages[index] = { ...lstVoyages[index] };
+        lstVoyages[index].key = values.id;
+        lstVoyages[index].voyageId = values.id;
+        lstVoyages[index].actualTimeArrival = values.ata;
+        lstVoyages[index].actualTimeDeparture = values.atd;
+        lstVoyages[index].agentId = values.selectAgent.value;
+        lstVoyages[index].agentName = values.selectAgent.label;
+        lstVoyages[index].estimatedTimeArrival = values.eta;
+        lstVoyages[index].estimatedTimeDeparture = values.etd;
+        lstVoyages[index].incomingVoyageNo = values.incomingVoyageNo;
+        lstVoyages[index].nextPortId = values.selectNextPort.value;
+        lstVoyages[index].nextPortName = values.selectNextPort.label;
+        lstVoyages[index].originPortId = values.selectOriginPort.value;
+        lstVoyages[index].originPortName = values.selectOriginPort.label;
+        lstVoyages[index].outgoingVoyageNo = values.outgoingVoyageNo;
+        lstVoyages[index].ownerId = values.selectOwner.value;
+        lstVoyages[index].ownerName = values.selectOwner.label;
+        lstVoyages[index].previousPortId = values.selectPreviousPort.value;
+        lstVoyages[index].previousPortName = values.selectPreviousPort.label;
+        lstVoyages[index].vesselId = values.selectVessel.value;
+        lstVoyages[index].vesselName = values.selectVessel.label;
+        lstVoyages[index].voyageStatus = values.voyageStatus ?"OPEN":"CLOSE";
+        lstVoyages[index].voyageStatusCode = values.voyageStatus?1:0;
+     //   console.log("from submuit", lstVoyages[index]);
+
+        setState((prevState) => ({
+          ...prevState,
+          ListOfVoyages: lstVoyages,
+          currentRow: {},
+        }));
+        editToggle();
+      } else {
+        toast.error(response.data.data[0]);
+      }
+    })
+  };
   const onSubmitCreateVoyage = (values, props) => {};
 
   const columns = [
@@ -79,7 +158,7 @@ const VoyagesPage = (props) => {
       dataIndex: "incomingVoyageNo",
       key: "voyageNoIn",
       sorter: {
-        compare: (a, b) => a.voyageNoIn.localeCompare(b.voyageNoIn),
+        compare: (a, b) => a.incomingVoyageNo.localeCompare(b.incomingVoyageNo),
         multiple: 3,
       },
       sortDirections: ["ascend", "descend"],
@@ -90,7 +169,7 @@ const VoyagesPage = (props) => {
       dataIndex: "outgoingVoyageNo",
       key: "voyageNoOut",
       sorter: {
-        compare: (a, b) => a.voyageNoOut.localeCompare(b.voyageNoOut),
+        compare: (a, b) => a.outgoingVoyageNo.localeCompare(b.outgoingVoyageNo),
         multiple: 4,
       },
       sortDirections: ["ascend", "descend"],
@@ -153,6 +232,11 @@ const VoyagesPage = (props) => {
     },
   ];
 
+  const [validVoyageStatus, setValidVoyageStatus] = useState({
+    message: "",
+    result: true,
+  });
+
   const [state, setState] = useState({
     //ListOfUserTypes: [],
 
@@ -163,7 +247,7 @@ const VoyagesPage = (props) => {
     ListOfOwners: [],
     ListOfVessels: [],
     ListOfVoyages: [],
-    status: 1,
+    voyageStatus: 1,
     eta: null,
     ata: null,
     etd: null,
@@ -176,6 +260,7 @@ const VoyagesPage = (props) => {
   useEffect(() => {
     getVoyage()
       .then((res) => {
+       // console.log('response', res.data.data)
         if (res.data.result) {
           const tempList = res.data.data.map((item) => {
             return {
@@ -203,14 +288,16 @@ const VoyagesPage = (props) => {
               voyageStatus: item.voyageStatus,
             };
           });
+          //console.log('templist', tempList)
           setState((prevState) => ({ ...prevState, ListOfVoyages: tempList }));
         }
       })
-      .catch((err) => {});
+      .catch((err) => {
+       // console.log('error',err)
+      });
     getVessels()
       .then((res) => {
         if (res.data.result) {
-          console.log("vessels", res);
           const tempList = res.data.data.map((item) => {
             return {
               value: item.VesselId,
@@ -225,7 +312,6 @@ const VoyagesPage = (props) => {
     getPorts()
       .then((res) => {
         if (res.data.result) {
-          console.log("ports", res);
           const temp = res.data.data.map((item) => {
             return { label: item.PortName, value: item.PortId };
           });
@@ -242,7 +328,6 @@ const VoyagesPage = (props) => {
     getShippingLines()
       .then((res) => {
         if (res.data.result) {
-          console.log("shippingLines", res);
           const temp = res.data.data.map((item) => {
             return { label: item.ShippingLineName, value: item.ShippingLineId };
           });
@@ -256,11 +341,13 @@ const VoyagesPage = (props) => {
       .catch((err) => {});
   }, []);
   const handleEditVoyage = (voyageData) => {
+    console.log('from handel voyage edit',voyageData)
     const Voyage = {
       ..._(state.ListOfVoyages)
-        .filter((c) => c.voyageId === voyageData.voyageId)
-        .first(),
+      .filter((c) => c.voyageId === voyageData.voyageId)
+      .first(),
     };
+    console.log('from handel voyage List of voyage',Voyage)
     const temp = {
       selectVessel: {
         label: Voyage.vesselName,
@@ -289,14 +376,14 @@ const VoyagesPage = (props) => {
       eta: Voyage.estimatedTimeArrival,
       ata: Voyage.actualTimeArrival,
       etd: Voyage.estimatedTimeDeparture,
-      atd: Voyage.actualTimeDeparture,
-      voyageStatus: Voyage.voyageStatus,
+      atd: Voyage.actualTimeDeparture ,
+      voyageStatus: Voyage.voyageStatusCode === 1 ? true : false,
+      voyageStatusCode: Voyage.voyageStatusCode,
       outgoingVoyageNo: Voyage.outgoingVoyageNo,
       incomingVoyageNo: Voyage.incomingVoyageNo,
       id: Voyage.voyageId,
     };
 
-    console.log("form edit voyage ", temp);
     setState((prevState) => ({ ...prevState, currentRow: temp }));
     editToggle();
   };
@@ -306,7 +393,7 @@ const VoyagesPage = (props) => {
   };
 
   const handleCancelEditVoyage = () => {
-    console.log("handleCancelEditVessel");
+  //  console.log("handleCancelEditVessel");
     setState((prevState) => ({ ...prevState, currentRow: {} }));
     editToggle();
     //setEditState({});
@@ -329,25 +416,21 @@ const VoyagesPage = (props) => {
     createToggle();
   };
   const handleVesselSelectedChanged = (value) => {
-    console.log("from hande vessel ", value);
+    //console.log("from hande vessel ", value);
   };
   const handleOwnerSelectedChanged = () => {};
   const handleAgentSelectedChanged = () => {};
   const handlePreviousPortSelectedChanged = () => {};
   const handleOriginPortSelectedChanged = () => {};
   const handleNextPortSelectedChanged = () => {};
-  const dtChange1 = (value) => {
-    console.log(
-      "dtChange1",
-      moment(
-        `${value.year}/${value.month}/${value.day}`,
-        "jYYYY/jM/jD HH:mm"
-      ).format("YYYY-M-D HH:mm:ss")
-    );
+  const handleStatustSelectedChanged = (value, formik) => {
+    //console.log("from status change", value);
+    if (!value) {
+      //formik.setFieldTouched('atd',true);
+    }
   };
-  const dtChange2 = (value) => {
-    console.log("dtChange2", value);
-  };
+  const dtChange1 = (value) => {};
+  const dtChange2 = (value) => {};
 
   return (
     <React.Fragment>
@@ -408,9 +491,11 @@ const VoyagesPage = (props) => {
             initialValues={state.currentRow}
             validationSchema={validationSchema}
             onSubmit={(values) => {
-              onSubmitEditVoyage(values, props);
+              onSubmitEditVoyage(values);
             }}
-            validateOnBlur={true}
+           // validateOnBlur={true}
+            validateOnChange = {true}
+            validateOnMount = {true}
             enableReinitialize
           >
             {(formik) => {
@@ -423,11 +508,7 @@ const VoyagesPage = (props) => {
                           <FormikControl
                             control="customSelect"
                             name="selectVessel"
-                            selectedValue={()=>{
-                              setTimeout(() => {
-                                return state.currentRow.selectVessel
-                              }, 3000);
-                            }}
+                            selectedValue={state.currentRow.selectVessel}
                             options={state.ListOfVessels}
                             label="Vessel Name"
                           />
@@ -568,9 +649,38 @@ const VoyagesPage = (props) => {
                           />
                         </Col>
                       </Row>
+                      <Row>
+                        <Col
+                          md="4"
+                          style={{
+                            justifyContent: "right",
+                            direction: "rtl",
+                            display: "flex",
+                          }}
+                        >
+                          <FormikControl
+                            control="customSwitch"
+                            name="voyageStatus"
+                            label="Voyage Status"
+                            unCheckedChildren="Close"
+                            checkedChildren="Open"
+                            selectedValue={
+                              state.currentRow && state.currentRow.voyageStatus
+                            }
+                            onSelectedChanged={(value) =>
+                              handleStatustSelectedChanged(value, formik)
+                            }
+                          />
+                        </Col>
+                      </Row>
                     </div>
                     <div className="form-actions center">
-                      <Button color="primary" type="submit" className="mr-1">
+                      <Button
+                        color="primary"
+                        type="submit"
+                        className="mr-1"
+                        disabled={!formik.isValid}
+                      >
                         <CheckSquare size={16} color="#FFF" /> Save
                       </Button>
                       <Button

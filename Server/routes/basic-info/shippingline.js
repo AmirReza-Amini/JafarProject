@@ -8,6 +8,7 @@ const db = sworm.db(setting.db.sqlConfig);
 
 router.route('/')
 .get(async (req, res) => {
+    console.log('sdklfsldjfljsdlfjslkdjflsjdflkjsldkfjskl')
     let result = await db.query(queries.BASIC_INFO.SHIPPINGLINE.getShippingLinesList)
     console.log("result", result)
     SendResponse(req, res, result)

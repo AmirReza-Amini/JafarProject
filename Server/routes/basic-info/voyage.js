@@ -16,7 +16,34 @@ router.route('/:id?')
         SendResponse(req, res, { capitan: 'Added' })
     })
     .put(async (req, res) => {
-        SendResponse(req, res, { capitan: 'Updated' })
+        try {
+            const data = req.body
+            console.log('befor' , data)
+            let query = await db.query(queries.VOYAGE.updateVoyage, {
+                vesselId: data.vesselId,
+                voyageNoIn:data.voyageNoIn,
+                voyageNoOut :data.voyageNoOut,
+                voyageVessel:data.voyageVessel,
+                ownerId:data.ownerId,
+                agentId:data.agentId,
+                estimatedTimeArrival:data.estimatedTimeArrival,
+                actualTimeArrival:data.actualTimeArrival,
+                estimatedTimeDeparture:data.estimatedTimeDeparture,
+                actualTimeDeparture:data.actualTimeDeparture,
+                voyageStatus:data.voyageStatus,
+                originPort:data.originPort,
+                previousPort:data.previousPort,
+                nextPort:data.nextPort,
+                voyageId: data.voyageId
+            });
+            console.log('after', query)
+            const temp = query && query.length > 0 && query[0].RESULT == true ? true : false;
+            const message = temp ? 'Updating info has been done successfully' : 'failure in updating info';
+            return SendResponse(req, res, message, temp, 200)
+        } catch (error) {
+            console.log('errorr ', error)
+            return SendResponse(req, res, 'Fail in updating voyage info',false, 500)
+        }
     })
     .delete(async (req, res) => {
         SendResponse(req, res, { capitan: 'Deleted' })
