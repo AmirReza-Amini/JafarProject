@@ -1,13 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardBody, Button, FormGroup, Row, Col, Modal, ModalHeader, ModalBody } from "reactstrap";
-import { ShoppingBag, Edit2, CheckSquare, X } from "react-feather";
-import { Table, Tag, Space } from 'antd';
+import { Card, CardBody, FormGroup, Row, Col } from "reactstrap";
+import { ShoppingBag } from "react-feather";
+import { Table, Tag } from 'antd';
 import { Formik, Form } from "formik";
-import * as Yup from "yup";
 import { toast } from "react-toastify";
-import _ from "lodash";
-import antdClass from 'antd/dist/antd.css';
-import antdClass2 from "../../../../assets/css/vendors/customAntdTable.css";
 
 
 import FormikControl from "../../../../components/common/formik/FormikControl";
@@ -19,10 +15,10 @@ toast.configure({ bodyClassName: "customFont" });
 //#region INITIAL VALUES ---------------------------------------------------
 
 const initialValues = {
-    selectTariff: ''
+    selectTariff: {}
 }
 
-const GarbageCollectionTariffPage = (props) => {
+const GarbageCollectionTariffPage = () => {
 
     const [state, setState] = useState({
         ListOfTariffs: [],
@@ -30,7 +26,7 @@ const GarbageCollectionTariffPage = (props) => {
     });
 
     useEffect(() => {
-        async function fetchAllTariffs() {
+        (async function fetchAllTariffs() {
             const response = await gcs.GetAllTariffs();
             if (response.data.result) {
                 let temp = response.data.data.map(m => {
@@ -44,9 +40,7 @@ const GarbageCollectionTariffPage = (props) => {
             else {
                 toast.error(response.data.data[0]);
             }
-        }
-        fetchAllTariffs();
-
+        })();
     }, [])
 
     const handleSelectedTariffChanged = async () => {
@@ -95,7 +89,7 @@ const GarbageCollectionTariffPage = (props) => {
                 initialValues={initialValues}
             >
                 {
-                    (formikProps) => {
+                    () => {
                         return (
                             <React.Fragment>
                                 <Form>
@@ -105,7 +99,7 @@ const GarbageCollectionTariffPage = (props) => {
                                                 <FormikControl
                                                     control="customSelect"
                                                     name="selectTariff"
-                                                    options={state.ListOfTariffs != null ? state.ListOfTariffs : null}
+                                                    options={state.ListOfTariffs ?? []}
                                                     label="Garbage collections tariffs"
                                                     onSelectedChanged={
                                                         handleSelectedTariffChanged

@@ -15,6 +15,7 @@ module.exports = {
     },
     VOYAGE: {
         getVoyageList: LoadText(__dirname + '/basic-info/voyage/get-voyages-list.sql'),
+        getLast10Voyages: LoadText(__dirname + '/voyage/get-last-10-voyages.sql'),
         loadVoyageDwellById: LoadText(__dirname + '/voyage/load-voyage-dwell-by-id.sql'),
         loadVoyageDataById: LoadText(__dirname + '/voyage/load-voyage-data-by-id.sql')
     },

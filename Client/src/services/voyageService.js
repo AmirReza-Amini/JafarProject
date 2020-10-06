@@ -25,3 +25,7 @@ export const addNewVoyageInfo = (voyageInfo) => {
   console.log('AddVoyage', voyageInfo)
   return http.post(apiEndpoint, voyageInfo);
 }
+
+export const GetLast10Voyages=()=>{
+    return http.post(apiEndpoint+'/get-last-voyages');
+}

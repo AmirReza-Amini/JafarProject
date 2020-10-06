@@ -6,9 +6,16 @@ const setting = require("../../app-setting");
 const sworm = require("sworm");
 const db = sworm.db(setting.db.sqlConfig);
 
+router.get('/get-last-voyages', async (req, res) => {
+    let result = await db.query(queries.VOYAGE.getLast10Voyages)
+    SendResponse(req, res, result)
+})
+
 router.route('/:id?')
     .get(async (req, res) => {
-//ConvertProperties(voyageData, ['ETA', 'ATA', 'ETD', 'ATD'], ToPersian)
+
+        console.log("req.params.id", req.params.id)
+        //ConvertProperties(voyageData, ['ETA', 'ATA', 'ETD', 'ATD'], ToPersian)
         let result = await db.query(queries.VOYAGE.getVoyageList)
         SendResponse(req, res, result)
     })
