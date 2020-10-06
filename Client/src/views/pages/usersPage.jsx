@@ -49,11 +49,11 @@ class UsersPage extends Component {
             sortDirections: ['ascend', 'descend'],
         },
         {
-            title: 'User Code',
-            dataIndex: 'userCode',
-            key: 'userCode',
+            title: 'User Name',
+            dataIndex: 'userName',
+            key: 'userName',
             sorter: {
-                compare: (a, b) => a.userCode.localeCompare(b.userCode),
+                compare: (a, b) => a.userName.localeCompare(b.userName),
                 multiple: 2
             },
             sortDirections: ['ascend', 'descend'],
@@ -82,11 +82,6 @@ class UsersPage extends Component {
                     isActive ? "Active" : "Inactive"
                 }</Tag>
             )
-        },
-        {
-            title: 'Permissions',
-            dataIndex: 'permissions',
-            key: 'permissions',
         },
         {
             title: 'Action',
@@ -118,22 +113,22 @@ class UsersPage extends Component {
 
     createDataModelForDataTabel(data) {
         return data.map(item => {
-            const permissions = item.permissions.filter(c => c.isGranted).map(item => item.name).join(", ");
-            return { ...item, permissions, key: item._id }
+            return { ...item,key: item._id }
         })
     }
 
     componentDidMount() {
         getUsers().then(res => {
+            console.log('resss',res)
             if (res.data.result) {
                 this.setState({ ListOfUsers: res.data.data, ListOfUsersForTable: this.createDataModelForDataTabel(res.data.data) })
             }
         });
-        getPermissions().then(res => {
-            if (res.data.result) {
-                this.setState({ ListOfPermissions: res.data.data });
-            }
-        });
+        // getPermissions().then(res => {
+        //     if (res.data.result) {
+        //         this.setState({ ListOfPermissions: res.data.data });
+        //     }
+        // });
         getUserTypes().then(res => {
             if (res.data.result) {
                 this.setState({ ListOfUserTypes: res.data.data });
@@ -164,7 +159,7 @@ class UsersPage extends Component {
     }
 
     handleUserPermissionsChange(checkedValues, permissionName) {
-        // console.log('checked = ', checkedValues, permissionName, this.state.currentRow.permissions);
+        console.log('checked = ', checkedValues);
         const currentRow = { ...this.state.currentRow };
 
         const permissions = [...currentRow.permissions];
@@ -213,14 +208,14 @@ class UsersPage extends Component {
     }
 
     handleUserTypeChange = ({ value }) => {
-        console.log('handleUserTypeChange', value);
+        //console.log('handleUserTypeChange', value);
         const currentRow = { ...this.state.currentRow };
         currentRow.userType = value;
         this.setState({ currentRow })
     }
 
     handleUserStatusChange = ({ value }) => {
-        console.log('handleUserStatusChange', value);
+        //console.log('handleUserStatusChange', value);
         const currentRow = { ...this.state.currentRow };
         currentRow.isActive = value === "Active" ? true : false;
         this.setState({ currentRow })
@@ -265,7 +260,7 @@ class UsersPage extends Component {
     //#region DELETE USER INFO EVENTS ---------------------------------------
 
     handleDeleteUser = (userData) => {
-        console.log('userData for delete', userData);
+        //console.log('userData for delete', userData);
         const userInfo = { ..._(this.state.ListOfUsers).filter(c => c._id === userData._id).first() };
         this.setState({ currentRow: userInfo })
         this.deleteToggle();
@@ -308,7 +303,7 @@ class UsersPage extends Component {
     //#region GRID SELECTION EVENT ------------------------------------------
 
     onSelectChange = selectedRowKeys => {
-        console.log('selectedRowKeys changed: ', selectedRowKeys);
+        //console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
     };
 
@@ -321,8 +316,7 @@ class UsersPage extends Component {
             selectedRowKeys,
             onChange: this.onSelectChange,
             selections: [
-                Table.SELECTION_ALL,
-
+                Table.SELECTION_ALL
             ],
         };
         return (
@@ -367,13 +361,14 @@ class UsersPage extends Component {
 
                                     </div>
 
-                                    <div className="form-actions text-right">
-                                        <Button color="warning" className="mr-1">
-                                            <X size={20} color="#FFF" /> Cancel
-                              </Button>
-                                        <Button color="success">
+                                    <div className="form-actions text-left">
+                                        <Button color="success" className="mr-1">
                                             <Check size={20} color="#FFF" /> Save
-                              </Button>
+                                        </Button>
+                                        <Button color="warning" >
+                                            <X size={20} color="#FFF" /> Cancel
+                                        </Button>
+                                        
                                     </div>
                                 </Form>
                             </CardBody>
@@ -451,10 +446,10 @@ class UsersPage extends Component {
                     <ModalFooter>
                         <Button color="primary" onClick={this.handleSubmitEditUserInfo}>
                             Save
-                  </Button>{" "}
+                        </Button>{" "}
                         <Button color="secondary" onClick={this.handleCancelEditUserInfo}>
                             Cancel
-                  </Button>
+                        </Button>
                     </ModalFooter>
                 </Modal>
 
@@ -471,10 +466,10 @@ class UsersPage extends Component {
                     <ModalFooter>
                         <Button color="primary" onClick={this.handleSubmitDeleteUserInfo}>
                             Save
-                  </Button>{" "}
+                        </Button>{" "}
                         <Button color="secondary" onClick={this.handleCancelDeleteUserInfo}>
                             Cancel
-                  </Button>
+                        </Button>
                     </ModalFooter>
                 </Modal>
             </React.Fragment>

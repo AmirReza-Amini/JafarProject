@@ -24,9 +24,8 @@ const initialValues = {
 };
 
 const validationSchema = Yup.object({
-  username: Yup.string().required("!نام کاربری را وارد کنید"),
-  password: Yup.string().required("!رمز عبور را وارد کنید"),
-  selectedArea: Yup.string().required("!محوطه عملیات را انتخاب کنید")
+  username: Yup.string().required("Enter Username !"),
+  password: Yup.string().required("Enter Password !")
 });
 
 //#endregion ---------------------------------------------------------------
@@ -36,18 +35,17 @@ const validationSchema = Yup.object({
 const onSubmit = async (values, props) => {
 
   let parameters = {
-    username: values.username,
-    password: values.password,
-    area: values.selectedArea
+    userName: values.username,
+    password: values.password
   };
 
   try {
-    const { result, message } = await auth.login(_.pick(parameters, ["username", "password", "area"]));
+    const { result, message } = await auth.login(_.pick(parameters, ["userName", "password"]));
     if (!result)
       return toast.error(message);
     else {
       const { state } = props.location;
-      //console.log(props, state);
+      console.log(props, state);
       //console.log('ssssssss', props.location.state);
       //window.location = state && state.from ? state.from.pathname : "/";
       if (state && state.from)
@@ -77,19 +75,13 @@ const LoginPage = (props) => {
   //#region INITAL FUNCTIONS ---------------------------------------------
 
   useEffect(() => {
-    getAreas().then(res => {
-      if (res.data.result) {
-        setState({ areaList: res.data.data.map(item => { return { label: item.areaName, value: item.areaName } }) })
+    if (props.location.state) {
+      const { message } = props.location.state;
+      if (props.location.state && message && message.length > 0) {
+        toast.error(message);
       }
-      else {
-        return toast.error(res.data.data[0]);
-      }
-    }).catch(error => { });
-
-    const { message } = props.location.state;
-    if (props.location.state && message && message.length > 0) {
-      toast.error(message);
     }
+
     //console.log('from login effevt', props)
 
     setTimeout(() => {
@@ -117,7 +109,7 @@ const LoginPage = (props) => {
             <CardBody>
               <h2 className="white py-4">
                 <ReactRevealText show={show}>
-                  نرم افزار هندهلد شرکت توسعه خدمات دریایی و بندری سینا
+                  Negin Terminal Operation System
                 </ReactRevealText>
               </h2>
               <div className="pt-2">
@@ -142,31 +134,12 @@ const LoginPage = (props) => {
                           <Row>
                             <Col md="12">
                               <FormikControl
-                                control="customSelect"
-                                name="selectedArea"
-                                selectedValue={
-                                  state.selectedArea
-                                }
-                                options={state.areaList}
-                                placeholder="انتخاب محوطه"
-
-                                onSelectedChanged={(selectedValue) =>
-                                  formik.setFieldValue('selectedArea', selectedValue.value)
-                                }
-                              />
-
-                            </Col>
-                          </Row>
-
-                          <Row>
-                            <Col md="12">
-                              <FormikControl
                                 control="input"
                                 type="text"
                                 name="username"
                                 id="username"
-                                className="rtl"
-                                placeholder="نام کاربری"
+                                className="ltr"
+                                placeholder="Username"
                               />
                             </Col>
                           </Row>
@@ -177,15 +150,15 @@ const LoginPage = (props) => {
                                 type="password"
                                 id="password"
                                 name="password"
-                                className="rtl"
-                                placeholder="کلمه عبور"
+                                className="ltr"
+                                placeholder="Password"
                               />
                             </Col>
                           </Row>
                           <div className="form-actions center">
 
                             <Button color="primary" type="submit" className="mr-1" disabled={!formik.isValid}>
-                              <LogIn size={16} color="#FFF" /> ورود
+                              <LogIn size={16} color="#FFF" /> Enter
                             </Button>
 
                           </div>

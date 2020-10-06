@@ -11,7 +11,6 @@ class InputMaskDebounce extends Component {
       mask: this.props.mask ? this.props.mask : '',
       value: ''
     };
-    console.log('props', props)
   }
 
 
@@ -60,7 +59,7 @@ class InputMaskDebounce extends Component {
           {(Fieldprops) => {
             const { form, meta } = Fieldprops;
             //console.log(this.state);
-            //console.log('mask debounce props', Fieldprops);
+            // console.log('mask debounce props', Fieldprops);
             return (
               <React.Fragment>
                 <ReactInputMask

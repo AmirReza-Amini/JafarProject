@@ -43,7 +43,7 @@ router.route('/')
         permissions.forEach(p => { result = filterData(menu2, p) })
                 
         function filterData(data, key) {
-         
+            console.log('date',JSON.stringify(data))
             var r = data.filter(function (o) {
                 if (o.child)
                     o.child = filterData(o.child, key);
