@@ -28,6 +28,7 @@ const GarbageCollectionTariffPage = () => {
     useEffect(() => {
         (async function fetchAllTariffs() {
             const response = await gcs.GetAllTariffs();
+            console.log('tariff list',response)
             if (response.data.result) {
                 let temp = response.data.data.map(m => {
                     return {

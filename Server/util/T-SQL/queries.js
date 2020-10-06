@@ -61,6 +61,12 @@ module.exports = {
       loadLast15bills: LoadText(
         __dirname + "/billing/garbage-collection/load-last-15-bills.sql"
       ),
+      loadAllTariffs:LoadText(
+        __dirname + "/billing/garbage-collection/load-all-tariffs.sql"
+      ),
+      loadTariffDetails:LoadText(
+        __dirname + "/billing/garbage-collection/load-tariff-details.sql"
+      )
     },
     VESSEL_STOPPAGE: {
       loadTariff: LoadText(
