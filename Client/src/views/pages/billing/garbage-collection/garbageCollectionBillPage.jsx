@@ -25,7 +25,6 @@ const GarbageCollectionBillPage = () => {
     });
 
     const handleSelectedVoyageChanged = (param) => {
-        console.log("handleSelectedVoyageChanged -> param", param)
         
     }
 
