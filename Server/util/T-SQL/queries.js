@@ -34,9 +34,10 @@ module.exports = {
     },
   },
   VOYAGE: {
-    getVoyageList: LoadText(__dirname + "/basic-info/voyage/get-voyages-list.sql"),
-    insertVoyage: LoadText(__dirname + "/basic-info/voyage/insert-voyage.sql"),
-    updateVoyage: LoadText(__dirname + "/basic-info/voyage/update-voyage.sql"),
+    getVoyageList: LoadText(__dirname + "/voyage/get-voyages-list.sql"),
+    getLast10Voyages: LoadText(__dirname + "/voyage/get-last-10-voyages.sql"),
+    insertVoyage: LoadText(__dirname + "/voyage/insert-voyage.sql"),
+    updateVoyage: LoadText(__dirname + "/voyage/update-voyage.sql"),
     loadVoyageDwellById: LoadText(
       __dirname + "/voyage/load-voyage-dwell-by-id.sql"
     ),

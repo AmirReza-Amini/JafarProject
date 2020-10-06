@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Card, CardBody, FormGroup, Row, Col } from "reactstrap";
-import { ShoppingBag } from "react-feather";
-import { Table, Tag } from 'antd';
+import { SetValueLabel } from '../../../../utility/tools'
 import { Formik, Form } from "formik";
 import { toast } from "react-toastify";
 
 import FormikControl from "../../../../components/common/formik/FormikControl";
 
-import * as  gcs from '../../../../services/garbageCollectionService';
+// import * as  gcs from '../../../../services/garbageCollectionService';
+import * as  vs from '../../../../services/voyageService';
 
 toast.configure({ bodyClassName: "customFont" });
 
@@ -24,8 +24,24 @@ const GarbageCollectionBillPage = () => {
         issuedBill: {}
     });
 
+    useEffect(() => {
+        (async function fetchAllTariffs() {
+            const response = await vs.GetLast10Voyages();
+            // console.log('voyageList',response)
+            if (response.data.result) {
+                let temp = SetValueLabel(response.data.data, 'VoyageId', 'VoyageNoIn');
+
+                setState((prevState) => ({ ...prevState, ListOfVoyages: temp }));
+            }
+            else {
+                toast.error(response.data.data[0]);
+            }
+        })();
+    }, [])
+
     const handleSelectedVoyageChanged = (param) => {
-        
+        console.log("handleSelectedVoyageChanged -> param", param)
+
     }
 
     return (
@@ -59,7 +75,7 @@ const GarbageCollectionBillPage = () => {
                     }}
 
             </Formik>
-        </React.Fragment> 
+        </React.Fragment>
     );
 }
 

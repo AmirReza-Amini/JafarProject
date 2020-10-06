@@ -5,14 +5,14 @@ const jwt = require('jsonwebtoken');
 const AES = require('crypto-js/aes');
 const { tokenHashKey, jwtSecret, jwtExpireTime } = require('../app-setting');
 
-map = (source, dest, excludeList = []) => {
+exports.Map = (source, dest, excludeList = []) => {
     let propertyList = Object.getOwnPropertyNames(source).filter(m => !excludeList.includes(m));
     propertyList.forEach(p => {
         dest[p] = source[p];
     })
 }
 
-sendResponse = (req, res, data, result = true, code = 200) => {
+exports.SendResponse = (req, res, data, result = true, code = 200) => {
 
     req.body.status = code;
     req.body.to = req.body.from;
@@ -28,11 +28,11 @@ sendResponse = (req, res, data, result = true, code = 200) => {
         }))
 }
 
-loadText = (filePath) => {
+exports.LoadText = (filePath) => {
     return fs.readFileSync(filePath, { encoding: 'utf-8' })
 }
 
-generateInvoiceNo = (number, prefix) => {
+exports.GenerateInvoiceNo = (number, prefix) => {
     let currentYear = pc.ToPersian(new Date()).substring(2, 4);
     if (number) {
         console.log("generateInvoiceNo -> number", number)
@@ -43,7 +43,7 @@ generateInvoiceNo = (number, prefix) => {
     return prefix + currentYear + '00000001'
 }
 
-toPersian = (garegorianDate) => {
+exports.ToPersian = (garegorianDate) => {
     let cleanedDate = garegorianDate
         .toISOString()
         .replace('T', ' ')
@@ -51,15 +51,14 @@ toPersian = (garegorianDate) => {
     return pc.ToPersian(cleanedDate, 'YYYY/MM/DD HH:mm')
 }
 
-convertProperties = (object, keys, method) => {
+exports.ConvertProperties = (object, keys, method) => {
     keys.forEach(key => {
         object[key] = method(object[key])
     });
     return object;
 }
 
-generateAuthToken = (user) => {
-    //console.log('generateAuthToken',user)
+exports.GenerateAuthToken = (user) => {
     const token = jwt.sign({
         _id: user._id,
         lastName: user.lastName,
@@ -73,14 +72,4 @@ generateAuthToken = (user) => {
     ).toString();
 
     return tokenCrypted
-}
-
-module.exports = {
-    Map: map,
-    LoadText: loadText,
-    SendResponse: sendResponse,
-    GenerateInvoiceNo: generateInvoiceNo,
-    ToPersian: toPersian,
-    ConvertProperties: convertProperties,
-    GenerateAuthToken:generateAuthToken
 }

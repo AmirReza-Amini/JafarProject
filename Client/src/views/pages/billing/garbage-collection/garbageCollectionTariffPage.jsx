@@ -4,6 +4,7 @@ import { ShoppingBag } from "react-feather";
 import { Table, Tag } from 'antd';
 import { Formik, Form } from "formik";
 import { toast } from "react-toastify";
+import { SetValueLabel } from '../../../../utility/tools'
 
 
 import FormikControl from "../../../../components/common/formik/FormikControl";
@@ -28,14 +29,9 @@ const GarbageCollectionTariffPage = () => {
     useEffect(() => {
         (async function fetchAllTariffs() {
             const response = await gcs.GetAllTariffs();
-            console.log('tariff list',response)
             if (response.data.result) {
-                let temp = response.data.data.map(m => {
-                    return {
-                        label: m.Description,
-                        value: m.GarbageCollectionTariffId,
-                    }
-                })
+                let temp = SetValueLabel(response.data.data, 'GarbageCollectionTariffId', 'Description')
+
                 setState((prevState) => ({ ...prevState, ListOfTariffs: temp }));
             }
             else {

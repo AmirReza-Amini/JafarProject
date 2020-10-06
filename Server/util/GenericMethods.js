@@ -2,28 +2,28 @@ const mapper = require('./utility')
 const md5 = require('md5')
 const { SendResponse } = require('./utility')
 
-insert = async (entity, req, res) => {
+exports.Insert = async (entity, req, res) => {
 
     let obj = new entity(req.body);
     await obj.save();
     SendResponse(req, res, obj);
 }
 
-insertMany = async (entity, req, res) => {
+exports.InsertMany = async (entity, req, res) => {
     let obj = await entity.insertMany(req.body);
     SendResponse(req, res, obj);
 }
 
-update = async (entity, req, res) => {
+exports.Update = async (entity, req, res) => {
     FindAndUpdate(entity, req, res, { _id: req.body._id }, req.body);
 };
 
 
-softDelete = async (entity, req, res) => {
+exports.Delete = async (entity, req, res) => {
     FindAndUpdate(entity, req, res, { _id: req.params.id }, { isDeleted: true });
 }
 
-hardDelete = async (entity, req, res) => {
+exports.HardDelete = async (entity, req, res) => {
     let doc = await entity.findByIdAndRemove(req.body._id);
     if (doc)
         SendResponse(req, res, doc);
@@ -31,7 +31,7 @@ hardDelete = async (entity, req, res) => {
         SendResponse(req, res, { error: 'nothing found!' }, false, 404);
 }
 
-getAll = async (entity, req, res, opt = {}) => {
+exports.GetAll = async (entity, req, res, opt = {}) => {
 
     sortTerm = opt.sort ? opt.sort : '_id';
 
@@ -53,7 +53,7 @@ console.log('doc',doc)
     SendResponse(req, res, doc);
 }
 
-getOne = async (entity, req, res, opt = {}) => {
+exports.GetOne = async (entity, req, res, opt = {}) => {
     populate = opt.populate ? opt.populate : '';
     let doc = await entity
         .findOne({ '_id': req.params.id, 'isDeleted': false })
@@ -73,14 +73,4 @@ FindAndUpdate = async (entity, req, res, condition, update) => {
     }
     else
         SendResponse(res, res, { error: 'nothing found!' }, false, 404);
-}
-
-module.exports = {
-    Insert: insert,
-    InsertMany: insertMany,
-    Update: update,
-    Delete: softDelete,
-    GetAll: getAll,
-    GetOne: getOne,
-    HardDelete: hardDelete
 }
