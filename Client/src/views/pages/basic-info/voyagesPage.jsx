@@ -57,7 +57,7 @@ const validationSchema = Yup.object().shape({
   //   .when("voyageStatus", {
   //     is: false,
   //     then: Yup.string().test("", "invalid date", (value) => //moment(value, "YYYY-MM-DD HH:mm:ss",true).isValid()
-      
+
   //     {
   //      const asd = moment(undefined).format('YYYY-MM-DD HH:mm:ss')
 
@@ -70,72 +70,116 @@ const validationSchema = Yup.object().shape({
 const VoyagesPage = (props) => {
   const onSubmitEditVoyage = (values) => {
 
-   // console.log('from edit voyage', values)
-   // if (values === state.currentRow) return;
+    // console.log('from edit voyage', values)
+    // if (values === state.currentRow) return;
     let parameters = {
       voyageId: values.id,
       voyageNoIn: values.incomingVoyageNo,
-      voyageNoOut : values.outgoingVoyageNo ,
-      voyageVessel : values.incomingVoyageNo + '/' + values.selectVessel.label  ,
-      vesselId : values.selectVessel.value ,
-      ownerId : values.selectOwner.value,
-      agentId :values.selectAgent.value,
-      estimatedTimeArrival : values.eta ,
-      actualTimeArrival :values.ata,
-      estimatedTimeDeparture :values.etd,
-      actualTimeDeparture : values.atd,
-      voyageStatus : values.voyageStatus ? 1:0,
-      originPort : values.selectOriginPort.value ,
-      previousPort : values.selectPreviousPort.value,
-      nextPort :values.selectNextPort.value 
+      voyageNoOut: values.outgoingVoyageNo,
+      voyageVessel: values.incomingVoyageNo + '/' + values.selectVessel.label,
+      vesselId: values.selectVessel.value,
+      ownerId: values.selectOwner.value,
+      agentId: values.selectAgent.value,
+      estimatedTimeArrival: values.eta,
+      actualTimeArrival: values.ata,
+      estimatedTimeDeparture: values.etd,
+      actualTimeDeparture: values.atd,
+      voyageStatus: values.voyageStatus ? 1 : 0,
+      originPort: values.selectOriginPort.value,
+      previousPort: values.selectPreviousPort.value,
+      nextPort: values.selectNextPort.value
     };
-   // console.log('from edit voyage after', parameters)
+    // console.log('from edit voyage after', parameters)
     editVoyageInfo(parameters)
-    .then((response) => {
-     // console.log('response',response)
-      if (response.data.result) {
-        toast.success(response.data.data[0]);
-        const lstVoyages = [...state.ListOfVoyages];
-        const index = _(lstVoyages).findIndex(
-          (c) => c.voyageId === values.id
-        );      
-        lstVoyages[index] = { ...lstVoyages[index] };
-        lstVoyages[index].key = values.id;
-        lstVoyages[index].voyageId = values.id;
-        lstVoyages[index].actualTimeArrival = values.ata;
-        lstVoyages[index].actualTimeDeparture = values.atd;
-        lstVoyages[index].agentId = values.selectAgent.value;
-        lstVoyages[index].agentName = values.selectAgent.label;
-        lstVoyages[index].estimatedTimeArrival = values.eta;
-        lstVoyages[index].estimatedTimeDeparture = values.etd;
-        lstVoyages[index].incomingVoyageNo = values.incomingVoyageNo;
-        lstVoyages[index].nextPortId = values.selectNextPort.value;
-        lstVoyages[index].nextPortName = values.selectNextPort.label;
-        lstVoyages[index].originPortId = values.selectOriginPort.value;
-        lstVoyages[index].originPortName = values.selectOriginPort.label;
-        lstVoyages[index].outgoingVoyageNo = values.outgoingVoyageNo;
-        lstVoyages[index].ownerId = values.selectOwner.value;
-        lstVoyages[index].ownerName = values.selectOwner.label;
-        lstVoyages[index].previousPortId = values.selectPreviousPort.value;
-        lstVoyages[index].previousPortName = values.selectPreviousPort.label;
-        lstVoyages[index].vesselId = values.selectVessel.value;
-        lstVoyages[index].vesselName = values.selectVessel.label;
-        lstVoyages[index].voyageStatus = values.voyageStatus ?"OPEN":"CLOSE";
-        lstVoyages[index].voyageStatusCode = values.voyageStatus?1:0;
-     //   console.log("from submuit", lstVoyages[index]);
+      .then((response) => {
+        // console.log('response',response)
+        if (response.data.result) {
+          toast.success(response.data.data[0]);
+          const lstVoyages = [...state.ListOfVoyages];
+          const index = _(lstVoyages).findIndex(
+            (c) => c.voyageId === values.id
+          );
+          lstVoyages[index] = { ...lstVoyages[index] };
+          lstVoyages[index].key = values.id;
+          lstVoyages[index].voyageId = values.id;
+          lstVoyages[index].actualTimeArrival = values.ata;
+          lstVoyages[index].actualTimeDeparture = values.atd;
+          lstVoyages[index].agentId = values.selectAgent.value;
+          lstVoyages[index].agentName = values.selectAgent.label;
+          lstVoyages[index].estimatedTimeArrival = values.eta;
+          lstVoyages[index].estimatedTimeDeparture = values.etd;
+          lstVoyages[index].incomingVoyageNo = values.incomingVoyageNo;
+          lstVoyages[index].nextPortId = values.selectNextPort.value;
+          lstVoyages[index].nextPortName = values.selectNextPort.label;
+          lstVoyages[index].originPortId = values.selectOriginPort.value;
+          lstVoyages[index].originPortName = values.selectOriginPort.label;
+          lstVoyages[index].outgoingVoyageNo = values.outgoingVoyageNo;
+          lstVoyages[index].ownerId = values.selectOwner.value;
+          lstVoyages[index].ownerName = values.selectOwner.label;
+          lstVoyages[index].previousPortId = values.selectPreviousPort.value;
+          lstVoyages[index].previousPortName = values.selectPreviousPort.label;
+          lstVoyages[index].vesselId = values.selectVessel.value;
+          lstVoyages[index].vesselName = values.selectVessel.label;
+          lstVoyages[index].voyageStatus = values.voyageStatus ? "OPEN" : "CLOSE";
+          lstVoyages[index].voyageStatusCode = values.voyageStatus ? 1 : 0;
+          //   console.log("from submuit", lstVoyages[index]);
 
-        setState((prevState) => ({
-          ...prevState,
-          ListOfVoyages: lstVoyages,
-          currentRow: {},
-        }));
-        editToggle();
-      } else {
-        toast.error(response.data.data[0]);
-      }
-    })
+          setState((prevState) => ({
+            ...prevState,
+            ListOfVoyages: lstVoyages,
+            currentRow: {},
+          }));
+          editToggle();
+        } else {
+          toast.error(response.data.data[0]);
+        }
+      })
   };
-  const onSubmitCreateVoyage = (values, props) => {};
+
+  const onSubmitCreateVoyage = (values) => {
+    console.log('from edit voyage', values)
+    let parameters = {
+      incomingVoyageNo: values.incomingVoyageNo,
+      outgoingVoyageNo: values.outgoingVoyageNo,
+      voyageVessel: values.incomingVoyageNo + '/' + values.selectVessel.label,
+      vesselId: values.selectVessel.value,
+      ownerId: values.selectOwner.value,
+      agentId: values.selectAgent.value,
+      estimatedTimeArrival: values.eta,
+      actualTimeArrival: values.ata,
+      estimatedTimeDeparture: values.etd,
+      actualTimeDeparture: values.atd,
+      voyageStatusCode: values.voyageStatus ? 1 : 0,
+      originPortId: values.selectOriginPort.value,
+      previousPortId: values.selectPreviousPort.value,
+      nextPortId: values.selectNextPort.value
+    };
+    addNewVoyageInfo(parameters)
+      .then((response) => {
+        // console.log('response',response)
+        if (response.data.result) {
+          toast.success(response.data.data[0]['message']);
+
+          const lstVoyages = [...state.ListOfVoyages];
+          parameters.voyageId = response.data.data[0]['voyageId'];
+          parameters.key = response.data.data[0]['voyageId'];
+          parameters.agentName = values.selectAgent.label;
+          parameters.incomingVoyageNo = values.incomingVoyageNo;
+          parameters.nextPortName = values.selectNextPort.label;
+          parameters.originPortName = values.selectOriginPort.label;
+          parameters.ownerName = values.selectOwner.label;
+          parameters.previousPortName = values.selectPreviousPort.label;
+          parameters.vesselName = values.selectVessel.label;
+          parameters.voyageStatus = values.voyageStatus ? "OPEN" : "CLOSE";
+          lstVoyages.push(parameters);
+
+          setState((prevState) => ({ ...prevState, ListOfVoyages: lstVoyages, currentRow: {} }));
+          createToggle();
+        } else {
+          toast.error(response.data.data[0]);
+        }
+      })
+  };
 
   const columns = [
     {
@@ -202,7 +246,7 @@ const VoyagesPage = (props) => {
     },
     {
       title: "ATA",
-      dataIndex: "ActualTimeArrival",
+      dataIndex: "actualTimeArrival",
       key: "ata",
     },
     {
@@ -260,7 +304,7 @@ const VoyagesPage = (props) => {
   useEffect(() => {
     getVoyage()
       .then((res) => {
-       // console.log('response', res.data.data)
+        // console.log('response', res.data.data)
         if (res.data.result) {
           const tempList = res.data.data.map((item) => {
             return {
@@ -293,7 +337,7 @@ const VoyagesPage = (props) => {
         }
       })
       .catch((err) => {
-       // console.log('error',err)
+        // console.log('error',err)
       });
     getVessels()
       .then((res) => {
@@ -307,7 +351,7 @@ const VoyagesPage = (props) => {
           setState((prevState) => ({ ...prevState, ListOfVessels: tempList }));
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
     getPorts()
       .then((res) => {
@@ -323,7 +367,7 @@ const VoyagesPage = (props) => {
           }));
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
 
     getShippingLines()
       .then((res) => {
@@ -338,16 +382,16 @@ const VoyagesPage = (props) => {
           }));
         }
       })
-      .catch((err) => {});
+      .catch((err) => { });
   }, []);
   const handleEditVoyage = (voyageData) => {
-    console.log('from handel voyage edit',voyageData)
+    console.log('from handel voyage edit', voyageData)
     const Voyage = {
       ..._(state.ListOfVoyages)
-      .filter((c) => c.voyageId === voyageData.voyageId)
-      .first(),
+        .filter((c) => c.voyageId === voyageData.voyageId)
+        .first(),
     };
-    console.log('from handel voyage List of voyage',Voyage)
+    console.log('from handel voyage List of voyage', Voyage)
     const temp = {
       selectVessel: {
         label: Voyage.vesselName,
@@ -376,7 +420,7 @@ const VoyagesPage = (props) => {
       eta: Voyage.estimatedTimeArrival,
       ata: Voyage.actualTimeArrival,
       etd: Voyage.estimatedTimeDeparture,
-      atd: Voyage.actualTimeDeparture ,
+      atd: Voyage.actualTimeDeparture,
       voyageStatus: Voyage.voyageStatusCode === 1 ? true : false,
       voyageStatusCode: Voyage.voyageStatusCode,
       outgoingVoyageNo: Voyage.outgoingVoyageNo,
@@ -393,10 +437,8 @@ const VoyagesPage = (props) => {
   };
 
   const handleCancelEditVoyage = () => {
-  //  console.log("handleCancelEditVessel");
     setState((prevState) => ({ ...prevState, currentRow: {} }));
     editToggle();
-    //setEditState({});
   };
 
   const handleCreateVoyage = () => {
@@ -405,10 +447,7 @@ const VoyagesPage = (props) => {
   };
 
   const createToggle = () => {
-    setState((prevState) => ({
-      ...prevState,
-      createModal: !state.createModal,
-    }));
+    setState((prevState) => ({ ...prevState, createModal: !state.createModal }));
   };
 
   const handleCancelCreateVoyage = () => {
@@ -418,19 +457,19 @@ const VoyagesPage = (props) => {
   const handleVesselSelectedChanged = (value) => {
     //console.log("from hande vessel ", value);
   };
-  const handleOwnerSelectedChanged = () => {};
-  const handleAgentSelectedChanged = () => {};
-  const handlePreviousPortSelectedChanged = () => {};
-  const handleOriginPortSelectedChanged = () => {};
-  const handleNextPortSelectedChanged = () => {};
+  const handleOwnerSelectedChanged = () => { };
+  const handleAgentSelectedChanged = () => { };
+  const handlePreviousPortSelectedChanged = () => { };
+  const handleOriginPortSelectedChanged = () => { };
+  const handleNextPortSelectedChanged = () => { };
   const handleStatustSelectedChanged = (value, formik) => {
     //console.log("from status change", value);
     if (!value) {
       //formik.setFieldTouched('atd',true);
     }
   };
-  const dtChange1 = (value) => {};
-  const dtChange2 = (value) => {};
+  const dtChange1 = (value) => { };
+  const dtChange2 = (value) => { };
 
   return (
     <React.Fragment>
@@ -493,9 +532,9 @@ const VoyagesPage = (props) => {
             onSubmit={(values) => {
               onSubmitEditVoyage(values);
             }}
-           // validateOnBlur={true}
-            validateOnChange = {true}
-            validateOnMount = {true}
+            // validateOnBlur={true}
+            validateOnChange={true}
+            validateOnMount={true}
             enableReinitialize
           >
             {(formik) => {
@@ -687,6 +726,185 @@ const VoyagesPage = (props) => {
                         color="warning"
                         type="button"
                         onClick={handleCancelEditVoyage}
+                      >
+                        <X size={16} color="#FFF" /> Cancel
+                      </Button>
+                    </div>
+                  </Form>
+                </React.Fragment>
+              );
+            }}
+          </Formik>
+        </ModalBody>
+      </Modal>
+      <Modal
+        isOpen={state.createModal}
+        toggle={editToggle}
+        className={props.className}
+        backdrop="static"
+      >
+        <ModalHeader toggle={createToggle}>
+          Add New Voyage
+        </ModalHeader>
+        <ModalBody>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={(values) => {
+              onSubmitCreateVoyage(values);
+            }}
+            // validateOnBlur={true}
+            validateOnChange={true}
+            validateOnMount={true}
+            enableReinitialize
+          >
+            {(formik) => {
+              return (
+                <React.Fragment>
+                  <Form>
+                    <div className="form-body">
+                      <Row>
+                        <Col md="6">
+                          <FormikControl
+                            control="customSelect"
+                            name="selectVessel"
+                            options={state.ListOfVessels}
+                            label="Vessel Name"
+                          />
+                        </Col>
+                        <Col md="6">
+                          <FormikControl
+                            control="customSelect"
+                            name="selectOriginPort"
+                            options={state.ListOfOriginPorts}
+                            label="Origin Port Name"
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md="6">
+                          <FormikControl
+                            control="customSelect"
+                            name="selectNextPort"
+                            options={state.ListOfNextPorts}
+                            label="Next Port Name"
+                          />
+                        </Col>
+                        <Col md="6">
+                          <FormikControl
+                            control="customSelect"
+                            name="selectPreviousPort"
+                            options={state.ListOfPreviousPorts}
+                            label="Previous Port Name"
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md="6">
+                          <FormikControl
+                            control="customSelect"
+                            name="selectAgent"
+                            options={state.ListOfAgents}
+                            label="Agent Name"
+                          />
+                        </Col>
+                        <Col md="6">
+                          <FormikControl
+                            control="customSelect"
+                            name="selectOwner"
+                            options={state.ListOfOwners}
+                            label="Owner Name"
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md="6">
+                          <FormikControl
+                            control="inputMaskDebounce"
+                            name="incomingVoyageNo"
+                            className="ltr"
+                            type="text"
+                            label="Incoming Voyage No"
+                          />
+                        </Col>
+                        <Col md="6">
+                          <FormikControl
+                            control="inputMaskDebounce"
+                            type="text"
+                            name="outgoingVoyageNo"
+                            className="ltr"
+                            label="Outgoing Voyage No"
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md="6">
+                          <FormikControl
+                            control="customDateTimePicker"
+                            name="eta"
+                            locale="en"
+                            label="Estimated Time Arrival"
+                            placeholder="Select Enter Date"
+                          />
+                        </Col>
+                        <Col md="6">
+                          <FormikControl
+                            control="customDateTimePicker"
+                            name="ata"
+                            label="Actual Time Arrival"
+                            placeholder="Select Enter Date"
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col md="6">
+                          <FormikControl
+                            control="customDateTimePicker"
+                            name="etd"
+                            label="Estimated Time Departure"
+                            placeholder="Select Enter Date"
+                          />
+                        </Col>
+                        <Col md="6">
+                          <FormikControl
+                            control="customDateTimePicker"
+                            name="atd"
+                            label="Actual Time Departure"
+                            placeholder="Select Enter Date"
+                          />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col
+                          md="4"
+                          style={{
+                            justifyContent: "right",
+                            direction: "rtl",
+                            display: "flex",
+                          }}
+                        >
+                          <FormikControl
+                            control="customSwitch"
+                            name="voyageStatus"
+                            label="Voyage Status"
+                            unCheckedChildren="Close"
+                            checkedChildren="Open"
+                          />
+                        </Col>
+                      </Row>
+                    </div>
+                    <div className="form-actions center">
+                      <Button
+                        color="primary"
+                        type="submit"
+                        className="mr-1"
+                        disabled={!formik.isValid}
+                      >
+                        <CheckSquare size={16} color="#FFF" /> Save
+                      </Button>
+                      <Button
+                        color="warning"
+                        type="button"
+                        onClick={handleCancelCreateVoyage}
                       >
                         <X size={16} color="#FFF" /> Cancel
                       </Button>
