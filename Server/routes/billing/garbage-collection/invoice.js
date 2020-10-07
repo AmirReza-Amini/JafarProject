@@ -22,7 +22,6 @@ router.route('/:id?')
         return SendResponse(req, res, invoiceList)
     })
     .post(async (req, res) => {
-
         try {
             //#region Load Voyage detail
             let voyage = (await db.query(queries.VOYAGE.loadVoyageDwellById, {
@@ -44,21 +43,22 @@ router.route('/:id?')
                 return SendResponse(req, res, 'Currency data not found', false, 404)
 
             let lastInvoiceNo = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastBill))[0];
+            console.log("lastInvoiceNo", GenerateInvoiceNo(lastInvoiceNo, 'GC'))
             //#endregion
 
             //#region calculate bill
 
             let invoice = {
                 tariffId: tariff.GarbageCollectionTariffDetailId,
-                dwell: Dwell,
+                dwellHour: Dwell,
                 priceD: Dwell * tariff.Price,
                 priceR: Dwell * tariff.Price * currency.Rate,
                 voyageId: req.body.voyageId,
                 currencyId: currency.CurrencyId,
-                invoiceNo: GenerateInvoiceNo(lastInvoiceNo, 'GC'),
+                invoiceNo: req.body.isPreInvoice ? '---' : GenerateInvoiceNo(lastInvoiceNo, 'GC'),
                 userId: '220'
             }
-            console.log("req.body.isPreInvoice", req.body.isPreInvoice)
+            console.log("invoice", invoice)
             if (!req.body.isPreInvoice)
                 await db.query(queries.BILLING.GARBAGE_COLLECTION.calculateBill, invoice);
             //#endregion

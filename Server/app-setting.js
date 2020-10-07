@@ -1,14 +1,14 @@
 module.exports = {
     portNo: 4000,
     db: {
-        mongo: {
+        mongo: { 
             main: {
                 name: 'NeginDB',
                 address: 'localhost:27017'
             },
             log: {
                 name: 'NeginDB_log',
-                address: 'localhost:27017'
+                address: 'localhost:27017' 
             }
         },
         sqlConfig: {

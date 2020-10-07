@@ -10,3 +10,8 @@ export const GetAllTariffs = () => {
 export const GetTariffDetails = (id) => {
     return http.get(apiEndpoint + '/tariff/' + id)
 }
+
+export const Calculate = (voyageId, isPreInvoice) => {
+    console.log("Calculate -> voyageId", voyageId)
+    return http.post(apiEndpoint + '/invoice/', { isPreInvoice: isPreInvoice, voyageId: voyageId });
+}

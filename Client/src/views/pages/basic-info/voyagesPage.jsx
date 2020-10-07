@@ -142,7 +142,7 @@ const VoyagesPage = (props) => {
       title: "Action",
       key: "action",
       render: (text, record) => (
-        <Space size="middle">
+        <Space size="middle"> 
           <Button
             className="btn-warning mt-1"
             size="sm"

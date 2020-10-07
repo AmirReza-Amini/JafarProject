@@ -35,7 +35,6 @@ exports.LoadText = (filePath) => {
 exports.GenerateInvoiceNo = (number, prefix) => {
     let currentYear = pc.ToPersian(new Date()).substring(2, 4);
     if (number) {
-        console.log("generateInvoiceNo -> number", number)
         let lastYear = number.InvoiceNo.substring(2, 4);
         if (lastYear == currentYear)
             return prefix + (parseInt(number.InvoiceNo.substring(2, 12)) + 1)
@@ -44,6 +43,7 @@ exports.GenerateInvoiceNo = (number, prefix) => {
 }
 
 exports.ToPersian = (garegorianDate) => {
+    if (!garegorianDate) return '---'
     let cleanedDate = garegorianDate
         .toISOString()
         .replace('T', ' ')
@@ -53,7 +53,9 @@ exports.ToPersian = (garegorianDate) => {
 
 exports.ConvertProperties = (object, keys, method) => {
     keys.forEach(key => {
+        console.log("exports.ConvertProperties -> key", object[key])
         object[key] = method(object[key])
+
     });
     return object;
 }
@@ -72,4 +74,8 @@ exports.GenerateAuthToken = (user) => {
     ).toString();
 
     return tokenCrypted
+}
+
+exports.FormatNumber = (number) => {
+    return number ? number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : number;
 }

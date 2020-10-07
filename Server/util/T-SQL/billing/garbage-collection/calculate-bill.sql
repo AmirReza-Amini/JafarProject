@@ -1,6 +1,6 @@
 INSERT dbo.GarbageCollectionInvoices
 VALUES  ( @tariffId , -- GarbageCollectionTariffDetailId - bigint
-          @dwell , -- DwellHour - int
+          @dwellHour , -- DwellHour - int
           @priceD , -- PriceD - money
           @priceR , -- PriceR - money
           @voyageId , -- VoyageId - bigint
