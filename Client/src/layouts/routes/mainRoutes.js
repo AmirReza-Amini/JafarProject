@@ -12,45 +12,57 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
 
    const doesCurrentUserHaveAuthorization = (permissions) => {
 
-      //console.log('permissions:', permissions, path);
+     // console.log('permissions:', permissions, path);
       if (permissions === null || permissions.length === 0)
          return false;
 
-      const items = _(path)
+      const route = _(path)
          .split("/")
          .value()
          .filter((c) => c !== "")
-         .map((c) => _.toUpper(c));
+         .map((c) => _.toUpper(c)).join('-');
 
-      // console.log('item', items);
-      switch (items.length) {
-         case 0:
-            return true
-         case 1:
-            let temp = permissions.filter(c => c.isGranted === true);
-            //  console.log('temp ', temp);
-            if (temp.length > 0)
-               return true
-            return false
-         case 2:
-            let temp1 = permissions.filter(c => _.toUpper(c.name) === items[1] && c.isGranted === true);
-            //console.log('temp', temp1);
-            if (temp1.length === 1)
-               return true
-            return false
-         case 3:
-         case 4:
-            let temp2 = permissions.filter(c => _.toUpper(c.name) === items[1] && c.isGranted === true);
-            console.log('from main route', temp2)
-            if (temp2.length === 1) {
-               let temp3 = temp2[0].access.filter(c => _.toUpper(c.key) === items[2] && c.value === true);
-               if (temp3.length === 1)
-                  return true
-            }
-            return false;
+      if (route.length === 0) return true;
+
+      const result = permissions.filter(c => c.name === route && c.isGranted);
+      if (result.length === 1){
+         return true;
       }
-      // console.log('miresi ya na')
-      return false
+
+      return false;
+   }
+
+   const handleRenderMethod = (matchProps) => {
+
+      if (!config.useAuthentication) {
+         return <MainLayout>{render(matchProps)}</MainLayout>
+      }
+      const user = auth.getCurrentUser();
+      if (user) {
+         console.log(user)
+         if (user.userType === "Admlin") {
+            return <MainLayout>{render(matchProps)}</MainLayout>
+         }
+         else if (doesCurrentUserHaveAuthorization(user.permissions)) {
+            return <MainLayout>{render(matchProps)}</MainLayout>
+         }
+         else {
+            //console.log('main rout', user)
+            auth.logout();
+            return (<Redirect
+               to={{
+                  pathname: "/login",
+                  state: { message: "Access to this section is forbidden" }
+               }}
+            />)
+         }
+      }
+      return (<Redirect
+         to={{
+            pathname: "/login",
+            state: { message: "Access to this section is forbidden" }
+         }}
+      />)
    }
    //console.log('from mainrout', location)
    return (
@@ -58,40 +70,7 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
       <Route
          {...rest}
          path={path}
-         render={matchProps => {
-            //return <MainLayout>{render(matchProps)}</MainLayout>
-            // console.log('asdfadsfasfda')
-            // if (path === urls.Logout)
-            //    return <MainLayout>{render(matchProps)}</MainLayout>
-            if (!config.useAuthentication) {
-               return <MainLayout>{render(matchProps)}</MainLayout>
-            }
-            const user = auth.getCurrentUser();
-            if (user) {
-               if (user.userType === "Admin") {
-                  return <MainLayout>{render(matchProps)}</MainLayout>
-               }
-               else if (doesCurrentUserHaveAuthorization(user.permissions)) {
-                  return <MainLayout>{render(matchProps)}</MainLayout>
-               }
-               else {
-                  //console.log('main rout', user)
-                  auth.logout();
-                  return (<Redirect
-                     to={{
-                        pathname: "/login",
-                        state: { message: "Access to this section is forbidden" }
-                     }}
-                  />)
-               }
-            }
-            return (<Redirect
-               to={{
-                  pathname: "/login",
-                  state: { from: matchProps.location }
-               }}
-            />)
-         }}
+         render={matchProps => handleRenderMethod(matchProps)}
       />
    );
 };

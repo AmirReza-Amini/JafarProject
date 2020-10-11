@@ -65,7 +65,8 @@ exports.GenerateAuthToken = (user) => {
         _id: user._id,
         lastName: user.lastName,
         firstName: user.firstName,
-        userType: user.userType
+        userType: user.userType,
+        permissions:user.permissions
     }, jwtSecret, { expiresIn: jwtExpireTime });
 
     const tokenCrypted = AES.encrypt(

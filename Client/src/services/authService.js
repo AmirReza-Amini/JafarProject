@@ -24,6 +24,7 @@ export async function login(user) {
 }
 
 export function logout() {
+  console.log('logoutttt')
   localStorage.removeItem(tokenKey);
 }
 

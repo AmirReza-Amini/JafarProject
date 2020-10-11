@@ -52,7 +52,7 @@ class Router extends Component {
           />
           <MainLayoutRoutes
             exact
-            path={urls.admin.Users}
+            path={urls.Admin.Users}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyUsersPage {...matchprops} />
@@ -61,7 +61,7 @@ class Router extends Component {
           />
           <MainLayoutRoutes
             exact
-            path={urls.admin.Dashboard}
+            path={urls.Admin.Dashboard}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyMaintainance {...matchprops} />
@@ -70,7 +70,7 @@ class Router extends Component {
           />
           <LoginLayoutRoute
             exact
-            path={urls.auth.Login}
+            path={urls.Auth.Login}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyLoginPage {...matchprops} />
@@ -79,7 +79,7 @@ class Router extends Component {
           />
           <MainLayoutRoutes
             exact
-            path={urls.BasicInfo.Vessels}
+            path={urls.BasicInformation.Vessels}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyVesselsPage {...matchprops} />
@@ -88,7 +88,7 @@ class Router extends Component {
           />
           <MainLayoutRoutes
             exact
-            path={urls.BasicInfo.ShippingLines}
+            path={urls.BasicInformation.ShippingLines}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyShippingLinesPage {...matchprops} />
@@ -97,13 +97,14 @@ class Router extends Component {
           />
           <MainLayoutRoutes
             exact
-            path={urls.BasicInfo.Voyages}
+            path={urls.BasicInformation.Voyages}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyVoyagesPage {...matchprops} />
               </Suspense>
             )}
           />
+<<<<<<< Updated upstream
           <MainLayoutRoutes
             exact
             path={urls.BasicInfo.Countries}
@@ -185,54 +186,38 @@ class Router extends Component {
               </Suspense>
             )}
           />
+=======
+>>>>>>> Stashed changes
           <MainLayoutRoutes
             exact
-            path={urls.Load}
+            path={urls.BasicInformation.Countries}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
-                <LazyLoadOperationsPage {...matchprops} />
+                <LazyCountriesPage {...matchprops} />
               </Suspense>
             )}
           />
           <MainLayoutRoutes
             exact
-            path={urls.Stowage}
+            path={urls.Billing.GarbageCollection.Invoice}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
-                <LazyStowagePage {...matchprops} />
-              </Suspense>
-            )}
-          /> */}
-          {/* <MainLayoutRoutes
-            exact
-            path={urls.Vessel}
-            render={(matchprops) => (
-              <Suspense fallback={<Spinner />}>
-                <LazyOperationsPage {...matchprops} operations="Vessel" />
+                <LazyGarbageCollectionBill {...matchprops} />
               </Suspense>
             )}
           />
           <MainLayoutRoutes
             exact
-            path={urls.CY}
+            path={urls.Billing.GarbageCollection.Tariff}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
-                <LazyOperationsPage {...matchprops} operations="CY" />
+                <LazyGarbageCollectionTariff {...matchprops} />
               </Suspense>
             )}
           />
-          <MainLayoutRoutes
-            exact
-            path={urls.OperationType}
-            render={(matchprops) => (
-              <Suspense fallback={<Spinner />}>
-                <LazyOperationTypePage {...matchprops} />
-              </Suspense>
-            )}
-          /> */}
           <LogoutLayoutRoute
             exact
-            path={urls.Logout}
+            path={urls.Auth.Logout}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyLogout {...matchprops} />

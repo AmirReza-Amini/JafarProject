@@ -1,10 +1,11 @@
 {
-    "BasicInfo": {
-        "Vessels": "/basicInfo/vessels",
-        "ShippingLines": "/basicInfo/shippingLines",
-        "Voyages": "/basicInfo/voyages",
-        "Countries": "/basicInfo/countries"
+    "BasicInformation": {
+        "Vessels": "/basic-information/vessels",
+        "ShippingLines": "/basic-information/shipping-lines",
+        "Voyages": "/basic-information/voyages",
+        "Countries": "/basic-information/countries"
     },
+<<<<<<< Updated upstream
     "billing": {
         "garbageCollection": {
             "invoice": "/invoices/garbage-collection/issue",
@@ -15,13 +16,23 @@
             "invoice": "/invoices/vessel-stoppage/issue",
             "list": "/invoices/vessel-stoppage/list",
             "tariff": "/invoices/vessel-stoppage/tariff"
+=======
+    "Billing": {
+        "GarbageCollection": {
+            "Invoice": "/billing/garbage-collection/invoice",
+            "Tariff": "/billing/garbage-collection/tariff"
+        },
+        "VesselStoppage": {
+            "Invoice": "/billing/vessel-stoppage/invoice",
+            "Tariff": "/billing/vessel-stoppage/tariff"
+>>>>>>> Stashed changes
         }
     },
-    "auth": {
+    "Auth": {
         "Logout": "/logout",
         "Login": "/login"
     },
-    "admin": {
+    "Admin": {
         "Users": "/admin/users",
         "Dashboard": "/admin/dashboard"
     },
