@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import FormikControl from "../../../../components/common/formik/FormikControl";
 
 import style from './style/style.css'
-import * as  gcs from '../../../../services/garbageCollectionService';
+import * as  vss from '../../../../services/vesselStoppageService';
 import * as  vs from '../../../../services/voyageService';
 
 toast.configure({ bodyClassName: "customFont" });
@@ -18,7 +18,7 @@ const initialValues = {
     issuedBill: {}
 }
 
-const GarbageCollectionBillPage = () => {
+const VesselStoppagePage = () => {
 
     const [state, setState] = useState({
         ListOfVoyages: [],
@@ -44,7 +44,7 @@ const GarbageCollectionBillPage = () => {
 
     const handleInvoiceClicked = async (isPreInvoice) => {
         try {
-            let result = await gcs.Calculate(voyageData.VoyageId, isPreInvoice)
+            let result = await vss.Calculate(voyageData.VoyageId, isPreInvoice)
             console.log("handleInvoiceClicked -> invoice", result)
             if (result.data.result) {
                 let invoice = result.data.data[0];
@@ -105,7 +105,6 @@ const GarbageCollectionBillPage = () => {
                                             </Col>
                                         </Row>
                                     </div>
-                                
                                     <div className="row details">
                                         <div className="col-6">Voyage/vessel: {voyageData.VoyageVessel}</div>
                                         <div className="col-6">Voyage status: <Tag color={voyageData.Status == 'OPEN' ? 'red' : 'green'}>{voyageData.Status}</Tag>
@@ -141,18 +140,18 @@ const GarbageCollectionBillPage = () => {
                                         <div className="col-3">Actual departure time: {voyageData.ATD}</div>
                                     </div>
 
-                                    <hr hidden={voyageData.InvoiceNo == null} />
-                                    <div hidden={voyageData.InvoiceNo == null} className="row details">
-                                        <div className="col-3">Invoice-no: {voyageData.InvoiceNo}</div>
-                                        <div className="col-3">Invoice Date: {voyageData.InvoiceDate}</div>
-                                        <div className="col-3">Price($): {voyageData.PriceD}</div>
-                                        <div className="col-3">Price(R): {voyageData.PriceR}</div>
+                                    <hr hidden={voyageData.vsInvoiceNo == null} />
+                                    <div hidden={voyageData.vsInvoiceNo == null} className="row details">
+                                        <div className="col-3">Invoice-no: {voyageData.vsInvoiceNo}</div>
+                                        <div className="col-3">Invoice Date: {voyageData.vsInvoiceDate}</div>
+                                        <div className="col-3">Price($): {voyageData.vsPriceD}</div>
+                                        <div className="col-3">Price(R): {voyageData.vsPriceR}</div>
                                     </div>
                                     <hr />
 
                                     <div hidden={!voyageData.VoyageId} className="row">
-                                        <button disabled={voyageData.Status == 'OPEN' || voyageData.InvoiceNo != null} className="btn btn-primary ml-3" onClick={() => handleInvoiceClicked(false)}>Invoice</button>
-                                        <button disabled={voyageData.Status == 'OPEN' || voyageData.InvoiceNo != null} className="btn btn-secondary ml-1" onClick={() => handleInvoiceClicked(true)}>Pre invoice</button>
+                                        <button disabled={voyageData.Status == 'OPEN' || voyageData.vsInvoiceNo != null} className="btn btn-primary ml-3" onClick={() => handleInvoiceClicked(false)}>Invoice</button>
+                                        <button disabled={voyageData.Status == 'OPEN' || voyageData.vsInvoiceNo != null} className="btn btn-secondary ml-1" onClick={() => handleInvoiceClicked(true)}>Pre invoice</button>
                                     </div>
                                 </Form>
                             </React.Fragment>
@@ -164,4 +163,4 @@ const GarbageCollectionBillPage = () => {
     );
 }
 
-export default GarbageCollectionBillPage;
+export default VesselStoppagePage;

@@ -6,9 +6,14 @@ const setting = require("../../../app-setting");
 const sworm = require("sworm");
 const db = sworm.db(setting.db.sqlConfig);
 
-router.route('/')
+router.route('/:id?')
     .get(async (req, res) => {
-        SendResponse(req, res, { capitan: 'loaded' })
+        if (req.params.id) {
+            let result = await db.query(queries.BILLING.VESSEL_STOPPAGE.loadTariffDetails, { id: req.params.id });
+            return SendResponse(req, res, result)
+        }
+        let result = await db.query(queries.BILLING.VESSEL_STOPPAGE.loadAllTariffs);
+        return SendResponse(req, res, result)
     })
     .post(async (req, res) => {
         SendResponse(req, res, { capitan: 'Added' })

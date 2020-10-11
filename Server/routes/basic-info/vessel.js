@@ -14,7 +14,7 @@ router.route('/getVesselTypes')
         SendResponse(req, res, result)
     })
 
-router.route('/')
+router.route('/') 
     // .get(async (req, res) => {
     //     SendResponse(req, res, { capitan: 'loaded' })
     // })

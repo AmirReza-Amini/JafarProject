@@ -162,8 +162,40 @@ class SideMenuContent extends Component {
           >
             <span className="menu-item-text">Invoice</span>
           </NavLink>
+          <NavLink 
+            to={urls.billing.garbageCollection.list}
+            exact
+            className="item"
+            activeclassname="active"
+          >
+            <span className="menu-item-text">List</span>
+          </NavLink>
           <NavLink
             to={urls.billing.garbageCollection.tariff}
+            exact
+            className="item"
+            activeclassname="active"
+          >
+            <span className="menu-item-text">Tariff</span>
+          </NavLink>
+        </SideMenu.MenuMultiItems>
+
+        <SideMenu.MenuMultiItems
+          name="Vessel stoppage bill"
+          Icon={<Paperclip size={18} />}
+          ArrowRight={<ChevronRight size={16} />}
+          collapsedSidebar={this.props.collapsedSidebar}
+        >
+          <NavLink
+            to={urls.billing.vesselStoppage.invoice}
+            exact
+            className="item"
+            activeclassname="active"
+          >
+            <span className="menu-item-text">Invoice</span>
+          </NavLink>
+          <NavLink
+            to={urls.billing.vesselStoppage.tariff}
             exact
             className="item"
             activeclassname="active"

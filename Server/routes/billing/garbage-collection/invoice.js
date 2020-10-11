@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { SendResponse, GenerateInvoiceNo, ToPersian } = require("../../../util/utility");
+const { SendResponse, GenerateInvoiceNo, ToPersian,ConvertProperties,FormatNumber } = require("../../../util/utility");
 const queries = require("../../../util/T-SQL/queries");
 const setting = require("../../../app-setting");
 const sworm = require("sworm");
@@ -15,9 +15,10 @@ router.route('/:id?')
             invoice.InvoiceDate = ToPersian(invoice.InvoiceDate);
             return SendResponse(req, res, invoice)
         }
-        let invoiceList = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLast15bills));
+        let invoiceList = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastAllbills));
         invoiceList.forEach(invoice => {
-            invoice.InvoiceDate = ToPersian(invoice.InvoiceDate);
+            ConvertProperties(invoice,['InvoiceDate'],ToPersian);
+            ConvertProperties(invoice,['PriceD','PriceR','Rate'],FormatNumber);
         });
         return SendResponse(req, res, invoiceList)
     })

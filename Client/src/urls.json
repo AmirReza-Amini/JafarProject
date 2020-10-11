@@ -8,10 +8,12 @@
     "billing": {
         "garbageCollection": {
             "invoice": "/invoices/garbage-collection/issue",
+            "list": "/invoices/garbage-collection/list",
             "tariff": "/invoices/garbage-collection/tariff"
         },
         "vesselStoppage": {
             "invoice": "/invoices/vessel-stoppage/issue",
+            "list": "/invoices/vessel-stoppage/list",
             "tariff": "/invoices/vessel-stoppage/tariff"
         }
     },

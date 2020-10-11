@@ -59,19 +59,25 @@ module.exports = {
       loadById: LoadText(
         __dirname + "/billing/garbage-collection/load-bill-by-id.sql"
       ),
-      loadLast15bills: LoadText(
-        __dirname + "/billing/garbage-collection/load-last-15-bills.sql"
+      loadLastAllbills: LoadText(
+        __dirname + "/billing/garbage-collection/load-all-bills.sql"
       ),
       loadAllTariffs:LoadText(
         __dirname + "/billing/garbage-collection/load-all-tariffs.sql"
       ),
-      loadTariffDetails:LoadText(
+      loadTariffDetails:LoadText( 
         __dirname + "/billing/garbage-collection/load-tariff-details.sql"
       )
     },
     VESSEL_STOPPAGE: {
       loadTariff: LoadText(
         __dirname + "/billing/vessel-stoppage/load-tariff.sql"
+      ),
+      loadAllTariffs:LoadText(
+        __dirname + "/billing/vessel-stoppage/load-all-tariffs.sql"
+      ),
+      loadTariffDetails:LoadText( 
+        __dirname + "/billing/vessel-stoppage/load-tariff-details.sql"
       ),
       calculateBill: LoadText(
         __dirname + "/billing/vessel-stoppage/calculate-bill.sql"

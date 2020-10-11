@@ -5,7 +5,7 @@ import {
   Button,
   FormGroup,
   Row,
-  Col,
+  Col, 
   Modal,
   ModalHeader,
   ModalBody,

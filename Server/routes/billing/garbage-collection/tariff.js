@@ -12,7 +12,6 @@ router.route('/:id?')
             let result = await db.query(queries.BILLING.GARBAGE_COLLECTION.loadTariffDetails, { id: req.params.id });
             return SendResponse(req, res, result)
         }
-        console.log('get all tariff')
         let result = await db.query(queries.BILLING.GARBAGE_COLLECTION.loadAllTariffs);
         return SendResponse(req, res, result)
     })
