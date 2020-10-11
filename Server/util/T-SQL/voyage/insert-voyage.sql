@@ -1,0 +1,14 @@
+EXEC dbo.sp_Node_InsertVoyage_2 @VesselId = @vesselId, -- bigint
+    @VoyageNoIn = @voyageNoIn, -- nvarchar(20)
+    @VoyageNoOut = @voyageNoOut, -- nvarchar(20)
+    @VoyageVessel = @voyageVessel, -- nvarchar(50)
+    @OwnerId = @ownerId, -- bigint
+    @AgentId = @agentId, -- bigint
+    @EstimatedTimeArrival = @estimatedTimeArrival, -- datetime
+    @ActualTimeArrival = @actualTimeArrival, -- datetime
+    @EstimatedTimeDeparture = @estimatedTimeDeparture, -- datetime
+    @ActualTimeDeparture = @actualTimeDeparture, -- datetime
+    @VoyageStatusCode = @voyageStatusCode, -- tinyint
+    @OriginPortId = @originPortId, -- bigint
+    @PreviousPortId = @previousPortId, -- bigint
+    @NextPortId = @nextPortId -- bigint

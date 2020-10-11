@@ -23,10 +23,37 @@ router.route('/:id?')
              return SendResponse(req, res, result);
         }
         let result = await db.query(queries.VOYAGE.getVoyageList)
+        
         SendResponse(req, res, result)
     })
     .post(async (req, res) => {
-        SendResponse(req, res, { capitan: 'Added' })
+        try {
+            const data = req.body
+            console.log('befor', data)
+            let query = await db.query(queries.VOYAGE.insertVoyage, {
+                vesselId: data.vesselId,
+                voyageNoIn: data.incomingVoyageNo,
+                voyageNoOut: data.outgoingVoyageNo,
+                voyageVessel: data.voyageVessel,
+                ownerId: data.ownerId,
+                agentId: data.agentId,
+                estimatedTimeArrival: data.estimatedTimeArrival,
+                actualTimeArrival: data.actualTimeArrival,
+                estimatedTimeDeparture: data.estimatedTimeDeparture,
+                actualTimeDeparture: data.actualTimeDeparture,
+                voyageStatusCode: data.voyageStatusCode,
+                originPortId: data.originPortId,
+                previousPortId: data.previousPortId,
+                nextPortId: data.nextPortId
+            });
+            console.log('after', query)
+            const temp = query && query.length > 0 && query[0].Result === 'OK' ? true : false;
+            const returnData = temp ? { message: 'Inserting info has been done successfully', voyageId: query[0].VoyageId } : 'failure in inserting info';
+            return SendResponse(req, res, returnData, temp, 200)
+        } catch (error) {
+            console.log('errorr ', error)
+            return SendResponse(req, res, 'Fail in inserting voyage info', false, 500)
+        }
     })
     .put(async (req, res) => {
         try {

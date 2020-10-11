@@ -18,7 +18,7 @@ exports.SendResponse = (req, res, data, result = true, code = 200) => {
     req.body.to = req.body.from;
     req.body.data = data;
     delete req.body.from;
-    const a = req.user ? generateAuthToken(req.user) : null;
+    const a = req.user ? this.GenerateAuthToken(req.user) : null;
     Log({ type: result ? 'info' : 'error', res: req.body })
     res.status(code).json(
         Object.assign(req.base, {
