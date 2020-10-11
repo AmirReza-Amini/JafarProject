@@ -36,7 +36,7 @@ class SideMenuContent extends Component {
     }
     else {
       const user = auth.getCurrentUser();
-      if (user.userType === "Admfin") {
+      if (user.userType === "Admin") {
         this.setState({ menuList: menuList, user: user });
         return;
       }
@@ -222,79 +222,6 @@ class SideMenuContent extends Component {
             <span className="menu-item-text">Tariff</span>
           </NavLink>
         </SideMenu.MenuMultiItems> */}
-
-<<<<<<< Updated upstream
-        <SideMenu.MenuMultiItems
-          name="Vessel stoppage bill"
-          Icon={<Paperclip size={18} />}
-          ArrowRight={<ChevronRight size={16} />}
-          collapsedSidebar={this.props.collapsedSidebar}
-        >
-          <NavLink
-            to={urls.billing.vesselStoppage.invoice}
-            exact
-            className="item"
-            activeclassname="active"
-          >
-            <span className="menu-item-text">Invoice</span>
-          </NavLink>
-          <NavLink
-            to={urls.billing.vesselStoppage.tariff}
-            exact
-            className="item"
-            activeclassname="active"
-          >
-            <span className="menu-item-text">Tariff</span>
-          </NavLink>
-        </SideMenu.MenuMultiItems>
-
-        <SideMenu.MenuSingleItem badgeColor="danger">
-          <NavLink to={urls.auth.Logout} activeclassname="active">
-            <i className="menu-icon">
-              <LogIn size={18} />
-            </i>
-            <span className="menu-item-text">Logout</span>
-          </NavLink>
-        </SideMenu.MenuSingleItem>
-        <SideMenu.MenuMultiItems
-=======
-        {/* <SideMenu.MenuMultiItems
->>>>>>> Stashed changes
-          //hidden={!this.state.isAdmin}
-          name="Admin"
-          // Icon={<Home size={18} />}
-          ArrowRight={<ChevronRight size={16} />}
-          collapsedSidebar={this.props.collapsedSidebar}
-        >
-          <NavLink
-            to={urls.admin.Dashboard}
-            exact
-            className="item"
-            activeclassname="active"
-          >
-            <span className="menu-item-text">Dashboard</span>
-          </NavLink>
-          <NavLink
-            to={urls.admin.Users}
-            exact
-            className="item"
-            activeclassname="active"
-          >
-            <span className="menu-item-text">Users</span>
-          </NavLink>
-        </SideMenu.MenuMultiItems>
-        
-        <SideMenu.MenuSingleItem badgeColor="danger">
-          <NavLink to={urls.auth.Logout} activeclassname="active">
-            <i className="menu-icon">
-              <LogOut size={18} />
-            </i>
-            <span className="menu-item-text">Logout</span>
-          </NavLink>
-        </SideMenu.MenuSingleItem>
-        
-        
-        */}
       //#endregion 
 
       </SideMenu >

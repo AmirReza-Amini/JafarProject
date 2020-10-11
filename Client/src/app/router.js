@@ -104,90 +104,6 @@ class Router extends Component {
               </Suspense>
             )}
           />
-<<<<<<< Updated upstream
-          <MainLayoutRoutes
-            exact
-            path={urls.BasicInfo.Countries}
-            render={(matchprops) => (
-              <Suspense fallback={<Spinner />}>
-                <LazyCountriesPage {...matchprops} />
-              </Suspense>
-            )}
-          />
-          <MainLayoutRoutes
-            exact
-            path={urls.billing.garbageCollection.invoice}
-            render={(matchprops) => (
-              <Suspense fallback={<Spinner />}>
-                <LazyGarbageCollectionBill {...matchprops} />
-              </Suspense>
-            )}
-          />
-            <MainLayoutRoutes
-            exact
-            path={urls.billing.garbageCollection.list}
-            render={(matchprops) => (
-              <Suspense fallback={<Spinner />}>
-                <LazyGarbageCollectionList {...matchprops} />
-              </Suspense>
-            )}
-          />
-          <MainLayoutRoutes
-            exact
-            path={urls.billing.garbageCollection.tariff}
-            render={(matchprops) => (
-              <Suspense fallback={<Spinner />}>
-                <LazyGarbageCollectionTariff {...matchprops} />
-              </Suspense>
-            )}
-          />
-          <MainLayoutRoutes
-            exact
-            path={urls.billing.vesselStoppage.invoice}
-            render={(matchprops) => (
-              <Suspense fallback={<Spinner />}>
-                <LazyVesselStoppageBill {...matchprops} />
-              </Suspense>
-            )}
-          />
-          <MainLayoutRoutes
-            exact
-            path={urls.billing.vesselStoppage.tariff}
-            render={(matchprops) => (
-              <Suspense fallback={<Spinner />}>
-                <LazyVesselStoppageTariff {...matchprops} />
-              </Suspense>
-            )}
-          />
-          {/* <MainLayoutRoutes
-            exact
-            path={urls.Discharge}
-            render={(matchprops) => (
-              <Suspense fallback={<Spinner />}>
-                <LazyUnloadOperationPage {...matchprops} />
-              </Suspense>
-            )}
-          />
-          <MainLayoutRoutes
-            exact
-            path={urls.LoadStatistics}
-            render={(matchprops) => (
-              <Suspense fallback={<Spinner />}>
-                <LazyLoadUnloadPage {...matchprops} />
-              </Suspense>
-            )}
-          />
-          <MainLayoutRoutes
-            exact
-            path={urls.LoadDamage}
-            render={(matchprops) => (
-              <Suspense fallback={<Spinner />}>
-                <LazyDamagePage {...matchprops} />
-              </Suspense>
-            )}
-          />
-=======
->>>>>>> Stashed changes
           <MainLayoutRoutes
             exact
             path={urls.BasicInformation.Countries}
@@ -206,12 +122,39 @@ class Router extends Component {
               </Suspense>
             )}
           />
+            <MainLayoutRoutes
+            exact
+            path={urls.Billing.GarbageCollection.List}
+            render={(matchprops) => (
+              <Suspense fallback={<Spinner />}>
+                <LazyGarbageCollectionList {...matchprops} />
+              </Suspense>
+            )}
+          />
           <MainLayoutRoutes
             exact
             path={urls.Billing.GarbageCollection.Tariff}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyGarbageCollectionTariff {...matchprops} />
+              </Suspense>
+            )}
+          />
+          <MainLayoutRoutes
+            exact
+            path={urls.Billing.VesselStoppage.Invoice}
+            render={(matchprops) => (
+              <Suspense fallback={<Spinner />}>
+                <LazyVesselStoppageBill {...matchprops} />
+              </Suspense>
+            )}
+          />
+          <MainLayoutRoutes
+            exact
+            path={urls.Billing.VesselStoppage.Tariff}
+            render={(matchprops) => (
+              <Suspense fallback={<Spinner />}>
+                <LazyVesselStoppageTariff {...matchprops} />
               </Suspense>
             )}
           />

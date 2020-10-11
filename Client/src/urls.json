@@ -5,27 +5,16 @@
         "Voyages": "/basic-information/voyages",
         "Countries": "/basic-information/countries"
     },
-<<<<<<< Updated upstream
-    "billing": {
-        "garbageCollection": {
-            "invoice": "/invoices/garbage-collection/issue",
-            "list": "/invoices/garbage-collection/list",
-            "tariff": "/invoices/garbage-collection/tariff"
-        },
-        "vesselStoppage": {
-            "invoice": "/invoices/vessel-stoppage/issue",
-            "list": "/invoices/vessel-stoppage/list",
-            "tariff": "/invoices/vessel-stoppage/tariff"
-=======
     "Billing": {
         "GarbageCollection": {
             "Invoice": "/billing/garbage-collection/invoice",
+            "List": "/billing/garbage-collection/list",
             "Tariff": "/billing/garbage-collection/tariff"
         },
         "VesselStoppage": {
             "Invoice": "/billing/vessel-stoppage/invoice",
+            "List": "/billing/vessel-stoppage/list",
             "Tariff": "/billing/vessel-stoppage/tariff"
->>>>>>> Stashed changes
         }
     },
     "Auth": {

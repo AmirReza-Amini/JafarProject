@@ -40,7 +40,7 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
       const user = auth.getCurrentUser();
       if (user) {
          console.log(user)
-         if (user.userType === "Admlin") {
+         if (user.userType === "Admin") {
             return <MainLayout>{render(matchProps)}</MainLayout>
          }
          else if (doesCurrentUserHaveAuthorization(user.permissions)) {
