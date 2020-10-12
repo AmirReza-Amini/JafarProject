@@ -36,7 +36,7 @@ const validationSchema = Yup.object({
 
 });
 const ShippingLinesPage = (props) => {
-    const onSubmitEditShippingLine = (values, props) => { 
+    const onSubmitEditShippingLine = (values, props) => {
         if (values === state.currentRow) return;
         let parameters = {
             shippingLineId: values.id,
@@ -104,6 +104,9 @@ const ShippingLinesPage = (props) => {
                         })
                         setState(prevState => ({ ...prevState, ListOfShippingLines: tempList }))
                     }
+                    else {
+                        return toast.error(res.data.data[0]);
+                    }
                 }).catch(err => { });
 
                 createToggle();
@@ -112,7 +115,7 @@ const ShippingLinesPage = (props) => {
                 toast.error(response.data.data[0])
             }
         }).catch(error => { })
-     }
+    }
     const columns = [
         {
             title: 'Name',
@@ -161,7 +164,7 @@ const ShippingLinesPage = (props) => {
                 </Space>
             ),
         }
-        
+
     ];
 
     const [state, setState] = useState({
@@ -247,11 +250,11 @@ const ShippingLinesPage = (props) => {
                                 <Col md="12">
                                     <FormGroup>
                                         <Table
-                                         className={antdClass + antdClass2}
-                                         columns={columns}
-                                         dataSource={state.ListOfShippingLines}
-                                         pagination={{ position: ["bottomCenter"] }}
-                                         scroll={{ x: 'max-content', y: 200 }}/>
+                                            className={antdClass + antdClass2}
+                                            columns={columns}
+                                            dataSource={state.ListOfShippingLines}
+                                            pagination={{ position: ["bottomCenter"] }}
+                                            scroll={{ x: 'max-content', y: 200 }} />
                                     </FormGroup>
                                 </Col>
                             </Row>

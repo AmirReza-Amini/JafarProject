@@ -5,7 +5,7 @@ import {
   Button,
   FormGroup,
   Row,
-  Col, 
+  Col,
   Modal,
   ModalHeader,
   ModalBody,
@@ -111,7 +111,7 @@ const VesselsPage = (props) => {
           toast.error(response.data.data[0]);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
   const onSubmitCreateVessel = (values) => {
     console.log("values", values);
@@ -158,15 +158,18 @@ const VesselsPage = (props) => {
                   ListOfVessels: tempList,
                 }));
               }
+              else {
+                return toast.error(res.data.data[0]);
+              }
             })
-            .catch(() => {});
+            .catch(() => { });
 
           createToggle();
         } else {
           toast.error(response.data.data[0]);
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   };
   //#endregion ---------------------------------------------------------------
 
@@ -287,7 +290,7 @@ const VesselsPage = (props) => {
           setState((prevState) => ({ ...prevState, ListOfVessels: tempList }));
         }
       })
-      .catch(() => {});
+      .catch(() => { });
     // getVesselTypes().then(res => {
     //     if (res.data.result) {
     //         setState({ ListOfVesselTypes: res.data.data });
@@ -310,7 +313,7 @@ const VesselsPage = (props) => {
           }));
         }
       })
-      .catch(() => {});
+      .catch(() => { });
     getVesselTypes()
       .then((res) => {
         if (res.data.result) {
@@ -324,7 +327,7 @@ const VesselsPage = (props) => {
           }));
         }
       })
-      .catch(() => {});
+      .catch(() => { });
   }, []);
 
   //#endregion -------------------------------------------------------------
@@ -395,7 +398,7 @@ const VesselsPage = (props) => {
   const handleNationalitySelectedChanged = () => {
     //console.log('asdfasdfa', value)
   };
-  const handleFlagSelectedChanged = () => {};
+  const handleFlagSelectedChanged = () => { };
 
   //#endregion -------------------------------------------------------------
 
