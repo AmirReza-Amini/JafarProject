@@ -1,12 +1,11 @@
 const express = require("express");
 const router = express.Router();
 const { SendResponse } = require("../../util/utility");
-const queries = require("../../util/T-SQL/queries");
 const setting = require("../../app-setting");
 const sworm = require("sworm");
-const _ = require("lodash");
-const md5 = require("md5");
 const db = sworm.db(setting.db.sqlConfig);
+const auth = require("../../middleware/auth");
+const { DoesUserHavePermission } = require("../../util/CheckPermission");
 
 var country = db.model({
     table: 'Countries',
@@ -18,23 +17,54 @@ var country = db.model({
 
 router.route('/')
     .get(async (req, res) => {
-
-        console.log("req", req)
-        let result = await db.query("SELECT * from Countries")
-
-        SendResponse(req, res, result)
+        try {
+            let result = await db.query("SELECT * from Countries")
+            return SendResponse(req, res, result)
+        } catch (error) {
+            return SendResponse(req, res, 'get-countries', false, 500);
+        }
     })
-    .post(async (req, res) => {
-        var newCountry = country();
-        newCountry.addCountry(req.body);
-        let result = await newCountry.save()
-        SendResponse(req, res, { capitan: result })
+    .post(auth, async (req, res) => {
+        if (!req.body)
+            return SendResponse(req, res, "Input data is not valid", false, 400);
+        const check = await DoesUserHavePermission(req.user, 'BASIC-INFORMATION-COUNTRIES-CREATE');
+        if (check.result) {
+            try {
+                var newCountry = country();
+                newCountry.addCountry(req.body);
+                let result = await newCountry.save()
+                return SendResponse(req, res, { capitan: result })
+            } catch (error) {
+                return SendResponse(req, res, 'post-countries', false, 500);
+            }
+        }
+        else {
+            return SendResponse(req, res, check.message, check.result, check.statusCode);
+        }
     })
-    .put(async (req, res) => {
-        SendResponse(req, res, { capitan: 'Updated' })
+    .put(auth, async (req, res) => {
+        if (!req.body.countryId)
+            return SendResponse(req, res, "Input data is not valid", false, 400);
+        const check = await DoesUserHavePermission(req.user, 'BASIC-INFORMATION-COUNTRIES-UPDATE');
+        if (check.result) {
+            //DOEING SOMETHING...
+            return SendResponse(req, res, { capitan: 'Updated' });
+        }
+        else {
+            return SendResponse(req, res, check.message, check.result, check.statusCode);
+        }
     })
-    .delete(async (req, res) => {
-        SendResponse(req, res, { capitan: 'Deleted' })
+    .delete(auth, async (req, res) => {
+        if (!req.body.countryId)
+            return SendResponse(req, res, "Input data is not valid", false, 400);
+        const check = await DoesUserHavePermission(req.user, 'BASIC-INFORMATION-COUNTRIES-DELETE');
+        if (check.result) {
+            //DOEING SOMETHING...
+            return SendResponse(req, res, { capitan: 'Deleted' })
+        }
+        else {
+            return SendResponse(req, res, check.message, check.result, check.statusCode);
+        }
     })
 
 module.exports = router;

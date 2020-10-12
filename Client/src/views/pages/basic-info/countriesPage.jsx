@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardBody, FormGroup, Row, Col} from "reactstrap";
+import { Card, CardBody, FormGroup, Row, Col } from "reactstrap";
 import { Table } from 'antd';
 import { toast } from "react-toastify";
 import _ from "lodash";
@@ -41,7 +41,7 @@ const CountriesPage = () => {
     useEffect(() => {
         getCountries().then(res => {
             if (res.data.result) {
-                console.log('Countries', res);
+                //console.log('Countries', res);
                 const tempList = res.data.data.map(item => {
                     return {
                         key: item.CountryId,
@@ -52,39 +52,42 @@ const CountriesPage = () => {
                 })
                 setState(prevState => ({ ...prevState, ListOfCountries: tempList }))
             }
+            else {
+                return toast.error(res.data.data[0]);
+            }
         }).catch(() => { });
     }, []);
 
     return (
         <React.Fragment>
 
-        <Row className="row-eq-height">
-            <Col sm="12" md="12">
-                <Card>
-                    <CardBody>
-                        <div className="form-body">
-                            <Row>
-                                <Col md="12">
-                                    <FormGroup>
-                                        <Table
-                                            className={antdClass + antdClass2}
-                                            columns={columns}
-                                            dataSource={state.ListOfCountries}
-                                            pagination={{ position: ["bottomCenter"] }}
-                                            scroll={{ x: 'max-content', y: 200 }}
-                                        />
-                                    </FormGroup>
-                                </Col>
-                            </Row>
-                        </div>
-                    </CardBody>
-                </Card>
-            </Col>
-        </Row>
+            <Row className="row-eq-height">
+                <Col sm="12" md="12">
+                    <Card>
+                        <CardBody>
+                            <div className="form-body">
+                                <Row>
+                                    <Col md="12">
+                                        <FormGroup>
+                                            <Table
+                                                className={antdClass + antdClass2}
+                                                columns={columns}
+                                                dataSource={state.ListOfCountries}
+                                                pagination={{ position: ["bottomCenter"] }}
+                                                scroll={{ x: 'max-content', y: 200 }}
+                                            />
+                                        </FormGroup>
+                                    </Col>
+                                </Row>
+                            </div>
+                        </CardBody>
+                    </Card>
+                </Col>
+            </Row>
 
-       
-       </React.Fragment>
-        );
+
+        </React.Fragment>
+    );
 }
 
 export default CountriesPage;

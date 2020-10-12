@@ -4,7 +4,7 @@ exports.DoesUserHavePermission = async (userInfo, permission) => {
     if (!requiresAuth)
         return { message: '', result: true, statusCode: '' };
 
-    console.log('permission', userInfo.permissions);
+    //console.log('permission', userInfo.permissions);
 
     try {
         if (userInfo) {
