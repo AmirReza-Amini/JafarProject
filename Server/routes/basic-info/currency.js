@@ -1,66 +1,48 @@
 const express = require("express");
 const router = express.Router();
 const { SendResponse } = require("../../util/utility");
-const queries = require("../../util/T-SQL/queries");
-const setting = require("../../app-setting");
-const sworm = require("sworm");
-const { json } = require("express");
-const db = sworm.db(setting.db.sqlConfig);
+const auth = require("../../middleware/auth");
+const { DoesUserHavePermission } = require("../../util/CheckPermission");
 
 router.route('/')
     .get(async (req, res) => {
-        let menu2 = [
-            { name: 'Gate', key: 'gate', child: [] },
-            {
-                name: 'billing', key: 'billing', child: [
-                    { name: 'Warehouse', key: 'warehouse', child: [] },
-                    {
-                        name: 'Strip', key: 'strip', child: [
-                            { name: 'create', key: 'strip-create', child: [] },
-                            { name: 'edit', key: 'strip-edit', child: [] },
-                            { name: 'delete', key: 'strip-delete', child: [] },
-                            { name: 'print', key: 'strip-print', child: [] }
-                        ]
-                    }
-                ]
-            }
-        ]
-        
-        
-        let permissionList = [
-            { name: 'gate', isGranted: false },
-            { name: 'billing', isGranted: true },
-            { name: 'warehouse', isGranted: true },
-            { name: 'strip', isGranted: true },
-            { name: 'strip-delete', isGranted: false }
-        ]
-        
-        let permissions = permissionList
-            .filter(m => m.isGranted == false)
-            .map(n => n.name);
-        
-        let result = [];
-        permissions.forEach(p => { result = filterData(menu2, p) })
-                
-        function filterData(data, key) {
-            console.log('date',JSON.stringify(data))
-            var r = data.filter(function (o) {
-                if (o.child)
-                    o.child = filterData(o.child, key);
-                return o.key != key
-            })
-            return r;
+        SendResponse(req, res, { capitan: 'Read' })
+    })
+    .post(auth, async (req, res) => {
+        if (!req.body)
+            return SendResponse(req, res, "Input data is not valid", false, 400);
+        const check = await DoesUserHavePermission(req.user, 'BASIC-INFORMATION-CURRENCY-CREATE');
+        if (check.result) {
+            // DOEING SOMETHING ...
+            return SendResponse(req, res, { capitan: 'Added' })
         }
-        SendResponse(req, res, result)
+        else {
+            return SendResponse(req, res, check.message, check.result, check.statusCode);
+        }
     })
-    .post(async (req, res) => {
-        SendResponse(req, res, { capitan: 'Added' })
+    .put(auth, async (req, res) => {
+        if (!req.body.currencyId)
+            return SendResponse(req, res, "Input data is not valid", false, 400);
+        const check = await DoesUserHavePermission(req.user, 'BASIC-INFORMATION-CURRENCY-UPDATE');
+        if (check.result) {
+            // DOEING SOMETHING ...
+            return SendResponse(req, res, { capitan: 'Updated' })
+        }
+        else {
+            return SendResponse(req, res, check.message, check.result, check.statusCode);
+        }
     })
-    .put(async (req, res) => {
-        SendResponse(req, res, { capitan: 'Updated' })
-    })
-    .delete(async (req, res) => {
-        SendResponse(req, res, { capitan: 'Deleted' })
+    .delete(auth, async (req, res) => {
+        if (!req.body.currencyId)
+            return SendResponse(req, res, "Input data is not valid", false, 400);
+        const check = await DoesUserHavePermission(req.user, 'BASIC-INFORMATION-CURRENCY-DELETE');
+        if (check.result) {
+            // DOEING SOMETHING ...
+            SendResponse(req, res, { capitan: 'Deleted' })
+        }
+        else {
+            return SendResponse(req, res, check.message, check.result, check.statusCode);
+        }
     })
 
 module.exports = router;
