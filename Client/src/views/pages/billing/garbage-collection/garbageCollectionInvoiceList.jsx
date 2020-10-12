@@ -35,7 +35,7 @@ const GarbageCollectionListPage = (props) => {
     (async function GetBills() {
       let result = await gcs.GetAllBills();
       if (result.data.result) {
-        setState((ps) => ({ ...ps, ListOfBills: result.data.data }));
+        setState((ps) => ({ ...ps, ListOfBills: result.data.data.map(item => { return { ...item, key: item.GarbageCollectionInvoiceId } }) }));
       }
     })();
   }, []);
@@ -168,8 +168,8 @@ const GarbageCollectionListPage = (props) => {
             </div>
 
             <div className="row invoiceItem">
-            <div className="col-6"><Tag color='geekblue'>Price ($): <b>{state.CurrentBill.PriceD}</b></Tag></div>
-            <div className="col-6"><Tag color='geekblue'>Price (IRR): <b>{state.CurrentBill.PriceR} </b></Tag></div>
+              <div className="col-6"><Tag color='geekblue'>Price ($): <b>{state.CurrentBill.PriceD}</b></Tag></div>
+              <div className="col-6"><Tag color='geekblue'>Price (IRR): <b>{state.CurrentBill.PriceR} </b></Tag></div>
             </div>
             <Button
               className="btn-success mt-1"
