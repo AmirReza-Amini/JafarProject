@@ -11,16 +11,24 @@ const auth = require("../../middleware/auth");
 
 router.route('/getVesselTypes')
     .get(async (req, res) => {
-        let result = await db.query(queries.BASIC_INFO.VESSEL.getVesselTypes);
-        console.log("result", result)
-        SendResponse(req, res, result)
+        try {
+            let result = await db.query(queries.BASIC_INFO.VESSEL.getVesselTypes);
+            //console.log("result", result)
+            return SendResponse(req, res, result);
+        } catch (error) {
+            return SendResponse(req, res, 'get-vesselTypes', false, 500);
+        }
     })
 
 router.route('/')
     .get(async (req, res) => {
-        let result = await db.query(queries.BASIC_INFO.VESSEL.getVesselsList)
-        console.log("result", result)
-        SendResponse(req, res, result)
+        try {
+            let result = await db.query(queries.BASIC_INFO.VESSEL.getVesselsList)
+            // console.log("result", result)
+            SendResponse(req, res, result)
+        } catch (error) {
+            return SendResponse(req, res, 'get-vessels', false, 500);
+        }
     })
     .post(auth, async (req, res) => {
         if (!req.body)
