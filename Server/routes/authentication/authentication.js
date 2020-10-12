@@ -18,7 +18,7 @@ console
       return SendResponse(req, res, "The user account is inactive", false, 200);
     else {
       const token = GenerateAuthToken(user);
-      console.log('token',token); 
+      //console.log('token',token); 
       return SendResponse(req, res, { token: token });
     }
   } else
