@@ -8,7 +8,7 @@ import { Card, CardBody, Button, Form, FormGroup, Row, Col, Modal, ModalHeader, 
 // const antdClass = require("antd/dist/antd.css");
 import antdClass from 'antd/dist/antd.css';
 import antdClass2 from "../../assets/css/vendors/customAntdTable.css";
-import _ from 'lodash';
+import _, { forEach } from 'lodash';
 
 import { getUsers, deleteUserInfo, editUserInfo } from '../../services/user';
 import { getPermissions } from '../../services/permission';
@@ -113,22 +113,22 @@ class UsersPage extends Component {
 
     createDataModelForDataTabel(data) {
         return data.map(item => {
-            return { ...item,key: item._id }
+            return { ...item, key: item._id }
         })
     }
 
     componentDidMount() {
         getUsers().then(res => {
-            console.log('resss',res)
+            console.log('resss', res)
             if (res.data.result) {
                 this.setState({ ListOfUsers: res.data.data, ListOfUsersForTable: this.createDataModelForDataTabel(res.data.data) })
             }
         });
-        // getPermissions().then(res => {
-        //     if (res.data.result) {
-        //         this.setState({ ListOfPermissions: res.data.data });
-        //     }
-        // });
+        getPermissions().then(res => {
+            if (res.data.result) {
+                this.setState({ ListOfPermissions: res.data.data });
+            }
+        });
         getUserTypes().then(res => {
             if (res.data.result) {
                 this.setState({ ListOfUserTypes: res.data.data });
@@ -141,16 +141,72 @@ class UsersPage extends Component {
     //#region EDIT USER INFO EVENTS ----------------------------------------
 
     handleEditUser = (userData) => {
-        //   console.log('userData for edit', userData);
-        const userInfo = { ..._(this.state.ListOfUsers).filter(c => c._id === userData._id).first() };
-        // userInfo.userCode = 123456;
+
+        console.log('userData for edit', userData);
+
+        // Use Spread Operator ------------------------------------
+        // به این علت که دیپ کلون نکردیم برای اینکه تغییری بدیم که اثرش توی لیست اصلی اعمال نشه
+        // مجبوریم از این روش استفاده کنیم که مدام باید برای هر آبجکتی که تو در تو هست
+        // const userInfo = { ..._(this.state.ListOfUsers).filter(c => c._id === userData._id).first() };
+        // از ... استفاده کنیم
+        // userInfo.userId = "123456";
         // const permissions = [..._(this.state.ListOfUsers).filter(c => c._id == userData._id).first().permissions];
         // permissions[0] = { ...permissions[0] };
         // permissions[0].name = "XXXX";
         // userInfo.permissions = permissions;
+        // Use Deep Clone -----------------------------------------
+        // در این صورت دیگه نیازی نیست که نگران باشیم رفرنس تغییر کرده یا نه
+        const userInfo = _.cloneDeep(_(this.state.ListOfUsers).filter(c => c._id === userData._id).first());
+        //userInfo.permissions[0].name = "xxxx";
+        this.extractUserPermissions(userInfo);
         this.setState({ currentRow: userInfo })
-        this.editToggle();
+        // this.editToggle();
     }
+
+    extractUserPermissions(userInfo) {
+        let permissions = _.cloneDeep(this.state.ListOfPermissions);
+
+        console.log('list of permi', permissions);
+        let traversNodes = (childPermissions, pp) => {
+            console.log('xxxx',childPermissions,pp)
+            childPermissions.map(item => {
+                console.log('node',item.key,pp.name)
+                if (item.key === pp.name) {
+                   // console.log('crossnode',item.key,pp.name)
+                    if (pp.isGranted) {
+                        item.isGranted = true;
+                    }
+                    else {
+                        item.isGranted = false;
+                    }
+                }
+                else if (item.child && item.child.length > 0) {
+                    console.log('traversnode',item.key,pp.name)
+                    traversNodes(item.child, pp)
+                }
+            })
+
+        }
+
+        for (let i = 0; i < userInfo.permissions.length; i++) {
+            for (let j = 0; j < permissions.length; j++) {
+                if (permissions[j].key === userInfo.permissions[i].name) {
+                    console.log('cross',i,j)
+                    if (userInfo.permissions[i].isGranted) {
+                        permissions[j].isGranted = true;
+                        break;
+                    }
+                }
+                else if (permissions[j].child != null && permissions[j].child.length > 0) {
+                    console.log('traverse', i,userInfo.permissions[i], j,permissions[j]);
+                    traversNodes(permissions[j].child, userInfo.permissions[i]);
+                }
+            }
+        }
+        console.log('user permissionsssss', permissions);
+    }
+
+
 
     editToggle = () => {
         this.setState({
@@ -311,7 +367,7 @@ class UsersPage extends Component {
 
     render() {
         const { selectedRowKeys } = this.state.selectedRowKeys;
-       // console.log('render state', this.state);
+        console.log('render state', this.state);
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,
@@ -368,7 +424,7 @@ class UsersPage extends Component {
                                         <Button color="warning" >
                                             <X size={20} color="#FFF" /> Cancel
                                         </Button>
-                                        
+
                                     </div>
                                 </Form>
                             </CardBody>
@@ -386,7 +442,7 @@ class UsersPage extends Component {
                     <ModalBody>
                         <Row>
                             {
-                                this.state.currentRow && this.state.currentRow.permissions &&
+                                this.state.currentRow && this.state.currentRow.permissions && false &&
                                 this.state.currentRow.permissions.map(permission => {
                                     let access = permission.access.map(item => { return { label: item.key.split('-').join(' '), value: item.key } });
                                     let defaultValue = permission.access.filter(c => c.value === true).map(item => item.key);

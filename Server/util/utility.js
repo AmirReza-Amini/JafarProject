@@ -55,7 +55,6 @@ exports.ConvertProperties = (object, keys, method) => {
     keys.forEach(key => {
         console.log("exports.ConvertProperties -> key", object[key])
         object[key] = method(object[key])
-
     });
     return object;
 }

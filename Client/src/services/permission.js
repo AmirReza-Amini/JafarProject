@@ -1,7 +1,7 @@
 import http from "./httpService";
 import { apiUrl } from "../config.json";
 
-const apiEndpoint = apiUrl + "/permission";
+const apiEndpoint = apiUrl + "/auth/permission";
 
 
 export const getPermissions = () => {

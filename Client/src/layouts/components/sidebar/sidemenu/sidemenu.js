@@ -50,13 +50,13 @@ class SideMenuContent extends Component {
           return r;
         }
 
-        let permissions = user.permissions
+        let userDoesNotHavePermissions = user.permissions
           .filter((m) => m.isGranted == false)
           .map((n) => n.name);
 
-        console.log(permissions)
+        console.log('side menu userDoesNotHavePermissions', userDoesNotHavePermissions)
         let result = menuList;
-        permissions.forEach((p) => {
+        userDoesNotHavePermissions.forEach((p) => {
           result = filterData(result, p);
         });
 
@@ -83,7 +83,7 @@ class SideMenuContent extends Component {
               </NavLink>
             )
           }
-          else{
+          else {
             return (
               <React.Fragment key={item.key}>
                 <div hidden={true}></div>
