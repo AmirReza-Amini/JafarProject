@@ -313,9 +313,26 @@ class UsersPage extends Component {
         this.editToggle();
     }
 
+    convertUserTreePermissionsToLinerPermissions = (permissions, tempList) => {
+        if (!permissions || !permissions.length) {
+            return tempList;
+        }
+        else {
+            permissions.map(item => {
+                tempList.push({ name: item.key, isGranted: item.isGranted });
+                this.convertUserTreePermissionsToLinerPermissions(item.child, tempList);
+            });
+            return tempList;
+        }
+    }
+
     handleSubmitEditUserInfo = () => {
         console.log('submit edit user info', this.state.currentRow);
-        const userData = { ...this.state.currentRow };
+        const userData = _.cloneDeep(this.state.currentRow);
+        const temp = [];
+        const userPermissions = this.convertUserTreePermissionsToLinerPermissions(userData.permissions, temp);
+        userData.permissions = userPermissions;
+        console.log(userPermissions);
         delete userData.password;
         console.log('delete password from user data edit', userData);
         editUserInfo(userData).then(response => {
@@ -324,7 +341,7 @@ class UsersPage extends Component {
                 const users = [...this.state.ListOfUsers];
                 const index = _(users).findIndex(c => c._id === this.state.currentRow._id);
                 users[index] = { ...users[index] };
-                users[index] = this.state.currentRow;
+                users[index] = userData;
 
                 this.setState({ ListOfUsers: users, ListOfUsersForTable: this.createDataModelForDataTabel(users), currentRow: {} });
                 this.editToggle();
