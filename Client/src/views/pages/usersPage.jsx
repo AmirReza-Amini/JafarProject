@@ -13,6 +13,7 @@ import _, { forEach } from 'lodash';
 import { getUsers, deleteUserInfo, editUserInfo } from '../../services/user';
 import { getPermissions } from '../../services/permission';
 import { getUserTypes } from '../../services/userType';
+import Tree from './Tree';
 
 
 const mapStateToProps = (state) => {
@@ -158,21 +159,22 @@ class UsersPage extends Component {
         // در این صورت دیگه نیازی نیست که نگران باشیم رفرنس تغییر کرده یا نه
         const userInfo = _.cloneDeep(_(this.state.ListOfUsers).filter(c => c._id === userData._id).first());
         //userInfo.permissions[0].name = "xxxx";
-        this.extractUserPermissions(userInfo);
-        this.setState({ currentRow: userInfo })
-        // this.editToggle();
+        let permissions = this.extractUserPermissions(userInfo);
+
+        this.setState({ currentRow: { ...userInfo, permissions: permissions } });
+        this.editToggle();
     }
 
     extractUserPermissions(userInfo) {
         let permissions = _.cloneDeep(this.state.ListOfPermissions);
 
-        console.log('list of permi', permissions);
+        //console.log('list of permi', permissions);
         let traversNodes = (childPermissions, pp) => {
-            console.log('xxxx',childPermissions,pp)
+            //console.log('xxxx',childPermissions,pp)
             childPermissions.map(item => {
-                console.log('node',item.key,pp.name)
+                //console.log('node',item.key,pp.name)
                 if (item.key === pp.name) {
-                   // console.log('crossnode',item.key,pp.name)
+                    // console.log('crossnode',item.key,pp.name)
                     if (pp.isGranted) {
                         item.isGranted = true;
                     }
@@ -181,7 +183,7 @@ class UsersPage extends Component {
                     }
                 }
                 else if (item.child && item.child.length > 0) {
-                    console.log('traversnode',item.key,pp.name)
+                    //console.log('traversnode',item.key,pp.name)
                     traversNodes(item.child, pp)
                 }
             })
@@ -191,22 +193,21 @@ class UsersPage extends Component {
         for (let i = 0; i < userInfo.permissions.length; i++) {
             for (let j = 0; j < permissions.length; j++) {
                 if (permissions[j].key === userInfo.permissions[i].name) {
-                    console.log('cross',i,j)
+                    //console.log('cross',i,j)
                     if (userInfo.permissions[i].isGranted) {
                         permissions[j].isGranted = true;
                         break;
                     }
                 }
                 else if (permissions[j].child != null && permissions[j].child.length > 0) {
-                    console.log('traverse', i,userInfo.permissions[i], j,permissions[j]);
+                    //console.log('traverse', i,userInfo.permissions[i], j,permissions[j]);
                     traversNodes(permissions[j].child, userInfo.permissions[i]);
                 }
             }
         }
-        console.log('user permissionsssss', permissions);
+        console.log('user permission extract', permissions);
+        return permissions;
     }
-
-
 
     editToggle = () => {
         this.setState({
@@ -252,15 +253,45 @@ class UsersPage extends Component {
         this.setState({ currentRow: currentRow });
     }
 
-    handleUserPermissionGrantedChange = (switchValue, permissionName) => {
+    handleUserPermissionGrantedChange = (switchValue, key) => {
         const currentRow = { ...this.state.currentRow };
         const permissions = [...currentRow.permissions];
-        const indexOfP = _(permissions).findIndex(c => c.name === permissionName);
-        permissions[indexOfP] = { ...permissions[indexOfP] };
-        permissions[indexOfP].isGranted = switchValue;
-        currentRow.permissions = permissions;
-        this.setState({ currentRow: currentRow })
+        // const indexOfP = _(permissions).findIndex(c => c.name === permissionName);
+        // permissions[indexOfP] = { ...permissions[indexOfP] };
+        // permissions[indexOfP].isGranted = switchValue;
+        // currentRow.permissions = permissions;
+        // this.setState({ currentRow: currentRow })
         //console.log(switchValue);
+        const temp = this.updateTreePermissionsWithKey(switchValue, key, permissions);
+        currentRow.permissions = temp;
+        console.log(temp)
+        this.setState({ currentRow })
+    }
+
+    updateTreePermissionsWithKey = (switchValue, key, permissions) => {
+
+        let travvv = (switchValue, key, childPermissions) => {
+            childPermissions.map(item => {
+                if (item.key === key) {
+                    item.isGranted = switchValue;
+                }
+                else if (item.child && item.child.length > 0) {
+
+                    travvv(switchValue, key, item.child);
+                }
+            });
+        }
+
+        permissions.map(item => {
+            if (item.key === key) {
+                item.isGranted = switchValue;
+            }
+            else if (item.child && item.child.length > 0) {
+
+                travvv(switchValue, key, item.child);
+            }
+        });
+        return permissions;
     }
 
     handleUserTypeChange = ({ value }) => {
@@ -365,6 +396,64 @@ class UsersPage extends Component {
 
     //#endregion ------------------------------------------------------------
 
+    showMenuPermissions = (permissions) => {
+        return permissions.map(item => {
+            if (!item.child || item.child.length == 0) {
+                return (
+                    <Col md="12" key={item.key} className="mb-1">
+                        <Row>
+                            <Col md="6">
+                                <Tag color="magenta">{item.name}</Tag>
+                            </Col>
+                            <Col md="6" style={{ justifyContent: "right", direction: "ltr", display: "flex" }} >
+                                {/* <span className="ml-1 pb-90">{permission.isGranted ? 'Granted' : 'Not Granted'}</span> */}
+                                <Switch
+                                    name={item.key}
+                                    size="default"
+                                    // disabled={item.level !=0 && disabledParent}
+                                    //disabled={disabled}
+                                    defaultChecked={item.isGranted}
+                                    checkedChildren={item.isGranted ? `Granted` : ""}
+                                    unCheckedChildren={!item.isGranted ? `Not Granted` : ""}
+                                    onChange={(value) => this.handleUserPermissionGrantedChange(value, item.key)}
+                                />
+                            </Col>
+                        </Row>
+                    </Col>
+                )
+            }
+            else {
+                return (
+                    <Col md="12" key={item.key} className="mb-1">
+                        <Row>
+                            <Col md="6">
+                                <Tag color="magenta">{item.name}</Tag>
+                            </Col>
+                            <Col md="6" style={{ justifyContent: "right", direction: "rtl", display: "flex" }} >
+                                {/* <span className="ml-1 pb-90">{permission.isGranted ? 'Granted' : 'Not Granted'}</span> */}
+                                <Switch
+                                    name={item.key}
+                                    size="default"
+                                    //disabled={disabledParent}
+                                    //disabled={disabled}
+                                    defaultChecked={item.isGranted}
+                                    checkedChildren={item.isGranted ? `Granted` : ""}
+                                    unCheckedChildren={!item.isGranted ? `Not Granted` : ""}
+                                    onChange={(value) => this.handleUserPermissionGrantedChange(value, item.key)}
+                                />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md="12" className="ml-1 mt-1">
+                                {this.showMenuPermissions(item.child)}
+                            </Col>
+                        </Row>
+                    </Col>
+                )
+            }
+        })
+    }
+
     render() {
         const { selectedRowKeys } = this.state.selectedRowKeys;
         console.log('render state', this.state);
@@ -442,40 +531,15 @@ class UsersPage extends Component {
                     <ModalBody>
                         <Row>
                             {
-                                this.state.currentRow && this.state.currentRow.permissions && false &&
-                                this.state.currentRow.permissions.map(permission => {
-                                    let access = permission.access.map(item => { return { label: item.key.split('-').join(' '), value: item.key } });
-                                    let defaultValue = permission.access.filter(c => c.value === true).map(item => item.key);
-                                    //  console.log('access', access);
-                                    return (
-
-                                        <Col md="12" key={permission.name}>
-                                            <Row>
-                                                <Col md="8">
-                                                    <Tag color="magenta">{permission.name + ' Permission'}</Tag>
-                                                </Col>
-                                                <Col md="4" style={{ justifyContent: "right", direction: "rtl", display: "flex" }} >
-                                                    {/* <span className="ml-1 pb-90">{permission.isGranted ? 'Granted' : 'Not Granted'}</span> */}
-                                                    <Switch
-                                                        name={permission.name}
-                                                        size="default"
-                                                        defaultChecked={permission.isGranted}
-                                                        checkedChildren={permission.isGranted ? "Granted" : ""}
-                                                        unCheckedChildren={!permission.isGranted ? "Not Granted" : ""}
-                                                        onChange={(value) => this.handleUserPermissionGrantedChange(value, permission.name)}
-                                                    />
-                                                </Col>
-                                            </Row>
-                                            <Row>
-                                                <Col md="12" className="ml-1">
-                                                    <Checkbox.Group disabled={!permission.isGranted} options={access} defaultValue={defaultValue} onChange={(checkedValues) => this.handleUserPermissionsChange(checkedValues, permission.name)} />
-                                                </Col>
-                                            </Row>
-                                            <hr />
-                                        </Col>
-                                    )
-                                })
+                                this.state.currentRow && this.state.currentRow.permissions &&
+                                //this.showMenuPermissions(this.state.currentRow.permissions)
+                                <Tree items={this.state.currentRow.permissions}
+                                    onChangeTree={this.handleUserPermissionGrantedChange}
+                                    disabled={false}
+                                />
                             }
+                        </Row>
+                        <Row>
                             <Col md="12">
                                 <Tag color="magenta">User Type</Tag>
                                 {this.state.ListOfUserTypes &&
@@ -487,6 +551,8 @@ class UsersPage extends Component {
                                 }
 
                             </Col>
+                        </Row>
+                        <Row>
                             <Col md="12" className="mt-1">
                                 <Tag color="magenta">User Status</Tag>
                                 {this.UserStatus &&
