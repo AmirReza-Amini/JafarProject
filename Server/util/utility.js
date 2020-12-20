@@ -12,8 +12,10 @@ exports.Map = (source, dest, excludeList = []) => {
     })
 }
 
-exports.SendResponse = (req, res, data, result = true, code = 200) => {
-
+exports.SendResponse = (req, res, data, result = true, code = 200, key = '') => {
+if(key!=''){
+    
+}
     req.body.status = code;
     req.body.to = req.body.from;
     req.body.data = data;
@@ -66,7 +68,7 @@ exports.GenerateAuthToken = (user) => {
         lastName: user.lastName,
         firstName: user.firstName,
         userType: user.userType,
-        permissions:user.permissions
+        permissions: user.permissions
     }, jwtSecret, { expiresIn: jwtExpireTime });
 
     const tokenCrypted = AES.encrypt(

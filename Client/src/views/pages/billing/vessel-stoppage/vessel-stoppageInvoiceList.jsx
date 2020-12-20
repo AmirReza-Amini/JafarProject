@@ -10,14 +10,13 @@ import {
   ModalHeader,
   ModalBody,
 } from "reactstrap";
-import { FormatNumber } from '../../../../utility/tools';
 import { ShoppingBag, Printer } from "react-feather";
 import { Table, Tag, Space } from "antd"; import { toast } from "react-toastify";
 import antdClass from "antd/dist/antd.css";
 import antdClass2 from "../../../../assets/css/vendors/customAntdTable.css";
 import style from './style/style.css'
 
-import * as  gcs from '../../../../services/garbageCollectionService';
+import * as  vss from '../../../../services/vesselStoppageService';
 
 toast.configure({ bodyClassName: "customFont" });
 
@@ -33,7 +32,7 @@ const GarbageCollectionListPage = (props) => {
   });
   useEffect(() => {
     (async function GetBills() {
-      let result = await gcs.GetAllBills();
+      let result = await vss.GetAllBills();
       if (result.data.result) {
         setState((ps) => ({ ...ps, ListOfBills: result.data.data.map(item => { return { ...item, key: item.GarbageCollectionInvoiceId } }) }));
       }

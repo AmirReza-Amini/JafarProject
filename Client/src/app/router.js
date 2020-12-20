@@ -22,6 +22,7 @@ const LazyGarbageCollectionList = lazy(() => import("../views/pages/billing/garb
 const LazyGarbageCollectionTariff = lazy(() => import("../views/pages/billing/garbage-collection/garbageCollectionTariffPage"));
 const LazyVesselStoppageBill = lazy(() => import("../views/pages/billing/vessel-stoppage/vessel-stoppageBillPage"));
 const LazyVesselStoppageTariff = lazy(() => import("../views/pages/billing/vessel-stoppage/vessel-stoppageTariffPage"));
+const LazyVesselStoppageInvoiceList = lazy(() => import("../views/pages/billing/vessel-stoppage/vessel-stoppageInvoiceList"));
 
 // Full Layout
 const LazyHome = lazy(() => import("../views/dashboard/ecommerceDashboard"));
@@ -155,6 +156,15 @@ class Router extends Component {
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyVesselStoppageTariff {...matchprops} />
+              </Suspense>
+            )}
+          />
+            <MainLayoutRoutes
+            exact
+            path={urls.Billing.VesselStoppage.List}
+            render={(matchprops) => (
+              <Suspense fallback={<Spinner />}>
+                <LazyVesselStoppageInvoiceList {...matchprops} />
               </Suspense>
             )}
           />

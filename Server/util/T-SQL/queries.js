@@ -88,8 +88,8 @@ module.exports = {
       loadById: LoadText(
         __dirname + "/billing/vessel-stoppage/load-bill-by-id.sql"
       ),
-      loadLast15bills: LoadText(
-        __dirname + "/billing/vessel-stoppage/load-last-15-bills.sql"
+      loadAllbills: LoadText(
+        __dirname + "/billing/vessel-stoppage/load-all-bills.sql"
       ),
     },
   },
