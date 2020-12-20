@@ -1,5 +1,5 @@
 // import external modules
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 import _ from 'lodash'
 
@@ -12,7 +12,7 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
 
    const doesCurrentUserHaveAuthorization = (permissions) => {
 
-     // console.log('permissions:', permissions, path);
+      // console.log('from main route: doesCurrentUserHaveAuthorization', permissions, path);
       if (permissions === null || permissions.length === 0)
          return false;
 
@@ -25,13 +25,12 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
       if (route.length === 0) return true;
 
       const result = permissions.filter(c => c.name === route && c.isGranted);
-      if (result.length === 1){
+      if (result.length === 1) {
          return true;
       }
 
       return false;
    }
-
    const handleRenderMethod = (matchProps) => {
 
       if (!config.useAuthentication) {
@@ -39,7 +38,7 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
       }
       const user = auth.getCurrentUser();
       if (user) {
-         console.log(user)
+         console.log("main rout user:", user);
          if (user.userType === "Admin") {
             return <MainLayout>{render(matchProps)}</MainLayout>
          }
@@ -47,7 +46,6 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
             return <MainLayout>{render(matchProps)}</MainLayout>
          }
          else {
-            //console.log('main rout', user)
             auth.logout();
             return (<Redirect
                to={{
@@ -64,9 +62,7 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
          }}
       />)
    }
-   //console.log('from mainrout', location)
    return (
-
       <Route
          {...rest}
          path={path}
