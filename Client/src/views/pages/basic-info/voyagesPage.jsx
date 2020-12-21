@@ -70,7 +70,7 @@ const validationSchema = Yup.object().shape({
 const VoyagesPage = (props) => {
   const onSubmitEditVoyage = (values) => {
 
-    // console.log('from edit voyage', values)
+     console.log('from edit voyage', values)
     // if (values === state.currentRow) return;
     let parameters = {
       voyageId: values.id,
@@ -120,7 +120,7 @@ const VoyagesPage = (props) => {
           lstVoyages[index].previousPortName = values.selectPreviousPort.label;
           lstVoyages[index].vesselId = values.selectVessel.value;
           lstVoyages[index].vesselName = values.selectVessel.label;
-          lstVoyages[index].voyageStatus = values.voyageStatus ? "OPEN" : "CLOSE";
+          lstVoyages[index].voyageStatus = values.voyageStatus ? "open" : "close";
           lstVoyages[index].voyageStatusCode = values.voyageStatus ? 1 : 0;
           //   console.log("from submuit", lstVoyages[index]);
 
@@ -170,7 +170,7 @@ const VoyagesPage = (props) => {
           parameters.ownerName = values.selectOwner.label;
           parameters.previousPortName = values.selectPreviousPort.label;
           parameters.vesselName = values.selectVessel.label;
-          parameters.voyageStatus = values.voyageStatus ? "OPEN" : "CLOSE";
+          parameters.voyageStatus = values.voyageStatus ? "open" : "close";
           lstVoyages.push(parameters);
 
           setState((prevState) => ({ ...prevState, ListOfVoyages: lstVoyages, currentRow: {} }));
@@ -304,7 +304,7 @@ const VoyagesPage = (props) => {
   useEffect(() => {
     getVoyage()
       .then((res) => {
-        // console.log('response', res.data.data)
+         console.log('response', res.data.data)
         if (res.data.result) {
           const tempList = res.data.data.map((item) => {
             return {
@@ -421,7 +421,7 @@ const VoyagesPage = (props) => {
       ata: Voyage.actualTimeArrival,
       etd: Voyage.estimatedTimeDeparture,
       atd: Voyage.actualTimeDeparture,
-      voyageStatus: Voyage.voyageStatusCode === 1 ? true : false,
+      voyageStatus: Voyage.voyageStatus,
       voyageStatusCode: Voyage.voyageStatusCode,
       outgoingVoyageNo: Voyage.outgoingVoyageNo,
       incomingVoyageNo: Voyage.incomingVoyageNo,
@@ -429,6 +429,10 @@ const VoyagesPage = (props) => {
     };
 
     setState((prevState) => ({ ...prevState, currentRow: temp }));
+    setTimeout(() => {
+      console.log('current row ', temp)
+      
+    }, 1000);
     editToggle();
   };
 
@@ -463,14 +467,15 @@ const VoyagesPage = (props) => {
   const handleOriginPortSelectedChanged = () => { };
   const handleNextPortSelectedChanged = () => { };
   const handleStatustSelectedChanged = (value, formik) => {
-    //console.log("from status change", value);
+   console.log('from handle status ', value)
     if (!value) {
-      //formik.setFieldTouched('atd',true);
+
+      formik.setFieldTouched('atd',true);
     }
   };
   const dtChange1 = (value) => { };
   const dtChange2 = (value) => { };
-
+  console.log("from status change", state.currentRow);
   return (
     <React.Fragment>
       <Row className="row-eq-height">
@@ -644,7 +649,7 @@ const VoyagesPage = (props) => {
                         <Col md="6">
                           <FormikControl
                             control="customDateTimePicker"
-                            name="ate"
+                            name="ata"
                             label="Actual Time Arrival"
                             placeholder="Select Enter Date"
                             selectedValue={
@@ -704,7 +709,7 @@ const VoyagesPage = (props) => {
                             unCheckedChildren="Close"
                             checkedChildren="Open"
                             selectedValue={
-                              state.currentRow && state.currentRow.voyageStatus
+                              state.currentRow && state.currentRow.voyageStatus === 'open'? true : false
                             }
                             onSelectedChanged={(value) =>
                               handleStatustSelectedChanged(value, formik)
@@ -886,8 +891,8 @@ const VoyagesPage = (props) => {
                             control="customSwitch"
                             name="voyageStatus"
                             label="Voyage Status"
-                            unCheckedChildren="Close"
-                            checkedChildren="Open"
+                            unCheckedChildren="close"
+                            checkedChildren="open"
                           />
                         </Col>
                       </Row>

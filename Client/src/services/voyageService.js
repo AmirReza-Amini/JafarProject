@@ -10,7 +10,7 @@ export const getVoyageTopTenOpen = (data) => {
 
 export const getVoyageDetail = (data) => {
     console.log("getVoyageDetail -> data", data)
-    return http.get(apiEndpoint + '/' + data)
+    return http.get(apiEndpoint  + data)
 }
 
 // export const getLoadUnloadStatisticsByVoyageId = (data) => {

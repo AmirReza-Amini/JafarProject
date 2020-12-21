@@ -16,7 +16,7 @@ const CustomSwitch = (props) => {
   const classN = "form-control " + className;
 
   const handleSelectedSwitchChanged = (value, form) => {
-    console.log("valuesssss", value);
+    console.log("valuesssss", selectedValue);
     if (props.onSelectedChanged) {
       props.onSelectedChanged(value);
     }
@@ -31,6 +31,7 @@ const CustomSwitch = (props) => {
           return (
             <Switch
               defaultChecked={selectedValue}
+              
               //checked={selectedValue}
               unCheckedChildren={unCheckedChildren}
               checkedChildren={checkedChildren}
