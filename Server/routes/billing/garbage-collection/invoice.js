@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { SendResponse, GenerateInvoiceNo, ToPersian,ConvertProperties,FormatNumber } = require("../../../util/utility");
+const { SendResponse, GenerateInvoiceNo, ToPersian, ConvertProperties, FormatNumber } = require("../../../util/utility");
 const queries = require("../../../util/T-SQL/queries");
 const setting = require("../../../app-setting");
 const sworm = require("sworm");
@@ -17,8 +17,8 @@ router.route('/:id?')
         }
         let invoiceList = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastAllbills));
         invoiceList.forEach(invoice => {
-            ConvertProperties(invoice,['InvoiceDate'],ToPersian);
-            ConvertProperties(invoice,['PriceD','PriceR','Rate'],FormatNumber);
+            ConvertProperties(invoice, ['InvoiceDate'], ToPersian);
+            ConvertProperties(invoice, ['PriceD', 'PriceR', 'Rate'], FormatNumber);
         });
         return SendResponse(req, res, invoiceList)
     })
@@ -62,6 +62,7 @@ router.route('/:id?')
             console.log("invoice", invoice)
             if (!req.body.isPreInvoice)
                 await db.query(queries.BILLING.GARBAGE_COLLECTION.calculateBill, invoice);
+
             //#endregion
 
             SendResponse(req, res, invoice)
