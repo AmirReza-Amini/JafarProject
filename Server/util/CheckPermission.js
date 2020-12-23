@@ -1,6 +1,7 @@
 const { requiresAuth } = require('../app-setting');
 
 exports.DoesUserHavePermission = async (userInfo, permission) => {
+
     if (!requiresAuth)
         return { message: '', result: true, statusCode: '' };
 

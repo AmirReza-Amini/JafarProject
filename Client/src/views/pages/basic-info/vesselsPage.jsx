@@ -290,7 +290,8 @@ const VesselsPage = (props) => {
           setState((prevState) => ({ ...prevState, ListOfVessels: tempList }));
         }
       })
-      .catch(() => { });
+      .catch(() => {
+       });
     // getVesselTypes().then(res => {
     //     if (res.data.result) {
     //         setState({ ListOfVesselTypes: res.data.data });

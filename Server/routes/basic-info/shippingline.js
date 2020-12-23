@@ -11,6 +11,7 @@ const { DoesUserHavePermission } = require("../../util/CheckPermission");
 router.route('/')
     .get(async (req, res) => {
         try {
+            console.log('from shipping line api ', req.body);
             let result = await db.query(queries.BASIC_INFO.SHIPPINGLINE.getShippingLinesList)
             return SendResponse(req, res, result);
         } catch (error) {
@@ -24,7 +25,7 @@ router.route('/')
         if (check.result) {
             try {
                 const data = req.body
-                //console.log('beforssss', req.body)
+                console.log('beforssss', req.body)
                 let query = await db.query(queries.BASIC_INFO.SHIPPINGLINE.insertShippingLine, {
                     shippingLineName: data.shippingLineName,
                     economicCode: data.economicCode,

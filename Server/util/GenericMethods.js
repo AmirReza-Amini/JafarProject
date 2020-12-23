@@ -68,6 +68,7 @@ FindAndUpdate = async (entity, req, res, condition, update) => {
             update.password = md5(update.password).toUpperCase();
 
         mapper.Map(update, doc);
+        delete doc.__v;
         await doc.save();
         SendResponse(req, res, doc);
     }

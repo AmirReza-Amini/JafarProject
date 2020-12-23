@@ -9,6 +9,7 @@ import moment from "jalali-moment";
 import TextError from "./TextError";
 
 class CustomDateTimePicker extends Component {
+  
   constructor(props) {
     super(props);
 
@@ -82,6 +83,16 @@ class CustomDateTimePicker extends Component {
 
   render() {
     const { label, name, placeholder } = this.props;
+    const minimumDate = {
+      year: 1398,
+      month: 12,
+      day: 29
+    };
+    const maximumDate = {
+      year: 1420,
+      month: 12,
+      day: 29
+    }
     return (
       <FormGroup>
         {label !== null && label !== "" && <Label for={name}>{label}</Label>}
@@ -94,6 +105,9 @@ class CustomDateTimePicker extends Component {
                 <Row>
                   <Col md="6" sm="6" style={{ paddingRight: "1px" }}>
                     <DatePicker
+                    minimumDate={minimumDate}
+                    maximumDate = {maximumDate}
+                  shouldHighlightWeekends
                       wrapperClassName="form-control"
                       value={this.state.selectedDate}
                       onChange={(value) =>
