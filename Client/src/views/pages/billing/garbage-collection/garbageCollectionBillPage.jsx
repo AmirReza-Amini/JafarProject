@@ -46,8 +46,9 @@ const GarbageCollectionBillPage = (props) => {
     }
 
     const handleInvoicePrint = async () => {
-        console.log(state.voyageData.VoyageId)
-        return props.history.push('/billing/garbage-collection/Invoice-Print');
+        let result = (await gcs.GetAllBills(state.voyageData.gcInvoiceId)).data.data[0]
+        result.billType = 'GarbageCollection';
+        return props.history.push('/billing/garbage-collection/Invoice-Print', { data: result });
     }
 
     const handleInvoiceClicked = async (isPreInvoice) => {
@@ -75,7 +76,7 @@ const GarbageCollectionBillPage = (props) => {
         }
         catch (ex) {
             toast.error(ex.message);
-        }
+        }  
     }
 
     const FireUp = async (voyageId) => {
@@ -97,7 +98,7 @@ const GarbageCollectionBillPage = (props) => {
                     () => {
                         return (
                             <React.Fragment>
-                                <Form>
+                                <Form className='custom-background'>
                                     <div className="form-body">
                                         <Row>
                                             <Col md="6">
@@ -116,7 +117,7 @@ const GarbageCollectionBillPage = (props) => {
 
                                     <div className="row details">
                                         <div className="col-6">Voyage/vessel: {voyageData.VoyageVessel}</div>
-                                        <div className="col-6">Voyage status: <Tag color={voyageData.Status == 'OPEN' ? 'red' : 'green'}>{voyageData.Status}</Tag>
+                                        <div className="col-6">Voyage status: <Tag color={voyageData.Status == 'close' ? 'red' : 'green'}>{voyageData.Status}</Tag>
                                         </div>
                                     </div>
                                     <div className="row details">
@@ -149,19 +150,19 @@ const GarbageCollectionBillPage = (props) => {
                                         <div className="col-3">Actual departure time: {voyageData.ATD}</div>
                                     </div>
 
-                                    <hr hidden={voyageData.InvoiceNo == null} />
-                                    <div hidden={voyageData.InvoiceNo == null} className="row details">
-                                        <div className="col-3">Invoice-no: {voyageData.InvoiceNo}</div>
-                                        <div className="col-3">Invoice Date: {voyageData.InvoiceDate}</div>
-                                        <div className="col-3">Price($): {voyageData.PriceD}</div>
-                                        <div className="col-3">Price(R): {voyageData.PriceR}</div>
+                                    <hr hidden={voyageData.gcInvoiceNo == null} />
+                                    <div hidden={voyageData.gcInvoiceNo == null} className="row details">
+                                        <div className="col-3">Invoice-no: {voyageData.gcInvoiceNo}</div>
+                                        <div className="col-3">Invoice Date: {voyageData.gcInvoiceDate}</div>
+                                        <div className="col-3">Price($): {voyageData.gcPriceD}</div>
+                                        <div className="col-3">Price(R): {voyageData.gcPriceR}</div>
                                     </div>
                                     <hr />
 
                                     <div hidden={!voyageData.VoyageId} className="row">
-                                        <button disabled={voyageData.Status == 'open' || voyageData.InvoiceNo != null} className="btn btn-primary ml-3" onClick={() => handleInvoiceClicked(false)}>Invoice</button>
-                                        <button disabled={voyageData.Status == 'open' || voyageData.InvoiceNo != null} className="btn btn-secondary ml-1" onClick={() => handleInvoiceClicked(true)}>Pre invoice</button>
-                                        <button disabled={voyageData.InvoiceNo == null} className="btn btn-secondary ml-1" onClick={() => handleInvoicePrint()}> <Printer size={16} /> Print</button>
+                                        <button disabled={voyageData.Status == 'open' || voyageData.gcInvoiceNo != null} className="btn btn-primary ml-3" onClick={() => handleInvoiceClicked(false)}>Invoice</button>
+                                        <button disabled={voyageData.Status == 'open' || voyageData.gcInvoiceNo != null} className="btn btn-secondary ml-1" onClick={() => handleInvoiceClicked(true)}>Pre invoice</button>
+                                        <button disabled={voyageData.gcInvoiceNo == null} className="btn btn-secondary ml-1" onClick={() => handleInvoicePrint()}> <Printer size={16} /> Print</button>
                                     </div>
                                 </Form>
                             </React.Fragment>

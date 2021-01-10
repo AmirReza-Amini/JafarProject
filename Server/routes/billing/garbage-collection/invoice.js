@@ -8,13 +8,10 @@ const db = sworm.db(setting.db.sqlConfig);
 
 router.route('/:id?')
     .get(async (req, res) => {
-      
+
         let invoice = {};
         if (req.params.id) {
-            if (req.params.id.length > 10)
-                invoice = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadByNo, { invoiceNo: req.params.id }))[0];
-            else
-                invoice = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadById, { invoiceId: req.params.id }))[0];
+            invoice = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadById, { invoiceId: req.params.id }))[0];
             if (!invoice)
                 return SendResponse(req, res, 'Invoice not found', false, 404)
             invoice.InvoiceDate = ToPersian(invoice.InvoiceDate);
@@ -29,6 +26,7 @@ router.route('/:id?')
     })
     .post(async (req, res) => {
         try {
+            console.log('salam')
             //#region Load Voyage detail
             let voyage = (await db.query(queries.VOYAGE.loadVoyageDwellById, {
                 VoyageId: req.body.voyageId
@@ -48,7 +46,8 @@ router.route('/:id?')
             if (!currency)
                 return SendResponse(req, res, 'Currency data not found', false, 404)
 
-            let { InvoiceNo } = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastBill))[0];
+            let lastBill = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastBill));
+            let InvoiceNo = lastBill ? lastBill.InvoiceNo : '';
             console.log("lastInvoiceNo", InvoiceNo)
             //#endregion
 

@@ -16,6 +16,6 @@ export const Calculate = (voyageId, isPreInvoice) => {
     return http.post(apiEndpoint + '/invoice/', { isPreInvoice: isPreInvoice, voyageId: voyageId });
 }
 
-export const GetAllBills = () => {
-    return http.get(apiEndpoint + '/invoice')
-}
+export const GetAllBills = (param) => {
+    return http.get(apiEndpoint + '/invoice' + (param ? '/' + param : ''));
+} 

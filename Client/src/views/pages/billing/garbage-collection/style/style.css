@@ -8,6 +8,12 @@
         padding-bottom: 5px;
 }
 
+.custom-background{
+    background-color: rgba(128, 128, 128, 0.274);
+    padding:10px;
+    margin-right: 10px;;
+}
+
 hr{
    border-top: 1px solid white;
 }
