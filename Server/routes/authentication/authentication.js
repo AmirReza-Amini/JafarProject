@@ -10,7 +10,7 @@ router.post('/', async (req, res) => {
     userName: req.body.userName,
     password: md5(req.body.password)
   });
-console.log(user)
+//console.log(user)
 
   if (user) {
     if (!user.isActive)
