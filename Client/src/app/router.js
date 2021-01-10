@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 // import internal(own) modules
 import MainLayoutRoutes from "../layouts/routes/mainRoutes";
 import LoginLayoutRoute from "../layouts/routes/loginRoutes"
-import ErrorLayoutRoute from "../layouts/routes/errorRoutes";
+import CleanLayoutRoute from "../layouts/routes/errorRoutes";
 import LogoutLayoutRoute from "../layouts/routes/logoutRoutes";
 import urls from '../urls.json';
 const LazyVesselsPage = lazy(() => import("../views/pages/basic-info/vesselsPage"));
@@ -23,6 +23,7 @@ const LazyGarbageCollectionTariff = lazy(() => import("../views/pages/billing/ga
 const LazyVesselStoppageBill = lazy(() => import("../views/pages/billing/vessel-stoppage/vessel-stoppageBillPage"));
 const LazyVesselStoppageTariff = lazy(() => import("../views/pages/billing/vessel-stoppage/vessel-stoppageTariffPage"));
 const LazyVesselStoppageInvoiceList = lazy(() => import("../views/pages/billing/vessel-stoppage/vessel-stoppageInvoiceList"));
+const LazyInvoicePrint = lazy(() => import("../views/pages/billing/reports/invoicePrintPage"));
 
 // Full Layout
 const LazyHome = lazy(() => import("../views/dashboard/ecommerceDashboard"));
@@ -168,6 +169,15 @@ class Router extends Component {
               </Suspense>
             )}
           />
+                 <CleanLayoutRoute
+            exact
+            path={urls.Billing.GarbageCollection.Print}
+            render={(matchprops) => (
+              <Suspense fallback={<Spinner />}>
+                <LazyInvoicePrint {...matchprops} />
+              </Suspense>
+            )}
+          />
           <LogoutLayoutRoute
             exact
             path={urls.Auth.Logout}
@@ -177,7 +187,7 @@ class Router extends Component {
               </Suspense>
             )}
           />
-          <ErrorLayoutRoute
+          <CleanLayoutRoute
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
                 <LazyErrorPage {...matchprops} />

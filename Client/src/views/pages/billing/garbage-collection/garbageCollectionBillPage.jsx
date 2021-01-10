@@ -3,12 +3,15 @@ import { Row, Col } from "reactstrap";
 import { SetValueLabel, FormatNumber } from '../../../../utility/tools'
 import { Tag } from 'antd';
 import { Formik, Form } from "formik";
+import { Printer } from "react-feather";
 import { toast } from "react-toastify";
 import FormikControl from "../../../../components/common/formik/FormikControl";
 
 import style from './style/style.css'
 import * as  gcs from '../../../../services/garbageCollectionService';
 import * as  vs from '../../../../services/voyageService';
+import url from '../../../../urls.json'
+import { propTypes } from "react-country-flag";
 
 toast.configure({ bodyClassName: "customFont" });
 
@@ -18,7 +21,7 @@ const initialValues = {
     issuedBill: {}
 }
 
-const GarbageCollectionBillPage = () => {
+const GarbageCollectionBillPage = (props) => {
 
     const [state, setState] = useState({
         ListOfVoyages: [],
@@ -40,6 +43,11 @@ const GarbageCollectionBillPage = () => {
 
     const handleSelectedVoyageChanged = async (param) => {
         await FireUp(param.value);
+    }
+
+    const handleInvoicePrint = async () => {
+        console.log(state.voyageData.VoyageId)
+        return props.history.push('/billing/garbage-collection/Invoice-Print');
     }
 
     const handleInvoiceClicked = async (isPreInvoice) => {
@@ -105,7 +113,7 @@ const GarbageCollectionBillPage = () => {
                                             </Col>
                                         </Row>
                                     </div>
-                                
+
                                     <div className="row details">
                                         <div className="col-6">Voyage/vessel: {voyageData.VoyageVessel}</div>
                                         <div className="col-6">Voyage status: <Tag color={voyageData.Status == 'OPEN' ? 'red' : 'green'}>{voyageData.Status}</Tag>
@@ -151,8 +159,9 @@ const GarbageCollectionBillPage = () => {
                                     <hr />
 
                                     <div hidden={!voyageData.VoyageId} className="row">
-                                        <button disabled={voyageData.Status == 'OPEN' || voyageData.InvoiceNo != null} className="btn btn-primary ml-3" onClick={() => handleInvoiceClicked(false)}>Invoice</button>
-                                        <button disabled={voyageData.Status == 'OPEN' || voyageData.InvoiceNo != null} className="btn btn-secondary ml-1" onClick={() => handleInvoiceClicked(true)}>Pre invoice</button>
+                                        <button disabled={voyageData.Status == 'open' || voyageData.InvoiceNo != null} className="btn btn-primary ml-3" onClick={() => handleInvoiceClicked(false)}>Invoice</button>
+                                        <button disabled={voyageData.Status == 'open' || voyageData.InvoiceNo != null} className="btn btn-secondary ml-1" onClick={() => handleInvoiceClicked(true)}>Pre invoice</button>
+                                        <button disabled={voyageData.InvoiceNo == null} className="btn btn-secondary ml-1" onClick={() => handleInvoicePrint()}> <Printer size={16} /> Print</button>
                                     </div>
                                 </Form>
                             </React.Fragment>
