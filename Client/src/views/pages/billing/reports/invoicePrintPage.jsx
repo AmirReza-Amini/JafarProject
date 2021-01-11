@@ -8,7 +8,6 @@ class Viewer extends React.Component {
 
     render() {
         let invoiceData = this.props.location.state.data;
-        console.log("🚀 invoiceData", invoiceData)
         return <React.Fragment>
             <div className="container">
                 <div className="col-md-12">
@@ -17,6 +16,7 @@ class Viewer extends React.Component {
                             <img src={logo}></img>
                             <span className="header">SIMIN PARS.co</span>
                         </div>
+                        <hr/>
                         <div className="invoice-header">
                             <div className="invoice-from">
                                 <small>from</small>
@@ -55,6 +55,7 @@ class Viewer extends React.Component {
                                     <thead>
                                         <tr>
                                             <th>INVOICE DETAIL</th>
+                                            <th className="text-center" width="10%">TYPE</th>
                                             <th className="text-center" width="10%">TONAGE</th>
                                             <th className="text-center" width="10%">DWELL</th>
                                             <th className="text-center" width="10%">FEE</th>
@@ -65,8 +66,9 @@ class Viewer extends React.Component {
                                         <tr>
                                             <td>
                                                 <span className="text-inverse">{invoiceData.billType}</span> <br />
-                                                <small>{invoiceData.VoyageVessel}.</small>
+                                                <small>{invoiceData.VoyageVessel}</small>
                                             </td>
+                                            <td className="text-center"> {invoiceData.VesselType}</td>
                                             <td className="text-center">{invoiceData.GrossTonage}T</td>
                                             <td className="text-center">{invoiceData.DwellDate}h</td>
                                             <td className="text-center">${invoiceData.Fee}</td>
@@ -92,7 +94,8 @@ class Viewer extends React.Component {
          </div>
                     </div>
                 </div>
-            </div>
+            </div><br/>
+
         </React.Fragment>
     }
 

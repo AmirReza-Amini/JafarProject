@@ -7,11 +7,12 @@ const sworm = require("sworm");
 const db = sworm.db(setting.db.sqlConfig);
 
 router.route('/:id?')
-    .get(async (req, res) => {
+    .get(async (req, res) => { 
 
         let invoice = {};
         if (req.params.id) {
             invoice = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadById, { invoiceId: req.params.id }))[0];
+            console.log("🚀 ~ file: invoice.js ~ line 15 ~ .get ~ invoice", invoice)
             if (!invoice)
                 return SendResponse(req, res, 'Invoice not found', false, 404)
             invoice.InvoiceDate = ToPersian(invoice.InvoiceDate);
@@ -47,8 +48,8 @@ router.route('/:id?')
                 return SendResponse(req, res, 'Currency data not found', false, 404)
 
             let lastBill = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastBill));
-            let InvoiceNo = lastBill ? lastBill.InvoiceNo : '';
-            console.log("lastInvoiceNo", InvoiceNo)
+            let InvoiceNo = lastBill.length!=0 ? lastBill[0].InvoiceNo : '';
+
             //#endregion
 
             //#region calculate bill

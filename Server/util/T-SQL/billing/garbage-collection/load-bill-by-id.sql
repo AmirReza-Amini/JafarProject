@@ -12,6 +12,7 @@ GCI.GarbageCollectionInvoiceId ,
 	   SL.Tel,
 	   SL.Address,
 	   GCI.GarbageCollectionTariffId,
+	   GT2.GeneralName AS VesselType,
 	   GCTD.Price AS Fee,v2.GrossTonage
 FROM dbo.GarbageCollectionInvoices AS GCI
     INNER JOIN dbo.GeneralTable AS GT ON GT.GeneralCode = GCI.Status
@@ -20,4 +21,5 @@ FROM dbo.GarbageCollectionInvoices AS GCI
     INNER JOIN dbo.Currencies AS C ON C.CurrencyId = GCI.CurrencyId
 	INNER JOIN dbo.ShippingLines AS SL ON v.AgentId = SL.ShippingLineId
 	left JOIN dbo.GarbageCollectionTariffDetails AS GCTD ON GCTD.GarbageCollectionTariffDetailId = GCI.GarbageCollectionTariffId
-    WHERE GT.GeneralType = 3 AND GCI.GarbageCollectionInvoiceId = @invoiceId
+	INNER JOIN dbo.GeneralTable AS GT2 ON V2.VesselType = GT2.GeneralCode
+    WHERE GT.GeneralType = 3 AND GT2.GeneralType=1 AND GCI.GarbageCollectionInvoiceId = @invoiceId
