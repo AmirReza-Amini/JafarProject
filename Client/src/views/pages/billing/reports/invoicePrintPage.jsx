@@ -3,20 +3,23 @@ import React from "react";
 import bootstrap from './style/bootstrap.min.css'
 import style from './style/style.css'
 import logo from './logo.jpg'
-
+import { Button } from "reactstrap";
 class Viewer extends React.Component {
+
+
 
     render() {
         let invoiceData = this.props.location.state.data;
+        console.log("🚀 ~ file: invoicePrintPage.jsx ~ line 13 ~ Viewer ~ render ~ invoiceData", invoiceData)
         return <React.Fragment>
             <div className="container">
-                <div className="col-md-12">
+                <div id='print-area' className="col-md-12">
                     <div className="invoice">
                         <div className="invoice-company text-inverse f-w-600">
                             <img src={logo}></img>
                             <span className="header">SIMIN PARS.co</span>
                         </div>
-                        <hr/>
+                        <hr />
                         <div className="invoice-header">
                             <div className="invoice-from">
                                 <small>from</small>
@@ -32,9 +35,9 @@ class Viewer extends React.Component {
                                 <small>to</small>
                                 <address className="m-t-5 m-b-5">
                                     <strong className="text-inverse">{invoiceData.ShippingLineName}</strong> <br />
-                                        {invoiceData.Address} <br />
-                  Phone: {invoiceData.Tel} 
-               </address>
+                                    {invoiceData.Address} <br />
+                  Phone: {invoiceData.Tel}
+                                </address>
                             </div>
                             <div className="invoice-date">
                                 <small>Invoice Date</small>
@@ -45,8 +48,22 @@ class Viewer extends React.Component {
                                 </div>
                                 <small>$Rate</small>
                                 <div className="invoice-detail">
-                                    {invoiceData.Rate.toLocaleString()} <br />
+                                    {invoiceData.Rate}
                                 </div>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="invoice-detail col">
+                                Vessel/voyage: {invoiceData.VoyageVessel}
+                            </div>
+                            <div className="invoice-detail col-3">
+                                Actual arrival: {invoiceData.ATA}
+                            </div>
+                            <div className="invoice-detail col-3">
+                                Actual leave: {invoiceData.ATD}
+                            </div> 
+                            <div className="invoice-detail col-2">
+                                Dwell: {invoiceData.DwellDate}h
                             </div>
                         </div>
                         <div className="invoice-content">
@@ -55,7 +72,6 @@ class Viewer extends React.Component {
                                     <thead>
                                         <tr>
                                             <th>INVOICE DETAIL</th>
-                                            <th className="text-center" width="10%">TYPE</th>
                                             <th className="text-center" width="10%">TONAGE</th>
                                             <th className="text-center" width="10%">DWELL</th>
                                             <th className="text-center" width="10%">FEE</th>
@@ -66,9 +82,8 @@ class Viewer extends React.Component {
                                         <tr>
                                             <td>
                                                 <span className="text-inverse">{invoiceData.billType}</span> <br />
-                                                <small>{invoiceData.VoyageVessel}</small>
+                                                <small>{invoiceData.VesselType}</small>
                                             </td>
-                                            <td className="text-center"> {invoiceData.VesselType}</td>
                                             <td className="text-center">{invoiceData.GrossTonage}T</td>
                                             <td className="text-center">{invoiceData.DwellDate}h</td>
                                             <td className="text-center">${invoiceData.Fee}</td>
@@ -83,8 +98,8 @@ class Viewer extends React.Component {
                                     </div>
                                 </div>
                                 <div className="invoice-price-right">
-                                    <small>TOTAL</small> <span className="f-w-600">${invoiceData.PriceD}</span><br/>
-                                    <span className="f-w-600">IRR {invoiceData.PriceR.toLocaleString()}</span>
+                                    <small>TOTAL</small> <span className="f-w-600">${invoiceData.PriceD}</span><br />
+                                    <span className="f-w-600">IRR {invoiceData.PriceR}</span>
                                 </div>
                             </div>
                         </div>
@@ -94,7 +109,7 @@ class Viewer extends React.Component {
          </div>
                     </div>
                 </div>
-            </div><br/>
+            </div><br />
 
         </React.Fragment>
     }

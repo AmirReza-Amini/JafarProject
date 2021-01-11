@@ -45,6 +45,7 @@ const GarbageCollectionListPage = (props) => {
     PrintToggle();
   }
 
+
   const handleSendToPrinter= async(record)=>{
     let result = (await vss.GetAllBills(record)).data.data[0]
     result.billType = 'Vessel stoppage';

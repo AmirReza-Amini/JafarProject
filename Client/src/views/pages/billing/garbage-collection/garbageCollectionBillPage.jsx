@@ -46,6 +46,7 @@ const GarbageCollectionBillPage = (props) => {
     }
 
     const handleInvoicePrint = async () => {
+        console.log("🚀 ~ file: garbageCollectionBillPage.jsx ~ line 50 ~ handleInvoicePrint ~ result")
         let result = (await gcs.GetAllBills(state.voyageData.gcInvoiceId)).data.data[0]
         result.billType = 'GarbageCollection';
         return props.history.push('/billing/garbage-collection/Invoice-Print', { data: result });
@@ -162,7 +163,7 @@ const GarbageCollectionBillPage = (props) => {
                                     <div hidden={!voyageData.VoyageId} className="row">
                                         <button disabled={voyageData.Status == 'open' || voyageData.gcInvoiceNo != null} className="btn btn-primary ml-3" onClick={() => handleInvoiceClicked(false)}>Invoice</button>
                                         <button disabled={voyageData.Status == 'open' || voyageData.gcInvoiceNo != null} className="btn btn-secondary ml-1" onClick={() => handleInvoiceClicked(true)}>Pre invoice</button>
-                                        <button disabled={voyageData.gcInvoiceNo == null} className="btn btn-secondary ml-1" onClick={() => handleInvoicePrint()}> <Printer size={16} /> Print</button>
+                                        <button type='button' disabled={voyageData.gcInvoiceNo == null} className="btn btn-secondary ml-1" onClick={() => handleInvoicePrint()}> <Printer size={16} /> Print</button>
                                     </div>
                                 </Form>
                             </React.Fragment>

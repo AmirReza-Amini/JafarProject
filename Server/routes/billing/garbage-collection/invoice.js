@@ -10,13 +10,15 @@ router.route('/:id?')
     .get(async (req, res) => { 
 
         let invoice = {};
+        console.log("🚀 ~ file: invoice.js ~ line 13 ~ .get ~ invoice", invoice)
         if (req.params.id) {
             invoice = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadById, { invoiceId: req.params.id }))[0];
-            console.log("🚀 ~ file: invoice.js ~ line 15 ~ .get ~ invoice", invoice)
+            console.log("🚀 ~ file: invoice.js ~ line 16 ~ .get ~ invoice", invoice)
             if (!invoice)
                 return SendResponse(req, res, 'Invoice not found', false, 404)
-            invoice.InvoiceDate = ToPersian(invoice.InvoiceDate);
-            return SendResponse(req, res, invoice)
+                ConvertProperties(invoice, ['PriceD', 'PriceR', 'Rate'], FormatNumber);
+                ConvertProperties(invoice, ['InvoiceDate','ATA','ATD'], ToPersian);
+                return SendResponse(req, res, invoice)
         }
         let invoiceList = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastAllbills));
         invoiceList.forEach(invoice => {

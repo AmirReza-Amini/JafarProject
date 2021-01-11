@@ -11,6 +11,8 @@ VSI.VesselStopageInvoiceId ,
        SL.ShippingLineName,
 	   SL.Tel,
 	   SL.Address,
+       V.ATA,
+       V.ATD,
 	   GT2.GeneralName AS VesselType,
 	  CASE WHEN VSI.DwellHour>VSTD.NormalHour then VSTD.ExtraPrice ELSE VSTD.NormalPrice END AS Fee,
 	   v2.GrossTonage

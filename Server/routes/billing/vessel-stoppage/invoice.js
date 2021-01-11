@@ -8,16 +8,16 @@ const db = sworm.db(setting.db.sqlConfig);
 
 router.route('/:id?')
     .get(async (req, res) => {
-        console.log("🚀 ~ file: invoice.js ~ line 12 ~ .get ~ req.params.id", req.params.id)
         if (req.params.id) {
             let invoice = (await db.query(queries.BILLING.VESSEL_STOPPAGE.loadById, { invoiceId: req.params.id }))[0];
-            invoice.InvoiceDate = ToPersian(invoice.InvoiceDate);
-            console.log("🚀 ~ file: invoice.js ~ line 14 ~ .get ~ invoice", invoice)
+            ConvertProperties(invoice, ['InvoiceDate', 'ATA', 'ATD'], ToPersian);
+            ConvertProperties(invoice, ['PriceD', 'PriceR', 'Rate'], FormatNumber);
+
             return SendResponse(req, res, invoice)
         }
         let invoiceList = (await db.query(queries.BILLING.VESSEL_STOPPAGE.loadAllbills));
         invoiceList.forEach(invoice => {
-            ConvertProperties(invoice, ['InvoiceDate'], ToPersian);
+            ConvertProperties(invoice, ['InvoiceDate', 'ATA', 'ATD'], ToPersian);
             ConvertProperties(invoice, ['PriceD', 'PriceR', 'Rate'], FormatNumber);
         });
         return SendResponse(req, res, invoiceList)
@@ -46,7 +46,7 @@ router.route('/:id?')
                 return SendResponse(req, res, 'Currency data not found', false, 404)
 
             let lastBill = (await db.query(queries.BILLING.VESSEL_STOPPAGE.loadLastBill));
-            let InvoiceNo = lastBill.length!=0 ? lastBill[0].InvoiceNo : ''; 
+            let InvoiceNo = lastBill.length != 0 ? lastBill[0].InvoiceNo : '';
             //#endregion
 
             //#region calculate bill
