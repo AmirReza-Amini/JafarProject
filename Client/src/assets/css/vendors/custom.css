@@ -104,6 +104,17 @@
 }
 
 
+.each-slide > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  height: 500px;
+  width: 100%;
+  border-radius: 15px;
+
+  border: rgb(97, 81, 79) 2px solid;
+}
 
 
 

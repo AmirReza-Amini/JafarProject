@@ -1,40 +1,50 @@
 // This needs review, including colors: https://www.google.com/design/spec/style/typography.html#typography-styles
 
-h1, .h1 {
-    font-size: $h1-font-size;
+h1,
+.h1 {
+  font-size: $h1-font-size;
 }
-h2, .h2{
-    font-size: $h2-font-size;
+h2,
+.h2 {
+  font-size: $h2-font-size;
 }
-h3, .h3{
-    font-size: $h3-font-size;
+h3,
+.h3 {
+  font-size: $h3-font-size;
 }
-h4, .h4{
-    font-size: $h4-font-size;
+h4,
+.h4 {
+  font-size: $h4-font-size;
 }
-h5, .h5 {
-    font-size: $h5-font-size;
+h5,
+.h5 {
+  font-size: $h5-font-size;
 }
-h6, .h6{
-    font-size: $h6-font-size;
-    font-weight: 300;
+h6,
+.h6 {
+  font-size: $h6-font-size;
+  font-weight: 300;
 }
 
-small, .small{
+small,
+.small {
   font-size: 90%;
 }
 
-blockquote, .blockquote{
+blockquote,
+.blockquote {
   padding: 10px 20px;
   margin: 0 0 20px;
   font-size: 1.1rem;
   border-left: 5px solid #eeeeee;
 
-  p{
+  p {
     font-style: italic;
   }
 
-  footer, small, .small{
+  footer,
+  small,
+  .small {
     display: block;
     font-size: 80%;
     line-height: 1.42857143;
@@ -42,7 +52,8 @@ blockquote, .blockquote{
   }
 }
 
-.blockquote-reverse, blockquote.pull-right{
+.blockquote-reverse,
+blockquote.pull-right {
   padding-right: 15px;
   padding-left: 0;
   border-right: 5px solid #eeeeee;
@@ -50,84 +61,85 @@ blockquote, .blockquote{
   text-align: right;
 }
 
-li,dd{
+li,
+dd {
   line-height: 2rem;
 }
 
-h2.title{
-    margin-bottom: $margin-base * 2;
+h2.title {
+  margin-bottom: $margin-base * 2;
 }
 
 .description,
 .card-description,
-.footer-big p{
-    color: color("gray");
+.footer-big p {
+  color: color("gray");
 }
 
 .text-warning {
-  color: theme-color("warning") !important;
+  color: theme-color("warning");
 }
 .text-primary {
-  color: theme-color("primary") !important;
+  color: theme-color("primary");
 }
 .text-danger {
-  color: theme-color("danger") !important;
+  color: theme-color("danger");
 }
 .text-success {
-  color: theme-color("success") !important;
+  color: theme-color("success");
 }
 .text-info {
-  color: theme-color("info") !important;
+  color: theme-color("info");
 }
-.text-gray{
-    color: color("gray") !important;
+.text-gray {
+  color: color("gray");
 }
 
 //small
-.font-small-1{
-  font-size: 0.7rem !important;
+.font-small-1 {
+  font-size: 0.7rem;
 }
-.font-small-2{
-  font-size: 0.8rem !important;
+.font-small-2 {
+  font-size: 0.8rem;
 }
-.font-small-3{
-  font-size: 0.9rem !important;
+.font-small-3 {
+  font-size: 0.9rem;
 }
 //medium
-.font-medium-1{
-  font-size: 1.1rem !important;
+.font-medium-1 {
+  font-size: 1.1rem;
 }
-.font-medium-2{
-  font-size: 1.2rem !important;
+.font-medium-2 {
+  font-size: 1.2rem;
 }
-.font-medium-3{
-  font-size: 1.3rem !important;
+.font-medium-3 {
+  font-size: 1.3rem;
 }
-.font-medium-4{
-  font-size: 1.4rem !important;
+.font-medium-4 {
+  font-size: 1.4rem;
 }
-.font-medium-5{
-  font-size: 1.5rem !important;
+.font-medium-5 {
+  font-size: 1.5rem;
 }
 //large
-.font-large-1{
-  font-size: 2rem !important;
+.font-large-1 {
+  font-size: 2rem;
   line-height: 2rem;
 }
-.font-large-2{
-  font-size: 3rem !important;
+.font-large-2 {
+  font-size: 3rem;
   line-height: 2.95rem;
 }
-.font-large-3{
-  font-size: 4rem !important;
+.font-large-3 {
+  font-size: 4rem;
   line-height: 3.5rem;
 }
-.font-large-4{
-  font-size: 5rem !important;
+.font-large-4 {
+  font-size: 5rem;
   line-height: 4.2rem;
 }
-.font-large-5{
-  font-size: 6rem !important;
+.font-large-5 {
+  font-size: 6rem;
   line-height: 5.2rem;
 }
 
@@ -154,23 +166,23 @@ h2.title{
 
 // Font style
 .text-italic {
-    font-style: italic;
+  font-style: italic;
 }
 .text-highlight {
-    padding: 4px 6px;
+  padding: 4px 6px;
 }
 
-[dir="rtl"]{
-  .float-left{
-    float: right !important;
+[dir="rtl"] {
+  .float-left {
+    float: right;
   }
-  .float-right{
-    float: left !important;
+  .float-right {
+    float: left;
   }
   .text-right {
-    text-align: left !important;
+    text-align: left;
   }
   .text-left {
-    text-align: right !important;
+    text-align: right;
   }
 }
