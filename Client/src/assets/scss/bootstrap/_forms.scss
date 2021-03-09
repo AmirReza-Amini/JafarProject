@@ -111,7 +111,7 @@ form{
 
         @include media-breakpoint-down(sm) {
             .buttons-group{
-                float: left !important;
+                float: left  ;
                 margin-bottom: 10px;
             }
         }
@@ -203,8 +203,8 @@ form{
 }
 
 select.form-control {
-	padding-top: 0 !important;
-	padding-bottom: 0 !important;
+	padding-top: 0  ;
+	padding-bottom: 0  ;
 }
 
 
@@ -301,7 +301,7 @@ select.form-control-xl:not([size]):not([multiple]){
 
             @include media-breakpoint-down(sm) {
                 .buttons-group{
-                    float: right !important;               
+                    float: right  ;               
                 }
             }
         }

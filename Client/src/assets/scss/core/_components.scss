@@ -43,10 +43,10 @@
 
 // Labels
 .label{
-    padding-bottom: .1em !important;
+    padding-bottom: .1em  ;
     letter-spacing: 0.5px;
     &.label-default{
-        background-color: #777 !important;
+        background-color: #777  ;
     }
 }
 
@@ -64,11 +64,11 @@
 }
 .media{
     img, iframe{
-        margin-right: 1rem !important;
+        margin-right: 1rem  ;
     }
     .media-body + a{
         img{
-            margin-right: 0 !important;
+            margin-right: 0  ;
             margin-left: 1rem;
         }
     }
@@ -136,7 +136,7 @@
 // Accordion
 ngb-accordion{
     [role=tabpanel]{
-        padding: 0 2.5rem !important;
+        padding: 0 2.5rem  ;
     }
     .card{
         border-bottom: 2px solid #f5f7fa;
@@ -147,22 +147,22 @@ ngb-accordion{
 // Sweet Alert
 .swal2-modal{
     .swal2-confirm{
-        background-color: theme-color('success') !important;
+        background-color: theme-color('success')  ;
     }
     .swal2-cancel{
-        background-color: theme-color('danger') !important;
+        background-color: theme-color('danger')  ;
     }
 }
 
 [dir="rtl"]{
     .media{
         img, iframe{
-            margin-left: 1rem !important;
-            margin-right: auto !important;
+            margin-left: 1rem  ;
+            margin-right: auto  ;
         }
         .media-body + a{
             img{
-                margin-left: 0 !important;
+                margin-left: 0  ;
                 margin-right: 1rem;
             }
         }

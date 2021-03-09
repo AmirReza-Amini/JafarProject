@@ -233,23 +233,23 @@
 }
 
 .ct-blue{
-    stroke: theme-color("primary") !important;
+    stroke: theme-color("primary")  ;
 }
 .ct-azure{
-    stroke: theme-color("info") !important;
+    stroke: theme-color("info")  ;
 }
 .ct-green{
-    stroke: theme-color("success") !important;
+    stroke: theme-color("success")  ;
 }
 .ct-orange{
-    stroke: theme-color("warning") !important;
+    stroke: theme-color("warning")  ;
 }
 .ct-red{
-    stroke: theme-color("danger") !important;
+    stroke: theme-color("danger")  ;
 }
 .ct-white{
-    stroke: $white !important;
+    stroke: $white  ;
 }
 .ct-rose{
-    stroke: $red !important;
+    stroke: $red  ;
 }

@@ -8,7 +8,7 @@
          color: $dl-body-text-color;
       }
       .bg-white {
-         background-color: $dl-bg-color !important;
+         background-color: $dl-bg-color  ;
       }
       //Typo & tables
       h1,
@@ -63,7 +63,7 @@
       }
       // Charts & SVG
       svg {
-         stroke: $dl-body-headings-color !important;
+         stroke: $dl-body-headings-color  ;
       }
       .ct-grid {
          // stroke: #77798e;
@@ -82,7 +82,7 @@
          }
       }
       .text-muted {
-         color: $dl-body-text-muted-color !important;
+         color: $dl-body-text-muted-color  ;
       }
 
       // List group
@@ -114,10 +114,10 @@
          }
          .scrollbar-container {
             &.bg-grey.bg-lighten-5 {
-               background-color: $dl-bg-color !important;
+               background-color: $dl-bg-color  ;
             }
             .border-bottom-grey.border-bottom-lighten-3 {
-               border-color: $dl-border-color !important;
+               border-color: $dl-border-color  ;
             }
          }
       }
@@ -181,7 +181,7 @@
          .list-group-item-action {
             color: $dl-body-text-color;
             &.bg-grey.bg-lighten-4 {
-               background-color: #4f5069 !important;
+               background-color: #4f5069  ;
             }
          }
       }
@@ -199,7 +199,7 @@
             border-color: $dl-border-color;
          }
          .bg-blue-grey.bg-lighten-5 {
-            background-color: #4f5069 !important;
+            background-color: #4f5069  ;
          }
       }
 
@@ -224,7 +224,7 @@
          .list-group-item-action {
             color: $dl-body-text-color;
             &.bg-grey.bg-lighten-4 {
-               background-color: #4f5069 !important;
+               background-color: #4f5069  ;
             }
          }
       }
@@ -250,19 +250,19 @@
          .list-group-item-action {
             color: $dl-body-text-color;
             &.bg-grey.bg-lighten-4 {
-               background-color: #4f5069 !important;
+               background-color: #4f5069  ;
             }
          }
       }
 
       //Timeline
       .horizontal-timeline-wrapper li[data-radium="true"] {
-         background-image: none !important;
+         background-image: none  ;
       }
       //Invoice template
       .invoice-template {
          .bg-grey.bg-lighten-4 {
-            background-color: $dl-bg-color !important;
+            background-color: $dl-bg-color  ;
          }
       }
 

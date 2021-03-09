@@ -60,7 +60,7 @@
 /* For sm screen*/
 @include media-breakpoint-down(md) {
    .navbar-header {
-      width: 100% !important;
+      width: 100%  ;
    }
    .navbar-container {
       width: 100%;
@@ -78,7 +78,7 @@
       .navbar-container {
          ul.navbar-nav {
             li {
-               float: right !important;
+               float: right  ;
                > a.nav-link {
                   padding: 0.5rem 0.5rem;
                }
@@ -94,7 +94,7 @@
          .navbar-container {
             ul.navbar-nav {
                li {
-                  float: left !important;
+                  float: left  ;
                }
             }
          }

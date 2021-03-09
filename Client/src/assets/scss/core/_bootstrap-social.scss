@@ -58,7 +58,7 @@ $bs-height-xs:   (floor($font-size-sm * 1.2) + $padding-small-vertical + 1) !def
   > :first-child {
     border: none;
     text-align: center;
-    width: 100%!important;
+    width: 100% ;
   }
   &.btn-lg {
     height: $bs-height-lg;
@@ -85,34 +85,34 @@ $bs-height-xs:   (floor($font-size-sm * 1.2) + $padding-small-vertical + 1) !def
   @include button-variant($color, $color-bg, rgba(0,0,0,.2));
 }
 @mixin btn-social-flat($color){
-    color: $color !important;
-    background-color: transparent !important;
-    border: none !important;
+    color: $color  ;
+    background-color: transparent  ;
+    border: none  ;
     span{
-      border: none !important;
+      border: none  ;
     }
     &:hover{
-      color: darken( $color , 25%) !important;
-      background-color: transparent !important;
+      color: darken( $color , 25%)  ;
+      background-color: transparent  ;
     }
 }
 
 // Social Outline Button Mixin
 @mixin btn-social-outline($color-bg) {
-  border: 1px solid $color-bg !important;
-  color: $color-bg !important;
+  border: 1px solid $color-bg  ;
+  color: $color-bg  ;
 }
 
 // Social Outline Button Hover Mixin
 @mixin btn-hover-outline($color-bg) {
   color: darken($color-bg, 20%);
-  border: 1px solid darken($color-bg, 20%) !important;
-  background-color: transparent !important;
+  border: 1px solid darken($color-bg, 20%)  ;
+  background-color: transparent  ;
 }
 
 // Flat Social Button Hover Mixin
 @mixin btn-social-flat-active($color-bg) {
-  background-color: transparent !important;
+  background-color: transparent  ;
 }
 
 

@@ -86,7 +86,7 @@ $sideber-width: 500px;
             padding: 0.7rem 1rem;
             font-size: 1.1rem;
             &.active {
-               border-radius: 3px !important;
+               border-radius: 3px  ;
                svg {
                   stroke: $white;
                }
@@ -149,7 +149,7 @@ $sideber-width: 500px;
 
 @include media-breakpoint-up(lg) {
    .email-app-list-mails {
-      width: 35% !important;
+      width: 35%  ;
       border-right: 1px solid #e6ecf5;
       float: left;
    }
@@ -159,7 +159,7 @@ $sideber-width: 500px;
 }
 @include media-breakpoint-between(md, lg) {
    .email-app-list-mails {
-      width: 35% !important;
+      width: 35%  ;
       border-right: 1px solid #e6ecf5;
       float: left;
    }
@@ -175,10 +175,10 @@ $sideber-width: 500px;
 
 @include media-breakpoint-down(sm) {
    .email-app-mail-content {
-      position: absolute !important;
-      top: 0 !important;
-      left: 15px !important;
-      width: 98% !important;
+      position: absolute  ;
+      top: 0  ;
+      left: 15px  ;
+      width: 98%  ;
       height: 100%;
       transition: all 1s ease-in-out;
       -webkit-transition: all 1s ease-in-out;
@@ -232,7 +232,7 @@ $sideber-width: 500px;
 
    @include media-breakpoint-down(sm) {
       .email-app-mail-content {
-         right: 15px !important;
+         right: 15px  ;
          left: auto;
       }
    }

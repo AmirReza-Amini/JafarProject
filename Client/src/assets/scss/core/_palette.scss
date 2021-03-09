@@ -46,10 +46,10 @@
   @each $color_type, $color_value in $color {
     @if $color_type == "base" {
       .#{$color_name} {
-        color: $color_value !important;
+        color: $color_value  ;
       }
       .bg-#{$color_name} {
-        background-color: $color_value !important;
+        background-color: $color_value  ;
         .card-header, .card-footer{
           background-color: transparent;
         }
@@ -58,11 +58,11 @@
         background-color: $color_value;
       }
       .alert-#{$color_name} {
-        border-color: $color_value !important;
-        background-color: lighten($color_value, 7%) !important;
-        color: darken($color_value, 35%) !important;
+        border-color: $color_value  ;
+        background-color: lighten($color_value, 7%)  ;
+        color: darken($color_value, 35%)  ;
         .alert-link{
-          color: darken($color_value, 43%) !important;
+          color: darken($color_value, 43%)  ;
         }
       }
       .border-#{$color_name}{
@@ -121,25 +121,25 @@
       }
       .btn-#{$color_name}{
         &.btn-flat{
-          background-color: transparent !important;
+          background-color: transparent  ;
           color: $color_value;
           border: none;
         }
         &.btn-raised, &.btn-fab{
-          background-color: $color_value !important;
-          color: #fff !important;
+          background-color: $color_value  ;
+          color: #fff  ;
           border-color: $color_value;
           &.active{
-            background-color: darken($color_value,7%) !important;
-            border-color: darken($color_value,7%) !important;
+            background-color: darken($color_value,7%)  ;
+            border-color: darken($color_value,7%)  ;
           }
         }
-        // color: $color_value !important;
+        // color: $color_value  ;
       }
       .btn-group-raised{
         .btn-#{$color_name}{
-          background-color: $color_value !important;
-          color: #fff !important;
+          background-color: $color_value  ;
+          color: #fff  ;
         }
       }
       .btn-outline-#{$color_name}{
@@ -147,21 +147,21 @@
         border-color: $color_value;
         background-color: transparent;
         color: $color_value;
-        box-shadow: none !important;
+        box-shadow: none  ;
         &:focus{
-          background-color: transparent !important;
-          color: $color_value !important;
-          box-shadow: transparent !important;
+          background-color: transparent  ;
+          color: $color_value  ;
+          box-shadow: transparent  ;
         }
         &.active{
-          background-color: $color_value !important;
-          color: #FFF !important;
+          background-color: $color_value  ;
+          color: #FFF  ;
         }
         &:hover{
-          background-color: darken($color_value, 3%) !important;
-          color: #FFF !important;
+          background-color: darken($color_value, 3%)  ;
+          color: #FFF  ;
           svg{
-            color: #FFF !important;
+            color: #FFF  ;
           }
         }
       }
@@ -171,17 +171,17 @@
           border-color: $color_value;
           background-color: transparent;
           color: $color_value;
-          box-shadow: none !important;
+          box-shadow: none  ;
           &:focus{
             background-color: transparent;
           }
           &.active{
-            background-color: $color_value !important;
-            color: #FFF !important;
+            background-color: $color_value  ;
+            color: #FFF  ;
           }
           &:hover{
-            background-color: darken($color_value, 3%) !important;
-            color: #FFF !important;
+            background-color: darken($color_value, 3%)  ;
+            color: #FFF  ;
           }
         }
       }
@@ -194,64 +194,64 @@
       }
 
       input:focus ~ .bg-#{$color_name}{
-        box-shadow: 0 0 0 .075rem #fff, 0 0 0 .21rem $color_value !important;
+        box-shadow: 0 0 0 .075rem #fff, 0 0 0 .21rem $color_value  ;
       }
     }
     @else {
       .#{$color_name}.#{$color_type} {
-        color: $color_value !important;
+        color: $color_value  ;
       }
       .bg-#{$color_name}.bg-#{$color_type} {
-        background-color: $color_value !important;
+        background-color: $color_value  ;
       }
       .btn-#{$color_name}.btn-#{$color_type}{
-        border-color: color-function($color_name, "darken-2") !important;
-        background-color: $color_value !important;
+        border-color: color-function($color_name, "darken-2")  ;
+        background-color: $color_value  ;
         &:hover{
-          border-color: color-function($color_name, "darken-2") !important;
-          background-color: color-function($color_name, "darken-3") !important;
+          border-color: color-function($color_name, "darken-2")  ;
+          background-color: color-function($color_name, "darken-3")  ;
         }
         &:focus,&:active{
-          border-color: color-function($color_name, "darken-3") !important;
-          background-color: color-function($color_name, "darken-4") !important;
+          border-color: color-function($color_name, "darken-3")  ;
+          background-color: color-function($color_name, "darken-4")  ;
         }
       }
       .btn-outline-#{$color_name}.btn-outline-#{$color_type}{
-        border-color: $color_value !important;
-        color: $color_value !important;
+        border-color: $color_value  ;
+        color: $color_value  ;
         &:hover{
-          background-color: $color_value !important;
+          background-color: $color_value  ;
         }
       }
       .progress-#{$color_name}.progress-#{$color_type}{
         @include progress-variant($color_value);
       }
       input:focus ~ .bg-#{$color_name}{
-        box-shadow: 0 0 0 .075rem #fff, 0 0 0 .21rem $color_value !important;
+        box-shadow: 0 0 0 .075rem #fff, 0 0 0 .21rem $color_value  ;
       }
       .border-#{$color_name}.border-#{$color_type} {
-        border: 1px solid $color_value !important;
+        border: 1px solid $color_value  ;
       }
       .border-top-#{$color_name}.border-top-#{$color_type} {
-        border-top: 1px solid $color_value !important;
+        border-top: 1px solid $color_value  ;
       }
       .border-bottom-#{$color_name}.border-bottom-#{$color_type} {
-        border-bottom: 1px solid $color_value !important;
+        border-bottom: 1px solid $color_value  ;
       }
       [dir="ltr"]{
         .border-left-#{$color_name}.border-left-#{$color_type} {
-          border-left: 1px solid $color_value !important;
+          border-left: 1px solid $color_value  ;
         }
         .border-right-#{$color_name}.border-right-#{$color_type} {
-          border-right: 1px solid $color_value !important;
+          border-right: 1px solid $color_value  ;
         }
       }
       [dir="rtl"]{
         .border-left-#{$color_name}.border-left-#{$color_type} {
-          border-right: 1px solid $color_value !important;
+          border-right: 1px solid $color_value  ;
         }
         .border-right-#{$color_name}.border-right-#{$color_type} {
-          border-left: 1px solid $color_value !important;
+          border-left: 1px solid $color_value  ;
         }
       }
       .overlay-#{$color_name}.overlay-#{$color_type}{

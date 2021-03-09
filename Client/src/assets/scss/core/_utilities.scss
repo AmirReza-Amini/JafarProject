@@ -12,17 +12,17 @@
 
 // Width and height
 .w-100 {
-   width: 100% !important;
+   width: 100%  ;
 }
 .h-100 {
-   height: 100% !important;
+   height: 100%  ;
 }
 
 // Margin and Padding
 
 .mx-auto {
-   margin-right: auto !important;
-   margin-left: auto !important;
+   margin-right: auto  ;
+   margin-left: auto  ;
 }
 
 a {
@@ -35,7 +35,7 @@ a {
    float: left;
    margin: 0.25rem;
    i.fa {
-      font-size: 1.35rem !important;
+      font-size: 1.35rem  ;
    }
 }
 
@@ -56,7 +56,7 @@ ul {
    }
 }
 [class*="gradient-"] {
-   background-repeat: repeat !important;
+   background-repeat: repeat  ;
 }
 // Shadow classes
 .shadow-z-1 {
@@ -101,7 +101,7 @@ ul {
 }
 @media (max-width: 550px) {
    .rbc-btn-group {
-      white-space: pre-wrap !important;
+      white-space: pre-wrap  ;
    }
 }
 

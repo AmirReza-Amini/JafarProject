@@ -67,9 +67,9 @@ $sideber-width: 500px;
          .list-group-item {
             cursor: pointer;
             &.active {
-               border-radius: 3px !important;
+               border-radius: 3px  ;
                svg {
-                  color: #fff !important;
+                  color: #fff  ;
                }
             }
          }
@@ -138,7 +138,7 @@ $sideber-width: 500px;
 
 @include media-breakpoint-up(lg) {
    .contact-app-list-mails {
-      width: 30% !important;
+      width: 30%  ;
       border-right: 1px solid #e6ecf5;
       float: left;
    }
@@ -149,7 +149,7 @@ $sideber-width: 500px;
 }
 @include media-breakpoint-between(md, lg) {
    .contact-app-list-mails {
-      width: 35% !important;
+      width: 35%  ;
       border-right: 1px solid #e6ecf5;
       float: left;
    }
@@ -165,10 +165,10 @@ $sideber-width: 500px;
 
 @include media-breakpoint-down(sm) {
    .contact-app-mail-content {
-      position: absolute !important;
-      top: 0 !important;
-      left: 15px !important;
-      width: 98% !important;
+      position: absolute  ;
+      top: 0  ;
+      left: 15px  ;
+      width: 98%  ;
       height: 100%;
       transition: all 1s ease-in-out;
       -webkit-transition: all 1s ease-in-out;
@@ -222,7 +222,7 @@ $sideber-width: 500px;
 
    @include media-breakpoint-down(sm) {
       .contact-app-mail-content {
-         right: 15px !important;
+         right: 15px  ;
          left: auto;
       }
    }

@@ -77,7 +77,7 @@ const VesselsPage = (props) => {
     };
     editVesselInfo(parameters)
       .then((response) => {
-        console.log("response", response);
+        // console.log("response", response);
         if (response.data.result) {
           toast.success(response.data.data[0]);
           const lstVessels = [...state.ListOfVessels];
@@ -99,7 +99,7 @@ const VesselsPage = (props) => {
           lstVessels[index].numberOfBays = values.numOfBays;
           lstVessels[index].activeCraneQty = values.activeCraneQty;
           lstVessels[index].callSign = values.callSign;
-          console.log("from submuit", lstVessels[index]);
+          // console.log("from submuit", lstVessels[index]);
 
           setState((prevState) => ({
             ...prevState,

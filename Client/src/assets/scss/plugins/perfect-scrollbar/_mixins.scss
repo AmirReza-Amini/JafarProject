@@ -44,16 +44,16 @@
 @mixin ps-container($theme) {
   -ms-touch-action: none;
   touch-action: none;
-  overflow: hidden !important;
+  overflow: hidden  ;
   -ms-overflow-style: none;
 
   // Edge
   @supports (-ms-overflow-style: none) {
-    overflow: auto !important;
+    overflow: auto  ;
   }
   // IE10+
   @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
-    overflow: auto !important;
+    overflow: auto  ;
   }
 
   &.ps-active-x > .ps-scrollbar-x-rail,
@@ -115,13 +115,13 @@
 }
 
 .ps-scrollbar-y-rail{
-    right: 3px !important;
-    left: auto !important;
+    right: 3px  ;
+    left: auto  ;
   }
 
 [dir="rtl"]{  
   .ps-scrollbar-y-rail{
-    left: 3px !important;
-    right: auto !important;
+    left: 3px  ;
+    right: auto  ;
   }
 }

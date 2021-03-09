@@ -412,7 +412,7 @@
    position: relative;
    margin: 20px 0;
    text-align: center;
-   float: none !important;
+   float: none  ;
    z-index: 1;
 }
 
@@ -763,7 +763,7 @@
 }
 
 #timeline .timeline-item.block:nth-child(even) {
-   width: 100% !important;
+   width: 100%  ;
    margin-top: 5px;
 }
 #timeline .timeline-item.block:nth-child(even):after {
@@ -794,7 +794,7 @@
 }
 
 #timeline .timeline-item.block:nth-child(odd) {
-   width: 100% !important;
+   width: 100%  ;
    margin-top: 5px;
 }
 #timeline .timeline-item.block:nth-child(odd):after {
@@ -954,7 +954,7 @@
       padding: 0 0px 50px 35px;
    }
    .timeline-item.block {
-      padding-right: 0 !important;
+      padding-right: 0  ;
    }
 }
 
@@ -970,8 +970,8 @@
       margin-left: -22px;
    }
    .timeline-item {
-      width: 100% !important;
-      margin-top: 0 !important;
+      width: 100%  ;
+      margin-top: 0  ;
       padding-right: 10px;
    }
    .timeline-item:nth-child(even):after {
@@ -1122,7 +1122,7 @@
    }
    #timeline.timeline-center .timeline-item {
       display: block;
-      padding: 20px 0 20px !important;
+      padding: 20px 0 20px  ;
    }
    #timeline.timeline-center .timeline-item:nth-child(even) {
       float: none;
@@ -1145,8 +1145,8 @@
       display: none;
    }
    #timeline.timeline-center .timeline-item > .timeline-badge {
-      top: 0px !important;
-      left: 47% !important;
+      top: 0px  ;
+      left: 47%  ;
    }
    #timeline.timeline-center .timeline-item.block:nth-child(even) {
       float: none;
@@ -1175,8 +1175,8 @@
 
 @media (max-width: 543px) {
    #timeline.timeline-center .timeline-item > .timeline-badge {
-      top: 0px !important;
-      left: 44% !important;
+      top: 0px  ;
+      left: 44%  ;
    }
 }
 
@@ -1478,8 +1478,8 @@
          padding: 0 35px 50px 0px;
       }
       .timeline-item.block {
-         padding-left: 0 !important;
-         padding-right: auto !important;
+         padding-left: 0  ;
+         padding-right: auto  ;
       }
    }
 
@@ -1602,14 +1602,14 @@
       }
 
       #timeline.timeline-center .timeline-item > .timeline-badge {
-         right: 47% !important;
-         left: auto !important;
+         right: 47%  ;
+         left: auto  ;
       }
    }
    @media (max-width: 543px) {
       .timeline-item > .timeline-badge {
-         right: 44% !important;
-         left: auto !important;
+         right: 44%  ;
+         left: auto  ;
       }
    }
 }

@@ -67,9 +67,9 @@ $sideber-width: 500px;
          .list-group-item {
             cursor: pointer;
             &.active {
-               border-radius: 3px !important;
+               border-radius: 3px  ;
                svg {
-                  color: #fff !important;
+                  color: #fff  ;
                }
             }
          }
@@ -99,7 +99,7 @@ $sideber-width: 500px;
    .list-group-item.active:hover,
    .list-group-item.active:focus {
       color: #fff;
-      border-radius: 3px !important;
+      border-radius: 3px  ;
    }
    .avatar-md {
       width: 40px;
@@ -144,7 +144,7 @@ $sideber-width: 500px;
 
 @include media-breakpoint-up(lg) {
    .todo-app-list-mails {
-      width: 50% !important;
+      width: 50%  ;
       border-right: 1px solid #e6ecf5;
       float: left;
    }
@@ -155,7 +155,7 @@ $sideber-width: 500px;
 }
 @include media-breakpoint-between(md, lg) {
    .todo-app-list-mails {
-      width: 35% !important;
+      width: 35%  ;
       border-right: 1px solid #e6ecf5;
       float: left;
    }
@@ -171,10 +171,10 @@ $sideber-width: 500px;
 
 @include media-breakpoint-down(sm) {
    .todo-app-mail-content {
-      position: absolute !important;
-      top: 0 !important;
-      left: 15px !important;
-      width: 98% !important;
+      position: absolute  ;
+      top: 0  ;
+      left: 15px  ;
+      width: 98%  ;
       height: 100%;
       transition: all 1s ease-in-out;
       -webkit-transition: all 1s ease-in-out;
@@ -228,7 +228,7 @@ $sideber-width: 500px;
 
    @include media-breakpoint-down(sm) {
       .todo-app-mail-content {
-         right: 15px !important;
+         right: 15px  ;
          left: auto;
       }
    }

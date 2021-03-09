@@ -5,7 +5,7 @@ const md5 = require('md5');
 const { SendResponse,GenerateAuthToken } = require('../../util/utility')
 
 router.post('/', async (req, res) => {
-//console.log(req.body,md5(req.body.password))
+console.log(req.body,md5(req.body.password))
   let user = await Users.findOne({
     userName: req.body.userName,
     password: md5(req.body.password)

@@ -5,8 +5,8 @@
   }
   
   .custom-today-day {
-    color: #d61997 !important;
-    border: 1px solid #d61997 !important;
+    color: #d61997  ;
+    border: 1px solid #d61997  ;
   }
   
   .custom-today-day::after {
