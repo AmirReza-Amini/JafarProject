@@ -5,7 +5,7 @@ import { Route } from "react-router-dom";
 // import internal(own) modules
 import ErrorLayout from "../errorLayout";
 
-const ErrorLayoutRoute = ({ render, ...rest }) => {
+const CleanLayoutRoute = ({ render, ...rest }) => {
    return (
       <Route
          {...rest}
@@ -14,4 +14,4 @@ const ErrorLayoutRoute = ({ render, ...rest }) => {
    );
 };
 
-export default ErrorLayoutRoute;
+export default CleanLayoutRoute;

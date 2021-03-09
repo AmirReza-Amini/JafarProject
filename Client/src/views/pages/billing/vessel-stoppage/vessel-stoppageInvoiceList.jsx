@@ -34,7 +34,7 @@ const GarbageCollectionListPage = (props) => {
     (async function GetBills() {
       let result = await vss.GetAllBills();
       if (result.data.result) {
-        setState((ps) => ({ ...ps, ListOfBills: result.data.data.map(item => { return { ...item, key: item.GarbageCollectionInvoiceId } }) }));
+        setState((ps) => ({ ...ps, ListOfBills: result.data.data.map(item => { return { ...item, key: item.VesselStopageInvoiceId } }) }));
       }
     })();
   }, []);
@@ -43,6 +43,13 @@ const GarbageCollectionListPage = (props) => {
     console.log("handleEditVessel -> record", record)
     setState(ps => ({ ...ps, CurrentBill: record }))
     PrintToggle();
+  }
+
+
+  const handleSendToPrinter= async(record)=>{
+    let result = (await vss.GetAllBills(record)).data.data[0]
+    result.billType = 'Vessel stoppage';
+    return props.history.push('/billing/garbage-collection/Invoice-Print', { data: result });
   }
 
   const PrintToggle = () => {
@@ -173,7 +180,7 @@ const GarbageCollectionListPage = (props) => {
             <Button
               className="btn-success mt-1"
               size="sm"
-            // onClick={() => handlePrintInvoice(record)}
+            onClick={() => handleSendToPrinter(state.CurrentBill.VesselStopageInvoiceId)}
             >
               <Printer size={16} /> Print
           </Button>

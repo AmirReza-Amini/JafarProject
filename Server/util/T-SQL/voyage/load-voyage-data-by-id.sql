@@ -6,7 +6,9 @@ SELECT
     V2.VesselName , V2.GrossTonage , V2.VesselLength ,
     V2.NumOfBays , V2.ActiveCraneQty , V2.CallSign ,
     GT.GeneralName as VesselType, c.CountryName AS Flag, c2.CountryName AS Nationality,
-	GCI.InvoiceNo,GCI.InvoiceDate,gci.PriceD,gci.PriceR,
+    GCI.GarbageCollectionInvoiceId as gcInvoiceId,
+	GCI.InvoiceNo as gcInvoiceNo,GCI.InvoiceDate as gcInvoiceDate,gci.PriceD as gcPriceD,gci.PriceR as gcPriceR,
+    VSI.VesselStopageInvoiceId as vsInvoiceId,
 	VSI.InvoiceNo as vsInvoiceNo ,VSI.InvoiceDate as vsInvoiceDate,
     VSI.PriceD as vsPriceD,VSI.PriceR as vsPriceR
 FROM dbo.Voyages AS V

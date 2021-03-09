@@ -23,11 +23,10 @@ router.route('/:id?')
             if (req.params.id) {
                 let result = (await db.query(queries.VOYAGE.loadVoyageDataById, { voyageId: req.params.id }))[0]
                 setTimeout(() => {
-                    console.log("result", result)
-                    
+                    console.log("result")
                 }, 2000);
-                ConvertProperties(result, ['ETA', 'ATA', 'ETD', 'ATD', 'InvoiceDate', 'vsInvoiceDate'], ToPersian);
-                ConvertProperties(result, ['PriceR', 'PriceD', 'vsPriceR', 'vsPriceD', 'GrossTonage', 'VesselLength'], FormatNumber);
+                ConvertProperties(result, ['ETA', 'ATA', 'ETD', 'ATD', 'gcInvoiceDate', 'vsInvoiceDate'], ToPersian);
+                ConvertProperties(result, ['gcPriceR', 'PriceD', 'vsPriceR', 'vsPriceD', 'GrossTonage', 'VesselLength'], FormatNumber);
                 return SendResponse(req, res, result);
             }
             let result = await db.query(queries.VOYAGE.getVoyageList)

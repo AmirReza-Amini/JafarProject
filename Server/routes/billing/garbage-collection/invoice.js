@@ -7,13 +7,18 @@ const sworm = require("sworm");
 const db = sworm.db(setting.db.sqlConfig);
 
 router.route('/:id?')
-    .get(async (req, res) => {
+    .get(async (req, res) => { 
+
+        let invoice = {};
+        console.log("🚀 ~ file: invoice.js ~ line 13 ~ .get ~ invoice", invoice)
         if (req.params.id) {
-            let invoice = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadById, { invoiceId: req.params.id }))[0];
+            invoice = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadById, { invoiceId: req.params.id }))[0];
+            console.log("🚀 ~ file: invoice.js ~ line 16 ~ .get ~ invoice", invoice)
             if (!invoice)
                 return SendResponse(req, res, 'Invoice not found', false, 404)
-            invoice.InvoiceDate = ToPersian(invoice.InvoiceDate);
-            return SendResponse(req, res, invoice)
+                ConvertProperties(invoice, ['PriceD', 'PriceR', 'Rate'], FormatNumber);
+                ConvertProperties(invoice, ['InvoiceDate','ATA','ATD'], ToPersian);
+                return SendResponse(req, res, invoice)
         }
         let invoiceList = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastAllbills));
         invoiceList.forEach(invoice => {
@@ -24,21 +29,19 @@ router.route('/:id?')
     })
     .post(async (req, res) => {
         try {
+            console.log('salam')
             //#region Load Voyage detail
-            console.log('from invoice body ',req.body)
             let voyage = (await db.query(queries.VOYAGE.loadVoyageDwellById, {
                 VoyageId: req.body.voyageId
             }))
-            console.log('from invoice ',voyage)
             if (voyage.length == 0)
-            return SendResponse(req, res, 'Voyage not found', false, 404)
+                return SendResponse(req, res, 'Voyage not found', false, 404)
             let { Dwell, GrossTonage } = voyage[0];
             //#endregion
-            
+
             //#region Load Tariff
             let tariff = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadTariff, { tonage: GrossTonage }))[0];
-            
-            console.log('from invoice tariff ',tariff)
+
             if (!tariff)
                 return SendResponse(req, res, 'Tariff data not found', false, 404)
 
@@ -46,8 +49,9 @@ router.route('/:id?')
             if (!currency)
                 return SendResponse(req, res, 'Currency data not found', false, 404)
 
-            let lastInvoiceNo = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastBill))[0];
-            console.log("lastInvoiceNo", GenerateInvoiceNo(lastInvoiceNo, 'GC'))
+            let lastBill = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastBill));
+            let InvoiceNo = lastBill.length!=0 ? lastBill[0].InvoiceNo : '';
+
             //#endregion
 
             //#region calculate bill
@@ -59,7 +63,7 @@ router.route('/:id?')
                 priceR: Dwell * tariff.Price * currency.Rate,
                 voyageId: req.body.voyageId,
                 currencyId: currency.CurrencyId,
-                invoiceNo: req.body.isPreInvoice ? '---' : GenerateInvoiceNo(lastInvoiceNo, 'GC'),
+                invoiceNo: req.body.isPreInvoice ? '---' : GenerateInvoiceNo(InvoiceNo, 'GC'),
                 userId: '220'
             }
             console.log("invoice", invoice)

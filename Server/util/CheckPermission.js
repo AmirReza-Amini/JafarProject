@@ -7,7 +7,7 @@ exports.DoesUserHavePermission = async (userInfo, permission) => {
 
     //console.log('permission', userInfo.permissions);
 
-    try {
+    try { 
         if (userInfo) {
             if (userInfo.userType === "Admin" || userInfo.userType === "Superuser")
                 return { message: '', result: true, statusCode: '' };
@@ -23,7 +23,7 @@ exports.DoesUserHavePermission = async (userInfo, permission) => {
         else {
             return { message: "User not found", result: false, statusCode: 401 };
         }
-    } catch (error) {
+    } catch (error) {  
         return { message: `check permission(${userInfo.id},${permission})`, result: false, statusCode: 500 };
     }
 }

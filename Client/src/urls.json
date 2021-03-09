@@ -9,12 +9,14 @@
         "GarbageCollection": {
             "Invoice": "/billing/garbage-collection/invoice",
             "List": "/billing/garbage-collection/list",
-            "Tariff": "/billing/garbage-collection/tariff"
+            "Tariff": "/billing/garbage-collection/tariff",
+            "Print": "/billing/garbage-collection/Invoice-Print"
         },
         "VesselStoppage": {
             "Invoice": "/billing/vessel-stoppage/invoice",
             "List": "/billing/vessel-stoppage/list",
-            "Tariff": "/billing/vessel-stoppage/tariff"
+            "Tariff": "/billing/vessel-stoppage/tariff",
+            "Print": "/billing/vessel-stoppage/Invoice-Print"
         }
     },
     "Auth": {

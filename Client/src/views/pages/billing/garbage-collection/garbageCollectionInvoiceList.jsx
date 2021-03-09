@@ -41,9 +41,16 @@ const GarbageCollectionListPage = (props) => {
   }, []);
 
   const handlePrintInvoice = (record) => {
+    
     console.log("handleEditVessel -> record", record)
     setState(ps => ({ ...ps, CurrentBill: record }))
     PrintToggle();
+  }
+
+  const handleSendToPrinter = async (record) => {
+  let result = (await gcs.GetAllBills(record)).data.data[0]
+  result.billType = 'GarbageCollection';
+  return props.history.push('/billing/garbage-collection/Invoice-Print', { data: result });
   }
 
   const PrintToggle = () => {
@@ -71,8 +78,8 @@ const GarbageCollectionListPage = (props) => {
     },
     {
       title: "Dwell",
-      dataIndex: "DwellHour",
-      key: "DwellHour",
+      dataIndex: "DwellDate",
+      key: "DwellDate",
       render: p => (
         <span>{
           p + ' hour(s)'
@@ -163,7 +170,7 @@ const GarbageCollectionListPage = (props) => {
               <div className="col-6">Status: <b>{state.CurrentBill.Status}</b> </div>
             </div>
             <div className="row invoiceItem">
-              <div className="col-6">Dwell: <b>{state.CurrentBill.DwellHour}</b></div>
+              <div className="col-6">Dwell: <b>{state.CurrentBill.DwellDate}</b></div>
               <div className="col-6">Rate: <b>{state.CurrentBill.Rate}</b> </div>
             </div>
 
@@ -174,7 +181,7 @@ const GarbageCollectionListPage = (props) => {
             <Button
               className="btn-success mt-1"
               size="sm"
-            // onClick={() => handlePrintInvoice(record)}
+            onClick={() => handleSendToPrinter(state.CurrentBill.GarbageCollectionInvoiceId)}
             >
               <Printer size={16} /> Print
           </Button>

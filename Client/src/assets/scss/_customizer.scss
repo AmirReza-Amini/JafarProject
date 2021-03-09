@@ -66,32 +66,33 @@
     }
   }
 
-  .cz-bg-color {
-    margin: 0 auto;
-    span {
-      &:hover {
-        cursor: pointer;
-      }
-      &.white {
-        color: #ddd;
-      }
-    }
-    .selected {
-      border: 3px solid #314fe5;
-    }
-  }
+	.cz-bg-color {
+    	margin: 0 auto;
+		span{
+			&:hover{
+				cursor: pointer;
+			}
+			&.white{
+				color: #ddd  ;
+			}
+		}
+		.selected{
+			border: 3px solid #314fe5;
+		}
+	}
 
-  .cz-bg-image {
-    &:hover {
-      cursor: pointer;
-    }
-    img.rounded {
-      border-radius: 1rem;
-      border: 2px solid #e6e6e6;
-      margin-right: 8px;
-      &.selected {
-        border: 2px solid #ff586b;
-      }
-    }
-  }
+	.cz-bg-image{
+		&:hover{
+			cursor: pointer;
+		}
+		img.rounded{
+			border-radius: 1rem  ;
+			border: 2px solid #e6e6e6;
+			margin-right: 8px;
+			&.selected{
+				border: 2px solid #FF586B;
+			}
+		}
+	}
+
 }

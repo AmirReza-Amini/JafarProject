@@ -18,7 +18,7 @@ const initialValues = {
     issuedBill: {}
 }
 
-const VesselStoppagePage = () => {
+const VesselStoppagePage = (props) => {
 
     const [state, setState] = useState({
         ListOfVoyages: [],
@@ -42,10 +42,15 @@ const VesselStoppagePage = () => {
         await FireUp(param.value);
     }
 
+    const handleInvoicePrint = async () => {
+        let result = (await vss.GetAllBills(state.voyageData.vsInvoiceId)).data.data[0]
+        result.billType = 'Vessel stoppage';
+        return props.history.push('/billing/garbage-collection/Invoice-Print', { data: result });
+    }
+
     const handleInvoiceClicked = async (isPreInvoice) => {
         try {
             let result = await vss.Calculate(voyageData.VoyageId, isPreInvoice)
-            console.log("handleInvoiceClicked -> invoice", result)
             if (result.data.result) {
                 let invoice = result.data.data[0];
                 if (!isPreInvoice) {
@@ -89,7 +94,7 @@ const VesselStoppagePage = () => {
                     () => {
                         return (
                             <React.Fragment>
-                                <Form>
+                                <Form className='custom-background'>
                                     <div className="form-body">
                                         <Row>
                                             <Col md="6">
@@ -107,7 +112,7 @@ const VesselStoppagePage = () => {
                                     </div>
                                     <div className="row details">
                                         <div className="col-6">Voyage/vessel: {voyageData.VoyageVessel}</div>
-                                        <div className="col-6">Voyage status: <Tag color={voyageData.Status == 'OPEN' ? 'red' : 'green'}>{voyageData.Status}</Tag>
+                                        <div className="col-6">Voyage status: <Tag color={voyageData.Status == 'close' ? 'red' : 'green'}>{voyageData.Status}</Tag>
                                         </div>
                                     </div>
                                     <div className="row details">
@@ -152,7 +157,9 @@ const VesselStoppagePage = () => {
                                     <div hidden={!voyageData.VoyageId} className="row">
                                         <button disabled={voyageData.Status == 'OPEN' || voyageData.vsInvoiceNo != null} className="btn btn-primary ml-3" onClick={() => handleInvoiceClicked(false)}>Invoice</button>
                                         <button disabled={voyageData.Status == 'OPEN' || voyageData.vsInvoiceNo != null} className="btn btn-secondary ml-1" onClick={() => handleInvoiceClicked(true)}>Pre invoice</button>
+                                        <button disabled={voyageData.vsInvoiceNo == null} className="btn btn-secondary ml-1" onClick={() => handleInvoicePrint()}>Print</button>
                                     </div>
+
                                 </Form>
                             </React.Fragment>
                         )

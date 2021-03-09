@@ -59,6 +59,9 @@ module.exports = {
       loadById: LoadText(
         __dirname + "/billing/garbage-collection/load-bill-by-id.sql"
       ),
+      loadByNo: LoadText(
+        __dirname + "/billing/garbage-collection/load-bill-by-no.sql"
+      ),
       loadLastAllbills: LoadText(
         __dirname + "/billing/garbage-collection/load-all-bills.sql"
       ),

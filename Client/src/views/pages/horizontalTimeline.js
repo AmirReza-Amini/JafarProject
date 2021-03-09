@@ -11,9 +11,9 @@ class HorizontalTimeline extends Component {
       previous: 0,
       showConfigurator: false,
       dates: [
-         moment(new Date(2014, 1, 16), "YYYY-MM-DD"),
+         moment(new Date(2014, 1, 16), "YYYY-MM-DD"), 
          moment(new Date(2014, 2, 28), "YYYY-MM-DD"),
-         moment(new Date(2014, 3, 20), "YYYY-MM-DD"),
+         moment(new Date(2014, 3, 20), "YYYY-MM-DD"), 
          moment(new Date(2014, 5, 20), "YYYY-MM-DD"),
          moment(new Date(2014, 7, 9), "YYYY-MM-DD"),
          moment(new Date(2014, 8, 30), "YYYY-MM-DD"),

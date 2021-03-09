@@ -10,12 +10,14 @@ router.route('/:id?')
     .get(async (req, res) => {
         if (req.params.id) {
             let invoice = (await db.query(queries.BILLING.VESSEL_STOPPAGE.loadById, { invoiceId: req.params.id }))[0];
-            invoice.InvoiceDate = ToPersian(invoice.InvoiceDate);
+            ConvertProperties(invoice, ['InvoiceDate', 'ATA', 'ATD'], ToPersian);
+            ConvertProperties(invoice, ['PriceD', 'PriceR', 'Rate'], FormatNumber);
+
             return SendResponse(req, res, invoice)
         }
         let invoiceList = (await db.query(queries.BILLING.VESSEL_STOPPAGE.loadAllbills));
         invoiceList.forEach(invoice => {
-            ConvertProperties(invoice, ['InvoiceDate'], ToPersian);
+            ConvertProperties(invoice, ['InvoiceDate', 'ATA', 'ATD'], ToPersian);
             ConvertProperties(invoice, ['PriceD', 'PriceR', 'Rate'], FormatNumber);
         });
         return SendResponse(req, res, invoiceList)
@@ -43,12 +45,13 @@ router.route('/:id?')
             if (!currency)
                 return SendResponse(req, res, 'Currency data not found', false, 404)
 
-            let lastInvoice = (await db.query(queries.BILLING.VESSEL_STOPPAGE.loadLastBill))[0];
+            let lastBill = (await db.query(queries.BILLING.VESSEL_STOPPAGE.loadLastBill));
+            let InvoiceNo = lastBill.length != 0 ? lastBill[0].InvoiceNo : '';
             //#endregion
 
             //#region calculate bill
 
-            let price = Dwell > tariff.NormalHoure ? Dwell * tariff.ExtraPrice : Dwell * tariff.NormalPrice;
+            let price = Dwell > tariff.NormalHour ? Dwell * tariff.ExtraPrice : Dwell * tariff.NormalPrice;
 
             let invoice = {
                 tariffId: tariff.VesselStoppageTariffDetailId,
@@ -57,10 +60,10 @@ router.route('/:id?')
                 priceR: price * currency.Rate,
                 voyageId: req.body.voyageId,
                 currencyId: currency.CurrencyId,
-                invoiceNo: GenerateInvoiceNo(lastInvoice, 'VS'),
+                invoiceNo: GenerateInvoiceNo(InvoiceNo, 'VS'),
                 userId: '220'
             }
-            console.log("invoice", invoice)
+            console.log("◘ invoice", invoice)
             if (!req.body.isPreInvoice)
                 await db.query(queries.BILLING.VESSEL_STOPPAGE.calculateBill, invoice);
 

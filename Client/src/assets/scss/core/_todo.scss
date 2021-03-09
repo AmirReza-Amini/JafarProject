@@ -73,9 +73,41 @@ $sideber-width: 500px;
           }
         }
       }
-      a {
-        padding: 0.85rem 1rem;
-        font-size: 1.1rem;
+   }
+   .list-group-item.active,
+   .list-group-item.active:hover,
+   .list-group-item.active:focus {
+      color: #fff;
+      border-radius: 3px  ;
+   }
+   .avatar-md {
+      width: 40px;
+   }
+   .avatar img {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+      border: 0;
+      border-radius: 1000px;
+   }
+   .avatar-md span.text-circle {
+      width: 40px;
+      height: 40px;
+   }
+   .avatar span.text-circle {
+      text-align: center;
+      vertical-align: middle;
+      color: #fff;
+      font-size: 1.2rem;
+      background: #babfc7;
+      display: table-cell;
+   }
+   .todo-app-content-wrapper {
+      overflow-y: scroll;
+      height: calc(100% - 30px);
+      .todo-app-options,
+      .todo-app-title {
+         border-bottom: 1px solid $sideber-border;
       }
     }
   }

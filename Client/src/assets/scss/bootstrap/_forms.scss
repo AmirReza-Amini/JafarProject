@@ -111,11 +111,12 @@ form {
       margin-bottom: 20px;
     }
 
-    @include media-breakpoint-down(sm) {
-      .buttons-group {
-        float: left;
-        margin-bottom: 10px;
-      }
+        @include media-breakpoint-down(sm) {
+            .buttons-group{
+                float: left  ;
+                margin-bottom: 10px;
+            }
+        }
     }
   }
 
@@ -206,8 +207,8 @@ form {
 }
 
 select.form-control {
-  padding-top: 0;
-  padding-bottom: 0;
+	padding-top: 0  ;
+	padding-bottom: 0  ;
 }
 
 /* 
@@ -276,28 +277,41 @@ select.form-control-xl:not([size]):not([multiple]) {
   border-color: theme-color("danger");
 }
 
-[dir="rtl"] {
-  form {
-    .form-control-position {
-      left: 0;
-      right: auto;
-    }
-    .has-icon-left {
-      .form-control-position {
-        left: auto;
-        right: inherit;
-      }
-      .form-control {
-        padding-left: 0.85rem;
-        padding-right: 2.95rem;
-      }
-    }
-    .has-icon-right {
-      .form-control {
-        padding-left: 2.5rem;
-        padding-right: auto;
-      }
-    }
+[dir="rtl"]{
+    form{  
+        .form-control-position{      
+            left: 0;
+            right: auto;        
+        }
+        .has-icon-left{
+            .form-control-position{
+                left: auto;
+                right: inherit;
+            }
+            .form-control{
+                padding-left: .85rem;
+                padding-right: 2.95rem;
+            }
+        }
+        .has-icon-right{
+            .form-control{
+                padding-left: 2.5rem;
+                padding-right: auto;
+            }
+        }
+        
+
+        .form-actions{ 
+            &.right{
+                text-align: left;
+            }       
+
+            @include media-breakpoint-down(sm) {
+                .buttons-group{
+                    float: right  ;               
+                }
+            }
+        }
 
     .form-actions {
       &.right {
