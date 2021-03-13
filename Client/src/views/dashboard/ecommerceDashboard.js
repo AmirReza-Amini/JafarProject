@@ -22,7 +22,7 @@ const EcommerceDashboard = () => {
     <div className="slide-container" style = {{padding: '20px'}}>
       <Slide>
          {slideImages.map(item => 
-            <div className="each-slide">
+            <div className="each-slide" key={item}>
             <div style={{ backgroundImage: `url(${item.default})`}}>
              
             </div>
