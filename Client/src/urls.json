@@ -1,7 +1,7 @@
 {
     "BasicInformation": {
         "Vessels": "/basic-information/vessels",
-        "ShippingLines": "/basic-information/shipping-lines",
+        "ShippingLines": "/basic-information/shippinglines",
         "Voyages": "/basic-information/voyages",
         "Countries": "/basic-information/countries"
     },

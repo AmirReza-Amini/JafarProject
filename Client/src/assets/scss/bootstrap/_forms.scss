@@ -120,7 +120,7 @@ form {
     }
   }
 
-  &.form-horizontal {
+  .form-horizontal {
     .form-group {
       @include media-breakpoint-up(sm) {
         .label-control {
@@ -130,7 +130,7 @@ form {
     }
   }
 
-  &.row-separator {
+  .row-separator {
     .form-group {
       margin: 0;
       border-bottom: 1px solid darken($body-bg, 3%);
@@ -141,13 +141,13 @@ form {
         padding: 1.2rem;
         padding-right: 0;
       }
-      &.last {
+      .last {
         border-bottom: 0;
       }
     }
   }
 
-  &.form-bordered {
+  .form-bordered {
     .form-group {
       margin: 0;
       border-bottom: 1px solid darken($body-bg, 3%);
@@ -159,13 +159,13 @@ form {
         padding-right: 0;
         border-left: 1px solid darken($body-bg, 3%);
       }
-      &.last {
+      .last {
         border-bottom: 0;
       }
     }
   }
 
-  &.striped-rows {
+  .striped-rows {
     .form-group {
       margin: 0;
 
@@ -179,13 +179,13 @@ form {
         padding-right: 0;
       }
 
-      &:nth-child(even) {
+      :nth-child(even) {
         background-color: $body-bg;
       }
     }
   }
 
-  &.striped-labels {
+  .striped-labels {
     .form-group {
       margin: 0;
 
@@ -199,12 +199,12 @@ form {
         background-color: white;
       }
 
-      &:nth-child(even) {
+      :nth-child(even) {
         background-color: $body-bg;
       }
     }
   }
-}
+
 
 select.form-control {
 	padding-top: 0  ;
@@ -217,7 +217,7 @@ Bootstrap Enhance */
 // Custom checkbox
 .custom-control {
   display: block;
-  &.inline {
+  .inline {
     display: inline;
   }
 }
@@ -240,8 +240,8 @@ Bootstrap Enhance */
   }
 }
 .form-control {
-  &:disabled,
-  &[readonly] {
+  :disabled,
+  [readonly] {
     background-color: #eceff1;
   }
 }
