@@ -12,7 +12,7 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
 
    const doesCurrentUserHaveAuthorization = (permissions) => {
 
-      // console.log('from main route: doesCurrentUserHaveAuthorization', permissions, path);
+       console.log('from main route: doesCurrentUserHaveAuthorization', permissions, path);
       if (permissions === null || permissions.length === 0)
          return false;
 

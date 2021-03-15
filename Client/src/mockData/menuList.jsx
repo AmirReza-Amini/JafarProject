@@ -14,7 +14,8 @@ const MenuList = [
             { name: "Vessels", key: "BASIC-INFORMATION-VESSELS", url: urls.BasicInformation.Vessels, child: [] },
             { name: "Shipping Lines", key: "BASIC-INFORMATION-SHIPPINGLINES", url: urls.BasicInformation.ShippingLines, child: [] },
             { name: "Voyages", key: "BASIC-INFORMATION-VOYAGES", url: urls.BasicInformation.Voyages, child: [] },
-            { name: "Countries", key: "BASIC-INFORMATION-COUNTRIES", url: urls.BasicInformation.Countries, child: [] }
+            { name: "Countries", key: "BASIC-INFORMATION-COUNTRIES", url: urls.BasicInformation.Countries, child: [] },
+            { name: "Currencies", key: "BASIC-INFORMATION-CURRENCIES", url: urls.BasicInformation.Currencies, child: [] }
         ]
     }
     ,
