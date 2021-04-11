@@ -30,6 +30,7 @@ import {
 import { getVessels } from "../../../services/vesselService";
 import { getPorts } from "../../../services/portServices";
 import { getShippingLines } from "../../../services/shippingLineService";
+import { ToPersianDate } from "../../../utility/tools";
 toast.configure({ bodyClassName: "customFont" });
 
 const initialValues = {
@@ -312,10 +313,10 @@ const VoyagesPage = (props) => {
               voyageId: item.voyageId,
               incomingVoyageNo: item.incomingVoyageNo,
               outgoingVoyageNo: item.outgoingVoyageNo,
-              estimatedTimeArrival: item.estimatedTimeArrival,
-              actualTimeArrival: item.actualTimeArrival,
-              estimatedTimeDeparture: item.estimatedTimeDeparture,
-              actualTimeDeparture: item.actualTimeDeparture,
+              estimatedTimeArrival: ToPersianDate( item.estimatedTimeArrival),
+              actualTimeArrival: ToPersianDate(item.actualTimeArrival),
+              estimatedTimeDeparture: ToPersianDate(item.estimatedTimeDeparture),
+              actualTimeDeparture: ToPersianDate(item.actualTimeDeparture),
               agentId: item.agentId,
               agentName: item.agentName,
               ownerId: item.ownerId,

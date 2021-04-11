@@ -13,6 +13,7 @@ const LazyVesselsPage = lazy(() => import("../views/pages/basic-info/vesselsPage
 const LazyShippingLinesPage = lazy(() => import("../views/pages/basic-info/shippingLinesPage"));
 const LazyVoyagesPage = lazy(() => import("../views/pages/basic-info/voyagesPage"));
 const LazyCountriesPage = lazy(() => import("../views/pages/basic-info/countriesPage"));
+const LazyCurrencyPage = lazy(() => import("../views/pages/basic-info/currencyPage"));
 const LazyLoginPage = lazy(() => import("../views/pages/loginPage"));
 const LazyUsersPage = lazy(() => import("../views/pages/usersPage"));
 const LazyLogout = lazy(() => import("../views/pages/logoutPage"));
@@ -117,6 +118,15 @@ class Router extends Component {
           />
           <MainLayoutRoutes
             exact
+            path={urls.BasicInformation.Currencies}
+            render={(matchprops) => (
+              <Suspense fallback={<Spinner />}>
+                <LazyCurrencyPage {...matchprops} />
+              </Suspense>
+            )}
+          />
+          <MainLayoutRoutes
+            exact
             path={urls.Billing.GarbageCollection.Invoice}
             render={(matchprops) => (
               <Suspense fallback={<Spinner />}>
@@ -169,7 +179,7 @@ class Router extends Component {
               </Suspense>
             )}
           />
-                 <CleanLayoutRoute
+          <CleanLayoutRoute
             exact
             path={urls.Billing.GarbageCollection.Print}
             render={(matchprops) => (
