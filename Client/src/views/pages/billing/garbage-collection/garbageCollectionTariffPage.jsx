@@ -48,7 +48,7 @@ const GarbageCollectionTariffPage = () => {
                 key: item.GarbageCollectionTariffDetailId
             }
         })
-        console.log('tariff', tariff)
+       // console.log('tariff', tariff)
         setState((prevState) => ({ ...prevState, ListOfTariffDetails: tariff }));
 
     }

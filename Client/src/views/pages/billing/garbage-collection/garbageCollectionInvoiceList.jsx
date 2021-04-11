@@ -42,7 +42,7 @@ const GarbageCollectionListPage = (props) => {
 
   const handlePrintInvoice = (record) => {
     
-    console.log("handleEditVessel -> record", record)
+    //console.log("handleEditVessel -> record", record)
     setState(ps => ({ ...ps, CurrentBill: record }))
     PrintToggle();
   }

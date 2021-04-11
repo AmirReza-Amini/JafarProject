@@ -143,7 +143,7 @@ export default class Example extends React.Component {
     return this.state.selection.includes(key);
   }
   logSelection = () => {
-    console.log('selection:', this.state.selection);
+    //console.log('selection:', this.state.selection);
   }
   toggleType = () => {
     this.setState({ selectType: this.state.selectType === 'radio' ? 'checkbox' : 'radio', selection: [], selectAll: false, });

@@ -48,7 +48,7 @@ const VesselStoppageTariffPage = () => {
                 key: item.VesselStoppageTariffDetailId
             }
         })
-        console.log('tariff', tariff)
+       // console.log('tariff', tariff)
         setState((prevState) => ({ ...prevState, ListOfTariffDetails: tariff }));
 
     }

@@ -10,10 +10,10 @@ router.route('/:id?')
     .get(async (req, res) => { 
 
         let invoice = {};
-        console.log("🚀 ~ file: invoice.js ~ line 13 ~ .get ~ invoice", invoice)
+        //console.log("🚀 ~ file: invoice.js ~ line 13 ~ .get ~ invoice", invoice)
         if (req.params.id) {
             invoice = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadById, { invoiceId: req.params.id }))[0];
-            console.log("🚀 ~ file: invoice.js ~ line 16 ~ .get ~ invoice", invoice)
+            //console.log("🚀 ~ file: invoice.js ~ line 16 ~ .get ~ invoice", invoice)
             if (!invoice)
                 return SendResponse(req, res, 'Invoice not found', false, 404)
                 ConvertProperties(invoice, ['PriceD', 'PriceR', 'Rate'], FormatNumber);
@@ -29,7 +29,7 @@ router.route('/:id?')
     })
     .post(async (req, res) => {
         try {
-            console.log('salam')
+            //console.log('salam')
             //#region Load Voyage detail
             let voyage = (await db.query(queries.VOYAGE.loadVoyageDwellById, {
                 VoyageId: req.body.voyageId
@@ -66,7 +66,7 @@ router.route('/:id?')
                 invoiceNo: req.body.isPreInvoice ? '---' : GenerateInvoiceNo(InvoiceNo, 'GC'),
                 userId: '220'
             }
-            console.log("invoice", invoice)
+            //console.log("invoice", invoice)
             if (!req.body.isPreInvoice)
                 await db.query(queries.BILLING.GARBAGE_COLLECTION.calculateBill, invoice);
 

@@ -120,7 +120,7 @@ class UsersPage extends Component {
 
     componentDidMount() {
         getUsers().then(res => {
-            console.log('resss', res)
+           // console.log('resss', res)
             if (res.data.result) {
                 this.setState({ ListOfUsers: res.data.data, ListOfUsersForTable: this.createDataModelForDataTabel(res.data.data) })
             }
@@ -143,7 +143,7 @@ class UsersPage extends Component {
 
     handleEditUser = (userData) => {
 
-        console.log('userData for edit', userData);
+       // console.log('userData for edit', userData);
 
         // Use Spread Operator ------------------------------------
         // به این علت که دیپ کلون نکردیم برای اینکه تغییری بدیم که اثرش توی لیست اصلی اعمال نشه
@@ -205,7 +205,7 @@ class UsersPage extends Component {
                 }
             }
         }
-        console.log('user permission extract', permissions);
+        //console.log('user permission extract', permissions);
         return permissions;
     }
 
@@ -216,7 +216,7 @@ class UsersPage extends Component {
     }
 
     handleUserPermissionsChange(checkedValues, permissionName) {
-        console.log('checked = ', checkedValues);
+        //console.log('checked = ', checkedValues);
         const currentRow = { ...this.state.currentRow };
 
         const permissions = [...currentRow.permissions];
@@ -264,7 +264,7 @@ class UsersPage extends Component {
         //console.log(switchValue);
         const temp = this.updateTreePermissionsWithKey(switchValue, key, permissions);
         currentRow.permissions = temp;
-        console.log(temp)
+       // console.log(temp)
         this.setState({ currentRow })
     }
 
@@ -327,14 +327,14 @@ class UsersPage extends Component {
     }
 
     handleSubmitEditUserInfo = () => {
-        console.log('submit edit user info', this.state.currentRow);
+        //console.log('submit edit user info', this.state.currentRow);
         const userData = _.cloneDeep(this.state.currentRow);
         const temp = [];
         const userPermissions = this.convertUserTreePermissionsToLinerPermissions(userData.permissions, temp);
         userData.permissions = userPermissions;
-        console.log(userPermissions);
+        //console.log(userPermissions);
         delete userData.password;
-        console.log('delete password from user data edit', userData);
+        //console.log('delete password from user data edit', userData);
         editUserInfo(userData).then(response => {
             if (response.data.result) {
                 toast.success('User info has been updated successfully');
@@ -473,7 +473,7 @@ class UsersPage extends Component {
 
     render() {
         const { selectedRowKeys } = this.state.selectedRowKeys;
-        console.log('render state', this.state);
+        //('render state', this.state);
         const rowSelection = {
             selectedRowKeys,
             onChange: this.onSelectChange,

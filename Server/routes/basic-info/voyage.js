@@ -23,29 +23,29 @@ router.route('/:id?')
             if (req.params.id) {
                 let result = (await db.query(queries.VOYAGE.loadVoyageDataById, { voyageId: req.params.id }))[0]
                 setTimeout(() => {
-                    console.log("result")
+                    //console.log("result")
                 }, 2000);
                 ConvertProperties(result, ['ETA', 'ATA', 'ETD', 'ATD', 'gcInvoiceDate', 'vsInvoiceDate'], ToPersian);
                 ConvertProperties(result, ['gcPriceR', 'PriceD', 'vsPriceR', 'vsPriceD', 'GrossTonage', 'VesselLength'], FormatNumber);
                 return SendResponse(req, res, result);
             }
             let result = await db.query(queries.VOYAGE.getVoyageList)
-            console.log("req.params.id", result)
+            //console.log("req.params.id", result)
             return SendResponse(req, res, result);
         } catch (error) {
             return SendResponse(req, res, 'get-voyageById', false, 500);
         }
     })
     .post(auth,async (req, res) => {
-        console.log('from voyage post: ',req.body)
+        //console.log('from voyage post: ',req.body)
         if (!req.body)
             return SendResponse(req, res, "Input data is not valid", false, 400);
         const check = await DoesUserHavePermission(req.user, 'BASIC-INFORMATION-VOYAGES-CREATE');
-        console.log('check', check)
+        //console.log('check', check)
         if (check.result) {
             try {
                 const data = req.body
-                console.log('befouerr', data)
+                //console.log('befouerr', data)
                 let query = await db.query(queries.VOYAGE.insertVoyage, {
                     vesselId: data.vesselId,
                     voyageNoIn: data.incomingVoyageNo,
@@ -62,7 +62,7 @@ router.route('/:id?')
                     previousPortId: data.previousPortId,
                     nextPortId: data.nextPortId
                 });
-                console.log('after', query)
+                //console.log('after', query)
                 const temp = query && query.length > 0 && query[0].Result === 'OK' ? true : false;
 
                 const returnData = temp ? { message: 'Inserting info has been done successfully', voyageId: query[0].VoyageId } : 'failureeeeeeee in inserting info';
@@ -102,7 +102,7 @@ router.route('/:id?')
                     nextPort: data.nextPort,
                     voyageId: data.voyageId
                 });
-                console.log('after', data)
+                //console.log('after', data)
                 const temp = query && query.length > 0 && query[0].RESULT == true ? true : false;
                 const message = temp ? 'Updating info has been done successfully' : 'failure in updating info';
                 return SendResponse(req, res, message, temp, 200)

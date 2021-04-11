@@ -114,7 +114,7 @@ const VesselsPage = (props) => {
       .catch(() => { });
   };
   const onSubmitCreateVessel = (values) => {
-    console.log("values", values);
+    //console.log("values", values);
     let parameters = {
       vesselType: values.selectVesselType.value,
       grossTonage: values.grossTonage,
@@ -128,13 +128,13 @@ const VesselsPage = (props) => {
     };
     addNewVesselInfo(parameters)
       .then((response) => {
-        console.log("response", response);
+        //console.log("response", response);
         if (response.data.result) {
           toast.success(response.data.data[0]);
           getVessels()
             .then((res) => {
               if (res.data.result) {
-                console.log("vessels", res);
+                //console.log("vessels", res);
                 const tempList = res.data.data.map((item) => {
                   return {
                     key: item.VesselId,
@@ -268,7 +268,7 @@ const VesselsPage = (props) => {
     getVessels()
       .then((res) => {
         if (res.data.result) {
-          console.log("vessels", res);
+          //console.log("vessels", res);
           const tempList = res.data.data.map((item) => {
             return {
               key: item.VesselId,
@@ -300,7 +300,7 @@ const VesselsPage = (props) => {
     getCountries()
       .then((res) => {
         if (res.data.result) {
-          console.log("country", res);
+          //console.log("country", res);
           const temp = res.data.data.map((item) => {
             return {
               label: item.CountryName + "-" + item.Symbol,
@@ -318,7 +318,7 @@ const VesselsPage = (props) => {
     getVesselTypes()
       .then((res) => {
         if (res.data.result) {
-          console.log("vesselTypes", res);
+          //console.log("vesselTypes", res);
           //setState({ ...state,ListOfNationalities: res.data.data, ListOfFlags: res.data.data });
           setState((prevState) => ({
             ...prevState,
@@ -371,7 +371,7 @@ const VesselsPage = (props) => {
   };
 
   const handleCancelEditVessel = () => {
-    console.log("handleCancelEditVessel");
+    //console.log("handleCancelEditVessel");
     setState((prevState) => ({ ...prevState, currentRow: {} }));
     editToggle();
     //setEditState({});
@@ -476,7 +476,7 @@ const VesselsPage = (props) => {
             enableReinitialize
           >
             {(formik) => {
-              console.log("Formik props values", formik.values);
+              //console.log("Formik props values", formik.values);
               return (
                 <React.Fragment>
                   <Form>
@@ -608,7 +608,7 @@ const VesselsPage = (props) => {
             enableReinitialize
           >
             {(formik) => {
-              console.log("Formik props values", formik.values);
+              //console.log("Formik props values", formik.values);
               return (
                 <React.Fragment>
                   <Form>

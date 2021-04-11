@@ -15,7 +15,7 @@ const EcommerceDashboard = () => {
     
    ];
   useEffect(() => {
-    console.log("from use effect", slideImages[0].default);
+    //console.log("from use effect", slideImages[0].default);
   }, []);
 
   return (

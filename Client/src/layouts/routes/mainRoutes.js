@@ -38,7 +38,7 @@ const MainLayoutRoute = ({ location, path, render, ...rest }) => {
       }
       const user = auth.getCurrentUser();
       if (user) {
-         console.log("main rout user:", user);
+         //console.log("main rout user:", user);
          if (user.userType === "Admin" || user.userType === "Superuser") {
             return <MainLayout>{render(matchProps)}</MainLayout>
          }

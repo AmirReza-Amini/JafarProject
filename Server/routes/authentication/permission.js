@@ -13,7 +13,7 @@ router.route('/')
             await GetAll(permission, req, res)
         }
         catch (error) {
-            console.log(error)
+           // console.log(error)
         }
     })
 // .post([auth, admin],async (req, res) => {

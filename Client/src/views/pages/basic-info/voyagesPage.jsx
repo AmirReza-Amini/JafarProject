@@ -137,7 +137,7 @@ const VoyagesPage = (props) => {
   };
 
   const onSubmitCreateVoyage = (values) => {
-    console.log('from edit voyage', values)
+    //console.log('from edit voyage', values)
     let parameters = {
       incomingVoyageNo: values.incomingVoyageNo,
       outgoingVoyageNo: values.outgoingVoyageNo,
@@ -304,7 +304,7 @@ const VoyagesPage = (props) => {
   useEffect(() => {
     getVoyage()
       .then((res) => {
-         console.log('response', res.data.data)
+         //console.log('response', res.data.data)
         if (res.data.result) {
           const tempList = res.data.data.map((item) => {
             return {
@@ -385,13 +385,13 @@ const VoyagesPage = (props) => {
       .catch((err) => { });
   }, []);
   const handleEditVoyage = (voyageData) => {
-    console.log('from handel voyage edit', voyageData)
+    //console.log('from handel voyage edit', voyageData)
     const Voyage = {
       ..._(state.ListOfVoyages)
         .filter((c) => c.voyageId === voyageData.voyageId)
         .first(),
     };
-    console.log('from handel voyage List of voyage', Voyage)
+    //console.log('from handel voyage List of voyage', Voyage)
     const temp = {
       selectVessel: {
         label: Voyage.vesselName,
@@ -430,7 +430,7 @@ const VoyagesPage = (props) => {
 
     setState((prevState) => ({ ...prevState, currentRow: temp }));
     setTimeout(() => {
-      console.log('current row ', temp)
+      //console.log('current row ', temp)
       
     }, 1000);
     editToggle();
@@ -467,7 +467,7 @@ const VoyagesPage = (props) => {
   const handleOriginPortSelectedChanged = () => { };
   const handleNextPortSelectedChanged = () => { };
   const handleStatustSelectedChanged = (value, formik) => {
-   console.log('from handle status ', value)
+  // console.log('from handle status ', value)
     if (!value) {
 
       formik.setFieldTouched('atd',true);
@@ -475,7 +475,7 @@ const VoyagesPage = (props) => {
   };
   const dtChange1 = (value) => { };
   const dtChange2 = (value) => { };
-  console.log("from status change", state.currentRow);
+  //console.log("from status change", state.currentRow);
   return (
     <React.Fragment>
       <Row className="row-eq-height">

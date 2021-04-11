@@ -35,12 +35,12 @@ exports.LoadText = (filePath) => {
 }
 
 exports.GenerateInvoiceNo = (number, prefix) => {
-console.log("number", number)
+//console.log("number", number)
     let currentYear = pc.ToPersian(new Date()).substring(0, 4);
-    console.log("currentYear", currentYear)
+    //console.log("currentYear", currentYear)
     if (number) {
         let lastYear = number.substring(2, 6);
-        console.log("lastYear", lastYear)
+        //console.log("lastYear", lastYear)
         if (lastYear == currentYear)
             return prefix + (parseInt(number.substring(2, 14)) + 1)
     }

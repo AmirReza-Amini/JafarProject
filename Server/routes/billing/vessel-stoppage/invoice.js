@@ -63,7 +63,7 @@ router.route('/:id?')
                 invoiceNo: GenerateInvoiceNo(InvoiceNo, 'VS'),
                 userId: '220'
             }
-            console.log("◘ invoice", invoice)
+            //console.log("◘ invoice", invoice)
             if (!req.body.isPreInvoice)
                 await db.query(queries.BILLING.VESSEL_STOPPAGE.calculateBill, invoice);
 

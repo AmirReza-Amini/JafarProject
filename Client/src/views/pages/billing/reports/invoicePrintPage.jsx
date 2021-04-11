@@ -10,7 +10,7 @@ class Viewer extends React.Component {
 
     render() {
         let invoiceData = this.props.location.state.data;
-        console.log("🚀 ~ file: invoicePrintPage.jsx ~ line 13 ~ Viewer ~ render ~ invoiceData", invoiceData)
+        //console.log("🚀 ~ file: invoicePrintPage.jsx ~ line 13 ~ Viewer ~ render ~ invoiceData", invoiceData)
         return <React.Fragment>
             <div className="container">
                 <div id='print-area' className="col-md-12">

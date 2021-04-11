@@ -28,7 +28,7 @@ router.route('/:id')
     await GetOne(Users, req, res)
   })
   .put([auth, adminOrSuperuser], async (req, res) => { 
-    console.log('reqqqqq123456789',req.user)
+    //console.log('reqqqqq123456789',req.user)
     await Update(Users, req, res) 
   })
   .get([auth, adminOrSuperuser], async (req, res) => { await GetOne(Users, req, res) })

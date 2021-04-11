@@ -14,7 +14,7 @@ router.route('/')
             await GetAll(userType, req, res, options)
         }
         catch (error) {
-            console.log(error)
+            //console.log(error)
         }
     })
 // .post([auth, admin],async (req, res) => {
