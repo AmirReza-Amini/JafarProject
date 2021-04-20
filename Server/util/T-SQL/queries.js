@@ -46,6 +46,14 @@ module.exports = {
     ),
   },
   BILLING: {
+    INVOICE_COVER:{
+      loadLastCoverNo:LoadText(
+        __dirname + "/billing/invoice-cover/load-last-cover-no.sql")
+    },
+    COMMON: {
+      loadDiscount: LoadText(
+        __dirname + "/billing/common/load-discount.sql")
+    },
     GARBAGE_COLLECTION: {
       loadTariff: LoadText(
         __dirname + "/billing/garbage-collection/load-tariff.sql"
@@ -65,10 +73,10 @@ module.exports = {
       loadLastAllbills: LoadText(
         __dirname + "/billing/garbage-collection/load-all-bills.sql"
       ),
-      loadAllTariffs:LoadText(
+      loadAllTariffs: LoadText(
         __dirname + "/billing/garbage-collection/load-all-tariffs.sql"
       ),
-      loadTariffDetails:LoadText( 
+      loadTariffDetails: LoadText(
         __dirname + "/billing/garbage-collection/load-tariff-details.sql"
       )
     },
@@ -76,10 +84,10 @@ module.exports = {
       loadTariff: LoadText(
         __dirname + "/billing/vessel-stoppage/load-tariff.sql"
       ),
-      loadAllTariffs:LoadText(
+      loadAllTariffs: LoadText(
         __dirname + "/billing/vessel-stoppage/load-all-tariffs.sql"
       ),
-      loadTariffDetails:LoadText( 
+      loadTariffDetails: LoadText(
         __dirname + "/billing/vessel-stoppage/load-tariff-details.sql"
       ),
       calculateBill: LoadText(

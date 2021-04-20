@@ -10,10 +10,8 @@ router.route('/:id?')
     .get(async (req, res) => { 
 
         let invoice = {};
-        console.log("🚀 ~ file: invoice.js ~ line 13 ~ .get ~ invoice", invoice)
         if (req.params.id) {
             invoice = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadById, { invoiceId: req.params.id }))[0];
-            console.log("🚀 ~ file: invoice.js ~ line 16 ~ .get ~ invoice", invoice)
             if (!invoice)
                 return SendResponse(req, res, 'Invoice not found', false, 404)
                 ConvertProperties(invoice, ['PriceD', 'PriceR', 'Rate'], FormatNumber);
@@ -29,44 +27,42 @@ router.route('/:id?')
     })
     .post(async (req, res) => {
         try {
-            console.log('salam')
             //#region Load Voyage detail
             let voyage = (await db.query(queries.VOYAGE.loadVoyageDwellById, {
                 VoyageId: req.body.voyageId
             }))
             if (voyage.length == 0)
                 return SendResponse(req, res, 'Voyage not found', false, 404)
-            let { Dwell, GrossTonage } = voyage[0];
+            let { Dwell, GrossTonage,Flag } = voyage[0];
             //#endregion
 
             //#region Load Tariff
-            let tariff = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadTariff, { tonage: GrossTonage }))[0];
+            let tariffGarbageCollection = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadTariff, { tonage: GrossTonage }))[0];
 
-            if (!tariff)
+            if (!tariffGarbageCollection)
                 return SendResponse(req, res, 'Tariff data not found', false, 404)
 
             let currency = (await db.query(queries.BASIC_INFO.CURRENCY.loadLastCurrency))[0];
             if (!currency)
                 return SendResponse(req, res, 'Currency data not found', false, 404)
 
-            let lastBill = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastBill));
-            let InvoiceNo = lastBill.length!=0 ? lastBill[0].InvoiceNo : '';
+            let lastGcBill = (await db.query(queries.BILLING.GARBAGE_COLLECTION.loadLastBill));
+            let GcInvoiceNo = lastGcBill.length!=0 ? lastGcBill[0].InvoiceNo : '';
 
             //#endregion
 
             //#region calculate bill
 
             let invoice = {
-                tariffId: tariff.GarbageCollectionTariffDetailId,
+                tariffId: tariffGarbageCollection.GarbageCollectionTariffDetailId,
                 dwellHour: Dwell,
-                priceD: Dwell * tariff.Price,
-                priceR: Dwell * tariff.Price * currency.Rate,
+                priceD: Dwell * tariffGarbageCollection.Price,
+                priceR: Dwell * tariffGarbageCollection.Price * currency.Rate,
                 voyageId: req.body.voyageId,
                 currencyId: currency.CurrencyId,
-                invoiceNo: req.body.isPreInvoice ? '---' : GenerateInvoiceNo(InvoiceNo, 'GC'),
+                invoiceNo: req.body.isPreInvoice ? '---' : GenerateInvoiceNo(GcInvoiceNo, 'GC'),
                 userId: '220'
             }
-            console.log("invoice", invoice)
             if (!req.body.isPreInvoice)
                 await db.query(queries.BILLING.GARBAGE_COLLECTION.calculateBill, invoice);
 

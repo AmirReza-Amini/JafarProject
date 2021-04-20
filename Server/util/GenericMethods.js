@@ -54,7 +54,6 @@ exports.GetAll = async (entity, req, res, opt = {}) => {
         .skip(skip)
         .limit(take)
         .populate(populate);
-    //console.log('doc', doc)
     SendResponse(req, res, doc);
 }
 
