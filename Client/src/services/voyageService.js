@@ -9,7 +9,7 @@ export const getVoyageTopTenOpen = (data) => {
 }
 
 export const getVoyageDetail = (data) => {
-    console.log("getVoyageDetail -> data", data)
+    //console.log("getVoyageDetail -> data", data)
     return http.get(apiEndpoint  + data)
 }
 
@@ -27,7 +27,7 @@ export const editVoyageInfo = (voyageInfo) => {
 }
 
 export const addNewVoyageInfo = (voyageInfo) => {
-    console.log('AddVoyage', voyageInfo)
+    //console.log('AddVoyage', voyageInfo)
     return http.post(apiEndpoint, voyageInfo);
 }
 

@@ -37,7 +37,7 @@ router.route('/')
         if (check.result) {
             try {
                 const data = req.body
-                console.log('befor', req.body)
+                //console.log('befor', req.body)
                 let query = await db.query(queries.BASIC_INFO.VESSEL.insertVessel, {
                     vesselName: data.vesselName,
                     vesselType: data.vesselType,
@@ -51,7 +51,7 @@ router.route('/')
                 });
                 const temp = query && query.length > 0 && query[0].RESULT == true ? true : false;
                 const message = temp ? 'Inserting info complated successfully' : 'failure in updating info';
-                console.log('after', query)
+                //console.log('after', query)
                 return SendResponse(req, res, message, temp, 200)
             } catch (error) {
                 return SendResponse(req, res, 'Fail in updating vessel info', false, 500)
@@ -65,7 +65,7 @@ router.route('/')
         if (!req.body.vesselId)
             return SendResponse(req, res, "Input data is not valid", false, 400);
         const check = await DoesUserHavePermission(req.user, 'BASIC-INFORMATION-VESSELS-UPDATE');
-        console.log(' vessel put check', check);
+        //console.log(' vessel put check', check);
         if (check.result) {
             try {
                 const data = req.body
@@ -83,7 +83,7 @@ router.route('/')
                 });
                 const temp = query && query.length > 0 && query[0].RESULT == true ? true : false;
                 const message = temp ? 'Updating info has been done successfully' : 'failure in updating info';
-                console.log('after', query)
+                //console.log('after', query)
                 return SendResponse(req, res, message, temp, 200)
             } catch (error) {
                 return SendResponse(req, res, 'Fail in updating vessel info', false, 500)

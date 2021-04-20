@@ -45,7 +45,7 @@ const onSubmit = async (values, props) => {
       return toast.error(message);
     else {
       const { state } = props.location;
-      console.log(props, state);
+      //console.log(props, state);
       //console.log('ssssssss', props.location.state);
       //window.location = state && state.from ? state.from.pathname : "/";
       if (state && state.from)

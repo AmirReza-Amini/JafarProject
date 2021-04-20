@@ -54,7 +54,7 @@ class SideMenuContent extends Component {
           .filter((m) => m.isGranted == false)
           .map((n) => n.name);
 
-        console.log('side menu userDoesNotHavePermissions', userDoesNotHavePermissions)
+        //console.log('side menu userDoesNotHavePermissions', userDoesNotHavePermissions)
         let result = menuList;
         userDoesNotHavePermissions.forEach((p) => {
           result = filterData(result, p);

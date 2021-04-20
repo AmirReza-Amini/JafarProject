@@ -31,6 +31,9 @@ module.exports = {
       loadLastCurrency: LoadText(
         __dirname + "/basic-info/currency/load-last-currency.sql"
       ),
+      insertCurrency: LoadText(
+        __dirname + "/basic-info/currency/insert-currency.sql"
+      ),
     },
   },
   VOYAGE: {
@@ -78,7 +81,7 @@ module.exports = {
       ),
       loadTariffDetails: LoadText(
         __dirname + "/billing/garbage-collection/load-tariff-details.sql"
-      )
+      ),
     },
     VESSEL_STOPPAGE: {
       loadTariff: LoadText(

@@ -12,6 +12,6 @@ export const editShippingLineInfo = (shippingLineInfo) => {
 }
 
 export const addNewshippingLineInfo = (shippingLineInfo) => {
-  console.log('AddshippingLineInfo', shippingLineInfo)
+  //console.log('AddshippingLineInfo', shippingLineInfo)
   return http.post(apiEndpoint, shippingLineInfo);
 }

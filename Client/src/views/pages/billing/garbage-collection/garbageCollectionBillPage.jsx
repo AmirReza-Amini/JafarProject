@@ -46,7 +46,7 @@ const GarbageCollectionBillPage = (props) => {
     }
 
     const handleInvoicePrint = async () => {
-        console.log("🚀 ~ file: garbageCollectionBillPage.jsx ~ line 50 ~ handleInvoicePrint ~ result")
+        //console.log("🚀 ~ file: garbageCollectionBillPage.jsx ~ line 50 ~ handleInvoicePrint ~ result")
         let result = (await gcs.GetAllBills(state.voyageData.gcInvoiceId)).data.data[0]
         result.billType = 'GarbageCollection';
         return props.history.push('/billing/garbage-collection/Invoice-Print', { data: result });
@@ -55,7 +55,7 @@ const GarbageCollectionBillPage = (props) => {
     const handleInvoiceClicked = async (isPreInvoice) => {
         try {
             let result = await gcs.Calculate(voyageData.VoyageId, isPreInvoice)
-            console.log("handleInvoiceClicked -> invoice", result)
+            //console.log("handleInvoiceClicked -> invoice", result)
             if (result.data.result) {
                 let invoice = result.data.data[0];
                 if (!isPreInvoice) {

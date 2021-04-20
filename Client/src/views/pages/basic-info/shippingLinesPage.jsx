@@ -48,7 +48,7 @@ const ShippingLinesPage = (props) => {
             nationalCode: values.nationalCode
         };
         editShippingLineInfo(parameters).then(response => {
-            console.log('response', response);
+            //console.log('response', response);
             if (response.data.result) {
                 toast.success(response.data.data[0]);
                 const lstShippingLines = [...state.ListOfShippingLines];
@@ -62,7 +62,7 @@ const ShippingLinesPage = (props) => {
                 lstShippingLines[index].email = values.email;
                 lstShippingLines[index].address = values.address;
                 lstShippingLines[index].nationalCode = values.nationalCode;
-                console.log('from submuit', lstShippingLines[index])
+               // console.log('from submuit', lstShippingLines[index])
 
                 setState(prevState => ({ ...prevState, ListOfShippingLines: lstShippingLines, currentRow: {} }));
                 editToggle();
@@ -73,7 +73,7 @@ const ShippingLinesPage = (props) => {
         }).catch(error => { })
     }
     const onSubmitCreateShippingLine = (values, props) => {
-        console.log('values', values);
+        //console.log('values', values);
         let parameters = {
             shippingLineName: values.shippingLineName,
             economicCode: values.economicCode,
@@ -83,13 +83,13 @@ const ShippingLinesPage = (props) => {
             nationalCode: values.nationalCode
         }
         addNewshippingLineInfo(parameters).then(response => {
-            console.log('response', response);
+           // console.log('response', response);
             if (response.data.result) {
                 toast.success(response.data.data[0]);
                 const lstShippingLines = [...state.ListOfShippingLines];
                 getShippingLines().then(res => {
                     if (res.data.result) {
-                        console.log('shippingLines', res);
+                        //console.log('shippingLines', res);
                         const tempList = res.data.data.map(item => {
                             return {
                                 key: item.ShippingLineId,
@@ -178,7 +178,7 @@ const ShippingLinesPage = (props) => {
     useEffect(() => {
         getShippingLines().then(res => {
             if (res.data.result) {
-                console.log('shippingLines', res);
+                //console.log('shippingLines', res);
                 const tempList = res.data.data.map(item => {
                     return {
                         key: item.ShippingLineId,
@@ -279,7 +279,7 @@ const ShippingLinesPage = (props) => {
                         validateOnBlur={true}
                         enableReinitialize>
                         {(formik) => {
-                            console.log("Formik props values", formik.values);
+                            //console.log("Formik props values", formik.values);
                             return (
                                 <React.Fragment>
                                     <Form>
@@ -402,7 +402,7 @@ const ShippingLinesPage = (props) => {
                     enableReinitialize
                 >
                     {(formik) => {
-                        console.log("Formik props values", formik.values);
+                        //console.log("Formik props values", formik.values);
                         return (
                             <React.Fragment>
                                 <Form>

@@ -14,7 +14,7 @@ class CustomDateTimePicker extends Component {
     super(props);
 
     const { selectedValue } = this.props;
-    console.log("props from ", this.props);
+   // console.log("props from ", this.props);
     this.state = {
       selectedDate: "",
       selectedTime: "",

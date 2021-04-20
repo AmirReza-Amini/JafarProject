@@ -24,6 +24,8 @@ router.route('/:id?')
         return SendResponse(req, res, invoiceList)
     })
     .post(async (req, res) => {
+
+        //body: {voyageId,isPreInvoice}
         try {
             //#region Load Voyage detail
             let voyage = (await db.query(queries.VOYAGE.loadVoyageDwellById, {
@@ -53,6 +55,7 @@ router.route('/:id?')
             let GcTable = db.model({ table: 'GarbageCollectionInvoices' });
 
             if (!GcInvoice.hasError && !VsInvoice.hasError) {
+          // db.transaction(() => { 
                         var icBill = IcTable({
                             InvoiceCoverNo: GenerateInvoiceNo(lastCoverNo, 'IC'),
                             InvoiceCoverDate: new Date(),
@@ -68,6 +71,7 @@ router.route('/:id?')
 
                         return icBill.save().then(() => console.log('Invoice issued successfuly'))
                         .catch((ex)=>{console.log(ex);});
+                   // })
             }
 
         }
@@ -77,6 +81,7 @@ router.route('/:id?')
 
     })
     .put(async (req, res) => {
+        //body: {status,invoiceId}
         try {
             await db.query(queries.BILLING.VESSEL_STOPPAGE.changeStatus, { status: req.body.status, id: req.body.invoiceId })
             SendResponse(req, res, 'Invoice updated successfully')
