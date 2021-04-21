@@ -18,5 +18,6 @@ export const Calculate = (voyageId, isPreInvoice) => {
 
 
 export const GetAllBills = (param) => {
+    console.log('from server',param)
     return http.get(apiEndpoint + '/invoice' + (param ? '/' + param : ''))
 } 

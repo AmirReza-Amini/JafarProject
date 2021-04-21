@@ -1,10 +1,12 @@
 .details{
-    color: white;
+    color: rgb(60, 210, 236);
 }
 .invoiceItem{
-    border-bottom: solid black 1px;
+    /* border-bottom: solid black 1px;
     margin-bottom: 7px;
-    padding-bottom: 5px;
+    padding-bottom: 5px; */
+    color: rgb(206, 234, 241);
+
 }
 
 hr{
@@ -12,7 +14,7 @@ hr{
 }
 
 .custom-background{
-    background-color: rgba(128, 128, 128, 0.274);
+    background-color: rgba(128, 128, 128, 0.425);
     padding:10px;
     margin-right: 10px;;
 }

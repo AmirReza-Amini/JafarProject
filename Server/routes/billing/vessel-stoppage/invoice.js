@@ -10,6 +10,7 @@ const db = sworm.db(setting.db.sqlConfig);
 router.route('/:id?')
     .get(async (req, res) => {
         if (req.params.id) {
+            console.log('hi babe')
             let invoice = (await db.query(queries.BILLING.VESSEL_STOPPAGE.loadById, { invoiceId: req.params.id }))[0];
             ConvertProperties(invoice, ['InvoiceDate', 'ATA', 'ATD'], ToPersian);
             ConvertProperties(invoice, ['PriceD', 'PriceR', 'Rate'], FormatNumber);
@@ -68,9 +69,12 @@ router.route('/:id?')
                             VsTable: (ic) => [VsTable({ ...VsInvoice.data, InvoiceCover: ic })],
                             GcTable: (ic) => [GcTable({ ...GcInvoice.data, InvoiceCover: ic })]
                         })
-
-                        return icBill.save().then(() => console.log('Invoice issued successfuly'))
+                        if (req.body.isPreInvoice) {
+                            return SendResponse(req, res, {icBill,GcInvoice,VsInvoice});
+                        }
+                        icBill.save().then(() => console.log('Invoice issued successfuly'))
                         .catch((ex)=>{console.log(ex);});
+                        return SendResponse(req, res, {icBill,GcInvoice,VsInvoice});
                    // })
             }
 

@@ -1,119 +1,239 @@
-
 import React from "react";
-import bootstrap from './style/bootstrap.min.css'
-import style from './style/style.css'
-import logo from './logo.jpg'
+import bootstrap from "./style/bootstrap.min.css";
+import style from "./style/style.css";
+import logo from "./logo.jpg";
+import { SetValueLabel, FormatNumber } from "../../../../utility/tools";
 import { Button } from "reactstrap";
 class Viewer extends React.Component {
-
-
-
-    render() {
-        let invoiceData = this.props.location.state.data;
-        //console.log("🚀 ~ file: invoicePrintPage.jsx ~ line 13 ~ Viewer ~ render ~ invoiceData", invoiceData)
-        return <React.Fragment>
-            <div className="container">
-                <div id='print-area' className="col-md-12">
-                    <div className="invoice">
-                        <div className="invoice-company text-inverse f-w-600">
-                            <img src={logo}></img>
-                            <span className="header">SIMIN PARS.co</span>
-                        </div>
-                        <hr />
-                        <div className="invoice-header">
-                            <div className="invoice-from">
-                                <small>from</small>
-                                <address className="m-t-5 m-b-5">
-                                    <strong className="text-inverse">Simin pars.co</strong> <br />
-                                        Gandi st <br />
-                  Tehran-Iran <br />
-                                        Phone: (123) 456-7890 <br />
-                  Fax: (123) 456-7890
-               </address>
-                            </div>
-                            <div className="invoice-to">
-                                <small>to</small>
-                                <address className="m-t-5 m-b-5">
-                                    <strong className="text-inverse">{invoiceData.ShippingLineName}</strong> <br />
-                                    {invoiceData.Address} <br />
-                  Phone: {invoiceData.Tel}
-                                </address>
-                            </div>
-                            <div className="invoice-date">
-                                <small>Invoice Date</small>
-                                <div className="date text-inverse m-t-5">{invoiceData.InvoiceDate}</div>
-                                <small>Invoice-no</small>
-                                <div className="invoice-detail">
-                                    {invoiceData.InvoiceNo} <br />
-                                </div>
-                                <small>$Rate</small>
-                                <div className="invoice-detail">
-                                    {invoiceData.Rate}
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="invoice-detail col">
-                                Vessel/voyage: {invoiceData.VoyageVessel}
-                            </div>
-                            <div className="invoice-detail col-3">
-                                Actual arrival: {invoiceData.ATA}
-                            </div>
-                            <div className="invoice-detail col-3">
-                                Actual leave: {invoiceData.ATD}
-                            </div> 
-                            <div className="invoice-detail col-2">
-                                Dwell: {invoiceData.DwellDate}h
-                            </div>
-                        </div>
-                        <div className="invoice-content">
-                            <div className="table-responsive">
-                                <table className="table table-invoice">
-                                    <thead>
-                                        <tr>
-                                            <th>INVOICE DETAIL</th>
-                                            <th className="text-center" width="10%">TONAGE</th>
-                                            <th className="text-center" width="10%">DWELL</th>
-                                            <th className="text-center" width="10%">FEE</th>
-                                            <th className="text-right" width="20%">LINE TOTAL</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <span className="text-inverse">{invoiceData.billType}</span> <br />
-                                                <small>{invoiceData.VesselType}</small>
-                                            </td>
-                                            <td className="text-center">{invoiceData.GrossTonage}T</td>
-                                            <td className="text-center">{invoiceData.DwellDate}h</td>
-                                            <td className="text-center">${invoiceData.Fee}</td>
-                                            <td className="text-right">${invoiceData.PriceD}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div className="invoice-price">
-                                <div className="invoice-price-left">
-                                    <div className="invoice-price-row">
-                                    </div>
-                                </div>
-                                <div className="invoice-price-right">
-                                    <small>TOTAL</small> <span className="f-w-600">${invoiceData.PriceD}</span><br />
-                                    <span className="f-w-600">IRR {invoiceData.PriceR}</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="invoice-note">
-                            * Make all cheques payable to SIMIN PARS <br />
-            * Payment is due within 30 days
-         </div>
-                    </div>
+  render() {
+    let invoiceData = this.props.location.state.data;
+    console.log(
+      "🚀 ~ file: invoicePrintPage.jsx ~ line 13 ~ Viewer ~ render ~ invoiceData",
+      invoiceData
+    );
+    return (
+      <React.Fragment>
+        <div className="container">
+          <div id="print-area" className="col-md-12">
+            <div className="invoice">
+              <div className="invoice-company text-inverse f-w-600">
+                <img src={logo}></img>
+                <span className="header">SIMIN PARS.co</span>
+              </div>
+              <hr />
+              <row>
+                <col />
+                <div className="invoice-header">
+                  <small className="col-md">
+                    Invoice-no:{" "}
+                    <strong className="text-inverse">
+                      {invoiceData.InvoiceCoverNo}
+                    </strong>{" "}
+                  </small>
+                  <small className="col-md">
+                    Invoice Date:{" "}
+                    <strong className="text-inverse">
+                      {invoiceData.InvoiceCoverDate}
+                    </strong>{" "}
+                  </small>
+                  <small className="col-md">
+                    Dollar Rate:{" "}
+                    <strong className="text-inverse">{invoiceData.Rate}</strong>{" "}
+                  </small>
                 </div>
-            </div><br />
-
-        </React.Fragment>
-    }
-
+                <col />
+                <col />
+                <div className="invoice-header">
+                  <small className="col-md">
+                    Seller:{" "}
+                    <strong className="text-inverse">Simin pars.co</strong>{" "}
+                  </small>
+                  <small className="col-md">
+                    Address:{" "}
+                    <strong className="text-inverse">
+                      No.35 13th avenue Gandi st Tehran Iran{" "}
+                    </strong>{" "}
+                  </small>
+                  <small className="col-md">
+                    ID No: <strong className="text-inverse">1010114364 </strong>{" "}
+                  </small>
+                  <small className="col-md">
+                    Economic No:{" "}
+                    <strong className="text-inverse">411-1135-5887 </strong>{" "}
+                  </small>
+                </div>
+                <col />
+                <col className="invoice-from" />
+                <div className="invoice-header">
+                  <small className="col-md">
+                    Buyer:{" "}
+                    <strong className="text-inverse">
+                      {invoiceData.ShippingLineName}
+                    </strong>{" "}
+                  </small>
+                  <small className="col-md">
+                    Address:{" "}
+                    <strong className="text-inverse">
+                      {invoiceData.Address}
+                    </strong>{" "}
+                  </small>
+                  <small className="col-md">
+                    ID No:{" "}
+                    <strong className="text-inverse">
+                      {invoiceData.NationalCode}{" "}
+                    </strong>{" "}
+                  </small>
+                  <small className="col-md">
+                    Economic No:{" "}
+                    <strong className="text-inverse">
+                      {invoiceData.EconomicCode}{" "}
+                    </strong>{" "}
+                  </small>
+                </div>
+                <col />
+              </row>
+              <div className="row">
+                <div className="invoice-detail col">
+                  Vessel/voyage: {invoiceData.VoyageVessel}
+                </div>
+                <div className="invoice-detail col-3">
+                  Actual arrival: {invoiceData.ATA}
+                </div>
+                <div className="invoice-detail col-3">
+                  Actual leave: {invoiceData.ATD}
+                </div>
+                <div className="invoice-detail col-2">
+                  Dwell: {invoiceData.DwellDate}h
+                </div>
+              </div>
+              <div className="invoice-content">
+                <div className="table-responsive">
+                  <table className="table table-invoice">
+                    <thead>
+                      <tr>
+                        <th>Invoice Detail</th>
+                        <th className="text-center" width="10%">
+                          Tonage
+                        </th>
+                        <th className="text-center" width="10%">
+                          Actual arrival
+                        </th>
+                        <th className="text-center" width="10%">
+                          Actual leave
+                        </th>
+                        <th className="text-center" width="10%">
+                          Dwell
+                        </th>
+                        <th className="text-center" width="10%">
+                          Vessel Name
+                        </th>
+                        <th className="text-center" width="10%">
+                          Dollar Rate
+                        </th>
+                        <th className="text-center" width="10%">
+                          Flag
+                        </th>
+                        <th className="text-right" width="10%">
+                          Price($)
+                        </th>
+                        <th className="text-right" width="10%">
+                          Price(R)
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th className="text-center" width="10%">
+                          {invoiceData.vsbillType}
+                        </th>
+                        <th className="text-center" width="10%">
+                          {invoiceData.GrossTonage}T
+                        </th>
+                        <th className="text-center" width="10%">
+                          {invoiceData.ATA}
+                        </th>
+                        <th className="text-center" width="10%">
+                          {invoiceData.ATD}
+                        </th>
+                        <th className="text-center" width="10%">
+                          {invoiceData.DwellDate} h
+                        </th>
+                        <th className="text-center" width="10%">
+                          {invoiceData.VesselName}
+                        </th>
+                        <th className="text-center" width="10%">
+                          {FormatNumber(invoiceData.Rate)}
+                        </th>
+                        <th className="text-right" width="10%">
+                          {invoiceData.Flag}
+                        </th>
+                        <th className="text-right" width="10%">
+                          {FormatNumber(invoiceData.vsPriceD)}
+                        </th>
+                        <th className="text-right" width="10%">
+                          {FormatNumber(invoiceData.vsPriceR)}
+                        </th>
+                      </tr>
+                      <tr>
+                        <th className="text-center" width="10%">
+                          {invoiceData.gcbillType}
+                        </th>
+                        <th className="text-center" width="10%">
+                          {FormatNumber(invoiceData.GrossTonage)}T
+                        </th>
+                        <th className="text-center" width="10%">
+                          {invoiceData.ATA}
+                        </th>
+                        <th className="text-center" width="10%">
+                          {invoiceData.ATD}
+                        </th>
+                        <th className="text-center" width="10%">
+                          {Math.ceil(invoiceData.DwellDate/24)} D
+                        </th>
+                        <th className="text-center" width="10%">
+                          {invoiceData.VesselName}
+                        </th>
+                        <th className="text-center" width="10%">
+                          {FormatNumber(invoiceData.Rate)}
+                        </th>
+                        <th className="text-right" width="10%">
+                          {invoiceData.Flag}
+                        </th>
+                        <th className="text-right" width="10%">
+                          {FormatNumber(invoiceData.gcPriceD)}
+                        </th>
+                        <th className="text-right" width="10%">
+                          {FormatNumber(invoiceData.gcPriceR)}
+                        </th>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="invoice-price">
+                  <div className="invoice-price-left">
+                    <div className="invoice-price-row">
+                        خواهشمند است مبلغ {FormatNumber(invoiceData.SumInvoicePriceR)}  ریال به حساب شماره 0106003276003 نزد بانک ملی و یا حساب شبا IR740170000000106003276003 به نام شرکت توسعه خدمات دریایی و بندری سینا واریز نمایید
+                    </div>
+                  </div>
+                  <div className="invoice-price-right">
+                    <small>TOTAL</small>{" "}
+                    <span className="f-w-600">{FormatNumber(invoiceData.SumInvoicePriceD)} $</span>
+                    <br />
+                    <span className="f-w-600">{FormatNumber(invoiceData.SumInvoicePriceR)} IRR</span>
+                  </div>
+                </div>
+              </div>
+              <div className="invoice-note">
+                * Make all cheques payable to SIMIN PARS <br />* Payment is due
+                within 30 days
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+      </React.Fragment>
+    );
+  }
 }
 
 export default Viewer;
