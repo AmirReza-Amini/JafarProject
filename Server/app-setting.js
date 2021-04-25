@@ -15,8 +15,8 @@ module.exports = {
       driver: "mssql",
       config: {
         user: "sa",
-        password: "8854po",
-        server: "172.24.17.15",
+        password: "qwe123!@#",
+        server: "172.16.34.10\\sql2014",
         database: "NeginDb",
         pool: {
           max: 10,

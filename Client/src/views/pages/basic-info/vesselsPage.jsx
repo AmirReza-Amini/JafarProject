@@ -47,12 +47,12 @@ const initialValues = {
 
 const validationSchema = Yup.object({
   selectVesselType: Yup.string().required("Entet Vessel Type!"),
-  callSign: Yup.string().required("Enter Call Sign!"),
-  selectNationality: Yup.string().required("Enter Nationality!"),
+ // callSign: Yup.string().required("Enter Call Sign!"),
+ // selectNationality: Yup.string().required("Enter Nationality!"),
   vesselName: Yup.string().required("Enter Vessel Name!"),
-  vesselLength: Yup.string().required("Enter Vessel Length!"),
-  numOfBays: Yup.string().required("Enter Number Of Bay!"),
-  activeCraneQty: Yup.string().required("Enter Active Crane Qty!"),
+  //vesselLength: Yup.string().required("Enter Vessel Length!"),
+  //numOfBays: Yup.string().required("Enter Number Of Bay!"),
+  //activeCraneQty: Yup.string().required("Enter Active Crane Qty!"),
   grossTonage: Yup.string().required("Enter Vessel Gross Tonage!"),
   selectFlag: Yup.string().required("Enter Flag Of Vessel!"),
 });

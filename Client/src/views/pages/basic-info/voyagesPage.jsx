@@ -53,7 +53,11 @@ const validationSchema = Yup.object().shape({
   incomingVoyageNo: Yup.string().required("Enter Incoming Voyage Number!"),
   selectOwner: Yup.string().required("Enter Owner Of Voyage!"),
   selectAgent: Yup.string().required("Enter Agent Of Voyage!"),
-  eta: Yup.string().required("Enter ETA Date!")
+  ata: Yup.string().required("Enter ATA, Date!"),
+  atd: Yup.string().required("Enter ATD Date!")
+  
+
+  //eta: Yup.string().required("Enter ETA Date!")
   // atd: Yup.string()
   //   .when("voyageStatus", {
   //     is: false,
@@ -755,6 +759,7 @@ const VoyagesPage = (props) => {
         <ModalBody>
           <Formik
             initialValues={initialValues}
+            validationSchema={validationSchema}
             onSubmit={(values) => {
               onSubmitCreateVoyage(values);
             }}
