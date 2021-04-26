@@ -147,7 +147,7 @@ class Viewer extends React.Component {
                           {invoiceData.vsbillType}
                         </th>
                         <th className="text-center" width="10%">
-                          {invoiceData.GrossTonage}T
+                          {invoiceData.GrossTonage} T
                         </th>
                         <th className="text-center" width="10%">
                           {invoiceData.ATA}
@@ -179,7 +179,7 @@ class Viewer extends React.Component {
                           {invoiceData.gcbillType}
                         </th>
                         <th className="text-center" width="10%">
-                          {FormatNumber(invoiceData.GrossTonage)}T
+                          {FormatNumber(invoiceData.GrossTonage)} T
                         </th>
                         <th className="text-center" width="10%">
                           {invoiceData.ATA}

@@ -149,7 +149,7 @@ const CurrencyPage = (props) => {
                 <Row>
                   <Col md="9">
                     <h4 className="form-section">
-                      <ShoppingBag size={20} color="#212529" /> Shipping Lines
+                      <ShoppingBag size={20} color="#212529" /> Currency Rates
                     </h4>
                   </Col>
                   <Col>
@@ -158,7 +158,7 @@ const CurrencyPage = (props) => {
                       type="button"
                       onClick={handleCreateCurrency}
                     >
-                      Add New Shipping Line
+                      Add New Currency Rate
                     </Button>
                   </Col>
                 </Row>
