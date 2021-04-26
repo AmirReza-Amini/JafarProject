@@ -17,6 +17,7 @@
     "mongoose": "^5.9.23",
     "mssql": "^5.1.0",
     "nodemon": "^2.0.4",
+    "passphrase": "^1.0.3",
     "socket.io": "^2.3.0",
     "sworm": "^3.8.0"
   }
