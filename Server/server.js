@@ -15,7 +15,7 @@ app.use(require('./bootstrap/init'));
 
 const serverHttp = require('http').createServer(app);
 const serverHttps = require('https').createServer({
-  key: fs.readFileSync("./keys/client-key.pem"),
+  key: fs.readFileSync("./keys/client-key.pem"), 
   cert: fs.readFileSync("./keys/client-cert.pem"),
     secureOptions: constants.SSL_OP_NO_TLSv1 | constants.SSL_OP_NO_TLSv1_1,
     passphrase: 'PASSWORD'
