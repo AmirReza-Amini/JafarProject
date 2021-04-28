@@ -48,15 +48,17 @@ exports.CalculateVsInvoice = async (voyage, currency, discountData) => {
         let lastVsBill = (await db.query(queries.BILLING.VESSEL_STOPPAGE.loadLastBill));
         let VsInvoiceNo = lastVsBill.length != 0 ? lastVsBill[0].InvoiceNo : '';
 
-        let price = Dwell > tariffVesselStoppage.NormalHour ? tariffVesselStoppage.ExtraPrice : tariffVesselStoppage.NormalPrice;
+        let price = Dwell > tariffVesselStoppage.NormalHour ?
+            (tariffVesselStoppage.NormalHour * tariffVesselStoppage.NormalPrice) + (Dwell - tariffVesselStoppage.NormalHour) * tariffVesselStoppage.ExtraPrice :
+            tariffVesselStoppage.NormalPrice * Dwell;
         let discountPercent = discountData.filter(m => m.FlagId == Flag && m.ToGrossTonage > GrossTonage)[0];
         let dp = 1.0 - (discountPercent ? discountPercent.discountPercent : discountData.filter(m => m.FlagId == 0)[0].discountPercent);
 
         let invoice = {
             VesselStopageTariffId: tariffVesselStoppage.VesselStoppageTariffDetailId,
             DwellHour: Dwell,
-            priceD: (Dwell * price * GrossTonage * dp) / 100,
-            priceR: (Dwell * price * GrossTonage * dp * currency.Rate) / 100,
+            priceD: (price * GrossTonage * dp) / 100,
+            priceR: (price * GrossTonage * dp * currency.Rate) / 100,
             voyageId: voyage.voyageId,
             InvoiceDate: new Date(),
             Status: 1,
