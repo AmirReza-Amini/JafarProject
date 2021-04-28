@@ -16,10 +16,10 @@ FROM dbo.Voyages AS V
     INNER JOIN dbo.GeneralTable AS GT ON GT.GeneralCode = v2.VesselType
     INNER JOIN dbo.GeneralTable AS GT2 ON GT2.GeneralCode = v.Status
     INNER JOIN dbo.Countries AS C ON C.CountryId = V2.Flag
-    INNER JOIN dbo.Countries AS C2 ON C2.CountryId = V2.Nationality
-    INNER JOIN dbo.Ports AS P ON P.PortId = V.NextPort
-    INNER JOIN dbo.Ports AS P2 ON P2.PortId = V.PreviousPort
-    INNER JOIN dbo.Ports AS P3 ON P3.PortId = V.OriginPort
+    LEFT JOIN dbo.Countries AS C2 ON C2.CountryId = V2.Nationality
+    LEFT JOIN dbo.Ports AS P ON P.PortId = V.NextPort
+    LEFT  JOIN dbo.Ports AS P2 ON P2.PortId = V.PreviousPort
+    LEFT JOIN dbo.Ports AS P3 ON P3.PortId = V.OriginPort
 	LEFT JOIN dbo.GarbageCollectionInvoices AS GCI ON GCI.VoyageId = V.VoyageId
 	LEFT JOIN dbo.VesselStopageInvoices AS VSI ON VSI.VoyageId = V.VoyageId
 WHERE GT.GeneralType = 1 AND GT2.GeneralType = 2 AND V.VoyageId = @voyageId
