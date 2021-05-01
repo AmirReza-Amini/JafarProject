@@ -1,6 +1,6 @@
 {
-    "apiUrl": "http://172.16.34.10:4001/api",
-    "apiUrls": "http://localhost:4000/api", 
+    "apiUrls": "http://172.16.34.10:4001/api",
+    "apiUrl": "http://localhost:4000/api", 
     "tokenHashKey": "8c10%$#f9be0b053082",
     "useAuthentication": true,
     "socketAddress":"http://172.16.34.10:4001"
