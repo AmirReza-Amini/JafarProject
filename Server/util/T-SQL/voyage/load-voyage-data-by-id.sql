@@ -16,7 +16,7 @@ FROM dbo.Voyages AS V
     INNER JOIN dbo.Vessels AS V2 ON V2.VesselId = V.VesselId
     INNER JOIN dbo.GeneralTable AS GT ON GT.GeneralCode = v2.VesselType
     INNER JOIN dbo.GeneralTable AS GT2 ON GT2.GeneralCode = v.Status
-    LEft JOIN dbo.Countries AS C ON C.CountryId = V2.Flag
+    Inner JOIN dbo.Countries AS C ON C.CountryId = V2.Flag
     LEft JOIN dbo.Countries AS C2 ON C2.CountryId = V2.Nationality
     LEft JOIN dbo.Ports AS P ON P.PortId = V.NextPort
     LEft JOIN dbo.Ports AS P2 ON P2.PortId = V.PreviousPort
