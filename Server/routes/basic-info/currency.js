@@ -15,29 +15,31 @@ router
   // })
   .get(async (req, res) => {
     try {
+
       let result = await db.query("SELECT TOP 100 * FROM dbo.Currencies");
       console.log("currency :", result);
       return SendResponse(req, res, result);
     } catch (error) {
       return SendResponse(req, res, "get-currencies", false, 500);
+
     }
   })
   .post(auth, async (req, res) => {
+    
     if (!req.body)
       return SendResponse(req, res, "Input data is not valid", false, 400);
     const check = await DoesUserHavePermission(
       req.user,
       "BASIC-INFORMATION-CURRENCY-CREATE"
-    );
-    check.result = true;
-    if (check.result) {
+    );  
+       if (check.result) {
       try {
         const data = req.body;
-        console.log("beforssss", data.rate ,data.date);
         let query = await db.query(queries.BASIC_INFO.CURRENCY.insertCurrency, {
           rate: data.rate,
           date: data.date,
         });
+        console.log("beforssss", query);
         const temp =
           query && query.length > 0 && query[0].RESULT == true ? true : false;
         const message = temp
