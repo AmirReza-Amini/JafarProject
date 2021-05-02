@@ -8,10 +8,12 @@ module.exports = async (data, logToConsole = false) => {
     log.req = data.req;
     log.res = data.res;
     log.client = data.client;
+      //console.log('logfggg',data.res.data)
     try {
+       
         if (logToConsole)
             console.log(`LOGGER --- ${new Date()}| `, req);
-        await log.save();
+      //  await log.save();
     }
     catch (ex) {
         console.log(ex);

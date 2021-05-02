@@ -12,16 +12,17 @@ exports.Map = (source, dest, excludeList = []) => {
     })
 }
 
-exports.SendResponse = (req, res, data, result = true, code = 200, key = '') => {
-if(key!=''){
-    
-}
+exports.SendResponse = (req, res, data, result = true, code = 200, dataForLog = '') => {
+
+
     req.body.status = code;
     req.body.to = req.body.from;
     req.body.data = data;
     delete req.body.from;
     const a = req.user ? this.GenerateAuthToken(req.user) : null;
-    Log({ type: result ? 'info' : 'error', res: req.body })
+
+    console.log('object',req.body)
+     Log({ type: result ? 'info' : 'error', res: req.body })
     res.status(code).json(
         Object.assign(req.base, {
             result: result,

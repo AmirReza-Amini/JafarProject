@@ -13,10 +13,17 @@ app.use(express.json());
 app.use(express.static(__dirname + '/www'));
 app.use(require('./middleware/log'))
 app.use(require('./bootstrap/init'));
-// var options = {
-//   key: fs.readFileSync('./util/https/client-key.pem'),
-//   cert: fs.readFileSync('./util/https/client-cert.pem')
-// };
+
+const serverHttp = require('http').createServer(app);
+// const serverHttps = require('https').createServer({
+//   key: fs.readFileSync("./keys/client-key.pem"), 
+//   cert: fs.readFileSync("./keys/client-cert.pem"),
+//     secureOptions: constants.SSL_OP_NO_TLSv1 | constants.SSL_OP_NO_TLSv1_1,
+//     passphrase: 'PASSWORD'
+//   },app); 
+
+
+
 require('./bootstrap/mongodb');
 require('./routes')(app);
 
@@ -33,6 +40,6 @@ serverHttp.listen((setting.portNo), () => {
   console.log(`Http Server started on ${setting.portNo} --- ${new Date()}`);
 });
 
-//serverHttps.listen((options,4100), () => {
- // console.log(`Https Server started on 4100 --- ${new Date()}`);
-//});
+// serverHttps.listen((4100), () => {
+//   console.log(`Https Server started on 4100 --- ${new Date()}`);
+// });

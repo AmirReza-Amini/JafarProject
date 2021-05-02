@@ -10,7 +10,8 @@ SELECT
 	GCI.InvoiceNo as gcInvoiceNo,GCI.InvoiceDate as gcInvoiceDate,gci.PriceD as gcPriceD,gci.PriceR as gcPriceR,
     VSI.VesselStopageInvoiceId as vsInvoiceId,
 	VSI.InvoiceNo as vsInvoiceNo ,VSI.InvoiceDate as vsInvoiceDate,
-    VSI.PriceD as vsPriceD,VSI.PriceR as vsPriceR
+     VSI.PriceD as vsPriceD,VSI.PriceR as vsPriceR,
+	IC.InvoiceCoverDate , IC.SumInvoicePriceD,IC.SumInvoicePriceR, IC.InvoiceCoverNo,IC.InvoiceCoverId
 FROM dbo.Voyages AS V
     INNER JOIN dbo.Vessels AS V2 ON V2.VesselId = V.VesselId
     INNER JOIN dbo.GeneralTable AS GT ON GT.GeneralCode = v2.VesselType
