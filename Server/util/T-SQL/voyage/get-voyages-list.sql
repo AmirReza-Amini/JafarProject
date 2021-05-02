@@ -23,8 +23,8 @@
                 INNER JOIN dbo.ShippingLines AS AG ON AG.ShippingLineId = VI.AgentId
                 INNER JOIN dbo.ShippingLines AS OW ON OW.ShippingLineId = VI.OwnerId
                 INNER JOIN dbo.Vessels AS VS ON VS.VesselId = VI.VesselId
-                INNER JOIN dbo.Ports AS PP ON PP.PortId = VI.PreviousPort
-                INNER JOIN dbo.Ports AS NP ON NP.PortId = VI.NextPort
-                INNER JOIN dbo.Ports AS OP ON OP.PortId = VI.OriginPort
+                Left JOIN dbo.Ports AS PP ON PP.PortId = VI.PreviousPort
+                Left JOIN dbo.Ports AS NP ON NP.PortId = VI.NextPort
+                Left JOIN dbo.Ports AS OP ON OP.PortId = VI.OriginPort
                 INNER JOIN dbo.GeneralTable AS GT ON GT.GeneralCode = VI.Status
                                                      AND GT.GeneralType = 2;
