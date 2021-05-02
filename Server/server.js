@@ -14,7 +14,6 @@ app.use(express.static(__dirname + '/www'));
 app.use(require('./middleware/log'))
 app.use(require('./bootstrap/init'));
 
-const serverHttp = require('http').createServer(app);
 // const serverHttps = require('https').createServer({
 //   key: fs.readFileSync("./keys/client-key.pem"), 
 //   cert: fs.readFileSync("./keys/client-cert.pem"),
