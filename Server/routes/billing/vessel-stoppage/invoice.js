@@ -87,7 +87,7 @@ router
             
             
             if (req.body.isPreInvoice) {
-              return SendResponse(req, res, { icBill, GcInvoice, VsInvoice });
+              return SendResponse(req, res, {icBill, GcInvoice, VsInvoice});
             }
         icBill
           .save()
