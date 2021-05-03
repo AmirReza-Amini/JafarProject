@@ -1,2 +1,2 @@
-SELECT TOP 100 * FROM dbo.Currencies
+SELECT TOP 1 * FROM dbo.Currencies
 ORDER BY CurrencyId
