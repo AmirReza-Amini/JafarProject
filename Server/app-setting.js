@@ -23,6 +23,10 @@ module.exports = {
           min: 0,
           idleTimeoutMillis: 60000,
         },
+        options:{
+          encrypt:true,
+          enableArithAbort:true
+        }
       },
     },
   },

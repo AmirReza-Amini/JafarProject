@@ -14,7 +14,7 @@ class Viewer extends React.Component {
             <div className="invoice">
               <div className="invoice-company text-inverse f-w-600">
                 <img src={logo}></img>
-                <span className="header">SIMIN PARS.co</span>
+                <span className="header">SPMCO</span>
               </div>
               <hr />
               <row>
@@ -203,7 +203,7 @@ class Viewer extends React.Component {
                         </th>
                       </tr>
                     </tbody>
-                  </table>
+                  </table>SOMCO
                 </div>
                 <div className="invoice-price">
                   <div className="invoice-price-left">

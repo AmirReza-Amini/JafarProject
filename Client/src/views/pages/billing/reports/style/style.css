@@ -6,6 +6,7 @@ body {
 .header {
   font-size: xx-large;
   font-weight: bold;
+  position: relative;
 }
 
 .invoice {
@@ -21,6 +22,7 @@ body {
   margin: 0 -20px;
   background: #bcbebe3a;
   padding: 20px;
+  font-size: 17px;
 }
 
 .invoice-date,
@@ -88,10 +90,11 @@ body {
   width: 25%;
   background: #c4c4c4;
   color: rgb(0, 0, 0);
-  font-size: 28px;
+  font-size: 18px;
   text-align: right;
   vertical-align: bottom;
   font-weight: 300;
+  direction: ltr;
 }
 
 .invoice-price .invoice-price-right small {
