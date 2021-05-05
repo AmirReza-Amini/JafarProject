@@ -17,12 +17,13 @@ exports.CalculateGcInvoice = async (voyage, currency, discountData) => {
         let DwellDays = Math.ceil(Dwell / 24);
         let discountPercent = discountData.filter(m => m.FlagId == Flag && m.ToGrossTonage > GrossTonage)[0];
         let dp = 1.0 - (discountPercent ? discountPercent.discountPercent : discountData.filter(m => m.FlagId == 0)[0].discountPercent);
+        let currencyRate = Flag == 207 ? currency.PRate: currency.FRate;
 
         let invoice = {
             GarbageCollectionTariffId: tariffGarbageCollection.GarbageCollectionTariffDetailId,
             DwellDate: DwellDays,
             priceD: DwellDays * tariffGarbageCollection.Price * dp,
-            priceR: DwellDays * tariffGarbageCollection.Price * dp * currency.Rate,
+            priceR: DwellDays * tariffGarbageCollection.Price * dp * currencyRate,
             voyageId: voyage.voyageId,
             InvoiceDate: new Date(),
             currencyId: currency.CurrencyId,
@@ -53,12 +54,12 @@ exports.CalculateVsInvoice = async (voyage, currency, discountData) => {
             tariffVesselStoppage.NormalPrice * Dwell;
         let discountPercent = discountData.filter(m => m.FlagId == Flag && m.ToGrossTonage > GrossTonage)[0];
         let dp = 1.0 - (discountPercent ? discountPercent.discountPercent : discountData.filter(m => m.FlagId == 0)[0].discountPercent);
-
+        let currencyRate = Flag == 207 ? currency.PRate: currency.FRate
         let invoice = {
             VesselStopageTariffId: tariffVesselStoppage.VesselStoppageTariffDetailId,
             DwellHour: Dwell,
             priceD: (price * GrossTonage * dp) / 100,
-            priceR: (price * GrossTonage * dp * currency.Rate) / 100,
+            priceR: (price * GrossTonage * dp * currencyRate) / 100,
             voyageId: voyage.voyageId,
             InvoiceDate: new Date(),
             Status: 1,

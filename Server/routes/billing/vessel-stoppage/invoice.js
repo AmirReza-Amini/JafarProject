@@ -49,12 +49,14 @@ router
       let discount = await db.query(queries.BILLING.COMMON.loadDiscount);
       if (!discount)
         return SendResponse(req, res, "Discount data not found", false, 404);
-
-      let currency = (
-        await db.query(queries.BASIC_INFO.CURRENCY.loadLastCurrency)
-      )[0];
-      if (!currency)
-        return SendResponse(req, res, "Currency data not found", false, 404);
+        let currency = (
+          await db.query(queries.BASIC_INFO.CURRENCY.loadLastCurrency,{
+            date:voyage[0].ATA
+          })
+          )[0];
+          //console.log('for currency data load:',currency)
+          if (!currency)
+          return SendResponse(req, res, "Currency data not found", false, 404);
 
       voyage.voyageId = req.body.voyageId;
       let GcInvoice = await CalculateGcInvoice(voyage, currency, discount);
@@ -73,7 +75,7 @@ router
         if (!GcInvoice.hasError && !VsInvoice.hasError) {
           // db.transaction(() => {
             var icBill = IcTable({
-              InvoiceCoverNo: GenerateInvoiceNo(lastCoverNo, "IC"),
+              InvoiceCoverNo: GenerateInvoiceNo(lastCoverNo, "N"),
               InvoiceCoverDate: new Date(),
               IsPaid: false,
               Status: 1,

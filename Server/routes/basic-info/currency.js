@@ -16,7 +16,7 @@ router
   .get(async (req, res) => {
     try {
 
-      let result = await db.query("SELECT TOP 100 * FROM dbo.Currencies");
+      let result = await db.query("SELECT TOP 100 * FROM dbo.Currencies Order by 1 desc");
       console.log("currency :", result);
       return SendResponse(req, res, result);
     } catch (error) {
@@ -35,11 +35,12 @@ router
        if (check.result) {
       try {
         const data = req.body;
+        console.log("beforssss", data);
         let query = await db.query(queries.BASIC_INFO.CURRENCY.insertCurrency, {
-          rate: data.rate,
+          frate: data.frate,
+          prate: data.prate,
           date: data.date,
         });
-        console.log("beforssss", query);
         const temp =
           query && query.length > 0 && query[0].RESULT == true ? true : false;
         const message = temp

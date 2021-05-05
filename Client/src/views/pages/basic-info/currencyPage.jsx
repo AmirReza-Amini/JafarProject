@@ -23,11 +23,13 @@ import antdClass2 from "../../../assets/css/vendors/customAntdTable.css";
 import * as Yup from "yup";
 toast.configure({ bodyClassName: "customFont" });
 const initialValues = {
-  rate: "",
+  frate: "",
+  prate:"",
   date: "",
 };
 const validationSchema = Yup.object({
-  rate: Yup.string().required("Enter Daily Doller Rate"),
+  frate: Yup.string().required("Enter Daily Foreign Doller Rate "),
+  prate: Yup.string().required("Enter Daily Persian Doller Rate"),
   date: Yup.string().required("Enter Date"),
 });
 const CurrencyPage = (props) => {
@@ -39,9 +41,16 @@ const CurrencyPage = (props) => {
 
   const columns = [
     {
-      title: "Rate",
-      dataIndex: "rate",
-      key: "rate",
+      title: "Forieign Rate",
+      dataIndex: "frate",
+      key: "frate",
+      sortDirections: ["ascend", "descend"],
+      defaultSortOrder: "ascend",
+    },
+    {
+      title: "Persian Rate",
+      dataIndex: "prate",
+      key: "prate",
       sortDirections: ["ascend", "descend"],
       defaultSortOrder: "ascend",
     },
@@ -70,7 +79,8 @@ const CurrencyPage = (props) => {
             return {
               key: item.CurrencyId,
               currencyId: item.CurrencyId,
-              rate: item.Rate,
+              frate: item.FRate,
+              prate: item.PRate,
               //date: moment.from(item.Date,'YYYY/MM/DD hh:mm:ss').locale('fa').format('YYYY/MM/DD hh:mm:ss')
               date: ToPersianDate(item.Date),
             };
@@ -100,7 +110,8 @@ const CurrencyPage = (props) => {
   const onSubmitCreateCurrency = (values) => {
     console.log("values", values);
     let parameters = {
-        rate: values.rate,
+        frate: values.frate,
+        prate: values.prate,
         date:values.date 
        }
        addNewCurrency(parameters).then(response => {
@@ -114,7 +125,8 @@ const CurrencyPage = (props) => {
                     const tempList = res.data.data.map(item => {
                         return {
                             key: item.currencyId,
-                            rate: item.rate,
+                            frate: item.frate,
+                            prate: item.prate,
                             date: item.date
                         }
                     })
@@ -149,7 +161,7 @@ const CurrencyPage = (props) => {
                 <Row>
                   <Col md="9">
                     <h4 className="form-section">
-                      <ShoppingBag size={20} color="#212529" /> Shipping Lines
+                      <ShoppingBag size={20} color="#212529" /> Currency Rates
                     </h4>
                   </Col>
                   <Col>
@@ -158,7 +170,7 @@ const CurrencyPage = (props) => {
                       type="button"
                       onClick={handleCreateCurrency}
                     >
-                      Add New Shipping Line
+                      Add New Currency Rate
                     </Button>
                   </Col>
                 </Row>
@@ -207,11 +219,19 @@ const CurrencyPage = (props) => {
                         <Col md="6">
                           <FormikControl
                             control="inputMaskDebounce"
-                            name="rate"
+                            name="frate"
                             className="ltr"
                             type="number"
-                            label="Currency Rate"
-                            defaultValue={state.currentRow.currencyRate}
+                            label="Currency Foreign Rate"
+                            defaultValue={state.currentRow.currencyFRate}
+                          />
+                          <FormikControl
+                            control="inputMaskDebounce"
+                            name="prate"
+                            className="ltr"
+                            type="number"
+                            label="Currency Persian Rate"
+                            defaultValue={state.currentRow.currencyPRate}
                           />
                         </Col>
                         <Col md="6">

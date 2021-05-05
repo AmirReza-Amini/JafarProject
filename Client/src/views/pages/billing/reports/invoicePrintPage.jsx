@@ -14,7 +14,7 @@ class Viewer extends React.Component {
             <div className="invoice">
               <div className="invoice-company text-inverse f-w-600">
                 <img src={logo}></img>
-                <span className="header">SPMCO</span>
+                <span className="header">Sina Port And Marine Services Company</span>
               </div>
               <hr />
               <row>
@@ -158,7 +158,7 @@ class Viewer extends React.Component {
                           {invoiceData.VesselName}
                         </th>
                         <th className="text-center" width="10%">
-                          {FormatNumber(invoiceData.Rate)}
+                          {invoiceData.Flag == "Iran" ?FormatNumber(invoiceData.PRate) :FormatNumber(invoiceData.FRate)}
                         </th>
                         <th className="text-right" width="10%">
                           {invoiceData.Flag}
@@ -190,7 +190,7 @@ class Viewer extends React.Component {
                           {invoiceData.VesselName}
                         </th>
                         <th className="text-center" width="10%">
-                          {FormatNumber(invoiceData.Rate)}
+                        {invoiceData.Flag == "Iran" ?FormatNumber(invoiceData.PRate) :FormatNumber(invoiceData.FRate)}
                         </th>
                         <th className="text-right" width="10%">
                           {invoiceData.Flag}

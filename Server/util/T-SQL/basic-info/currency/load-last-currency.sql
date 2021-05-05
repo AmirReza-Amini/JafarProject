@@ -1,2 +1,3 @@
 SELECT TOP 1 * FROM dbo.Currencies
-ORDER BY CurrencyId
+WHERE date >=CAST(@date as Date)
+ORDER BY Date

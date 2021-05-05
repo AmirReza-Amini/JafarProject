@@ -22,11 +22,12 @@ module.exports = {
           max: 10,
           min: 0,
           idleTimeoutMillis: 60000,
-        },
-        options:{
-          encrypt:true,
-          enableArithAbort:true
         }
+        // ,
+        // options:{
+        //   encrypt:true,
+        //   enableArithAbort:true
+        // }
       },
     },
   },

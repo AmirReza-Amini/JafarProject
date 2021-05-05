@@ -1,3 +1,4 @@
 EXEC sp_Node_InsertCurrency
-@Rate = @rate
+@FRate = @frate,
+@PRate = @prate
 ,@Date = @date
