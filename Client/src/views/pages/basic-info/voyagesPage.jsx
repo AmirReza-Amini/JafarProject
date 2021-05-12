@@ -53,7 +53,9 @@ const validationSchema = Yup.object().shape({
   incomingVoyageNo: Yup.string().required("Enter Incoming Voyage Number!"),
   selectOwner: Yup.string().required("Enter Owner Of Voyage!"),
   selectAgent: Yup.string().required("Enter Agent Of Voyage!"),
-  eta: Yup.string().required("Enter ETA Date!")
+  //eta: Yup.string().required("Enter ETA Date!")
+  ata: Yup.string().required("Enter Arrival Date!"),
+  atd: Yup.string().required("Enter Departure Date!")
   // atd: Yup.string()
   //   .when("voyageStatus", {
   //     is: false,
@@ -185,6 +187,7 @@ const VoyagesPage = (props) => {
   const columns = [
     {
       title: "Action",
+      width:"7vw",
       key: "action",
       render: (text, record) => (
         <Space size="middle"> 
@@ -208,6 +211,7 @@ const VoyagesPage = (props) => {
       },
       sortDirections: ["ascend", "descend"],
       defaultSortOrder: "ascend",
+      width:"7vw"
     },
     {
       title: "Outgoing Voyage No",
@@ -219,61 +223,73 @@ const VoyagesPage = (props) => {
       },
       sortDirections: ["ascend", "descend"],
       defaultSortOrder: "ascend",
+      width:"7vw"
     },
     {
       title: "Vessel",
       dataIndex: "vesselName",
       key: "vesselName",
+      width:"7vw"
     },
     {
       title: "Owner",
       dataIndex: "ownerName",
-      key: "wner",
+      key: "owner",
+      width:"7vw"
     },
     {
       title: "Agent",
       dataIndex: "agentName",
       key: "agent",
+      width:"7vw"
     },
     {
       title: "Status",
       dataIndex: "voyageStatus",
       key: "status",
+      width:"7vw"
     },
     {
       title: "ETA",
       dataIndex: "estimatedTimeArrival",
       key: "eta",
+      width:"7vw"
     },
     {
       title: "ATA",
       dataIndex: "actualTimeArrival",
       key: "ata",
+      width:"7vw"
     },
     {
       title: "ETD",
       dataIndex: "estimatedTimeDeparture",
       key: "etd",
+      width:"7vw"
     },
     {
       title: "ATD",
       dataIndex: "actualTimeDeparture",
       key: "atd",
+      width:"7vw"
     },
     {
       title: "Origin Port",
       dataIndex: "originPortName",
       key: "OriginPort",
+      width:"7vw"
     },
     {
       title: "Previous Port",
       dataIndex: "previousPortName",
       key: "previous",
+      width:"7vw"
     },
     {
       title: "Next Port",
       dataIndex: "nextPortName",
       key: "nextPort",
+      width:"7vw"
     },
   ];
 
@@ -755,6 +771,7 @@ const VoyagesPage = (props) => {
         <ModalBody>
           <Formik
             initialValues={initialValues}
+            validationSchema = {validationSchema}
             onSubmit={(values) => {
               onSubmitCreateVoyage(values);
             }}

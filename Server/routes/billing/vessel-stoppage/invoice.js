@@ -68,6 +68,7 @@ router
         let lastCoverNo =
         lastCover.length != 0 ? lastCover[0].InvoiceCoverNo : "";
         
+        console.log("last invoice no:",lastCoverNo);
         let IcTable = db.model({ table: "InvoiceCover" });
         let VsTable = db.model({ table: "VesselStopageInvoices" });
         let GcTable = db.model({ table: "GarbageCollectionInvoices" });

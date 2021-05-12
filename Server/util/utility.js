@@ -37,14 +37,18 @@ exports.LoadText = (filePath) => {
 
 exports.GenerateInvoiceNo = (number, prefix) => {
     let currentYear = pc.ToPersian(new Date()).substring(0, 4);
+    
     if (number) {
-        let lastYear = number.substring(2, 6);
+        let lastYear = number.substring(1, 5);
+      
         if (lastYear == currentYear){
-            let result = prefix + (parseInt(number.substring(2, 14)) + 1)
+            let result = prefix + (parseInt(number.substring(1, 12)) + 1)
+            
+            
             return result;
         }
     }
-    return prefix + currentYear + '00000001' 
+    return prefix + currentYear + '0000001' 
 } 
 
 exports.ToPersian = (garegorianDate) => {

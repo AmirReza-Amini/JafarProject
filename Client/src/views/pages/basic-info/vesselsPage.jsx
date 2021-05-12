@@ -47,12 +47,12 @@ const initialValues = {
 
 const validationSchema = Yup.object({
   selectVesselType: Yup.string().required("Entet Vessel Type!"),
-  callSign: Yup.string().required("Enter Call Sign!"),
-  selectNationality: Yup.string().required("Enter Nationality!"),
+  //callSign: Yup.string().required("Enter Call Sign!"),
+  //selectNationality: Yup.string().required("Enter Nationality!"),
   vesselName: Yup.string().required("Enter Vessel Name!"),
-  vesselLength: Yup.string().required("Enter Vessel Length!"),
-  numOfBays: Yup.string().required("Enter Number Of Bay!"),
-  activeCraneQty: Yup.string().required("Enter Active Crane Qty!"),
+  //vesselLength: Yup.string().required("Enter Vessel Length!"),
+ // numOfBays: Yup.string().required("Enter Number Of Bay!"),
+  //activeCraneQty: Yup.string().required("Enter Active Crane Qty!"),
   grossTonage: Yup.string().required("Enter Vessel Gross Tonage!"),
   selectFlag: Yup.string().required("Enter Flag Of Vessel!"),
 });
@@ -184,21 +184,25 @@ const VesselsPage = (props) => {
       },
       sortDirections: ["ascend", "descend"],
       defaultSortOrder: "ascend",
+      width:"7vw"
     },
     {
       title: "Type",
       dataIndex: "vesselTypeName",
       key: "vesselTypeName",
+      width:"7vw"
     },
     {
       title: "Gross Tonage",
       dataIndex: "grossTonage",
       key: "grossTonage",
+      width:"7vw"
     },
     {
       title: "Flag",
       dataIndex: "flagName",
       key: "flagName",
+      width:"7vw",
       render: (flag) => (
         <Tag color={flag === "Iran" ? "blue" : "volcano"}>{flag}</Tag>
       ),
@@ -207,29 +211,35 @@ const VesselsPage = (props) => {
       title: "Nationality",
       dataIndex: "nationalityName",
       key: "nationalityName",
+      width:"7vw"
     },
     {
       title: "Length",
       dataIndex: "vesselLength",
       key: "vesselLength",
+      width:"7vw"
     },
     {
       title: "Number Of Bays",
       dataIndex: "numberOfBays",
       key: "numberOfBays",
+      width:"7vw"
     },
     {
       title: "Active Crane Qty",
       dataIndex: "activeCraneQty",
       key: "activeCraneQty",
+      width:"7vw"
     },
     {
       title: "Call Sign",
       dataIndex: "callSign",
       key: "callSign",
+      width:"7vw"
     },
     {
       title: "Action",
+      width:"7vw",
       key: "action",
       render: (text, record) => (
         <Space size="middle">

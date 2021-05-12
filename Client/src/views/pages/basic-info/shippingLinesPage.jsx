@@ -127,34 +127,41 @@ const ShippingLinesPage = (props) => {
             },
             sortDirections: ['ascend', 'descend'],
             defaultSortOrder: 'ascend',
+            width:"7vw"
         },
         {
             title: 'Economic Code',
             dataIndex: 'economicCode',
-            key: 'economicCode'
+            key: 'economicCode',
+            width:"7vw"
         },
         {
             title: 'Tel',
             dataIndex: 'tel',
-            key: 'tel'
+            key: 'tel',
+            width:"7vw"
         },
         {
             title: 'Address',
             dataIndex: 'address',
-            key: 'address'
+            key: 'address',
+            width:"7vw"
         },
         {
             title: 'Email',
             dataIndex: 'email',
-            key: 'email'
+            key: 'email',
+            width:"7vw"
         },
         {
             title: 'NationalCode',
             dataIndex: 'nationalCode',
-            key: 'nationalCode'
+            key: 'nationalCode',
+            width:"7vw"
         },
         {
             title: 'Action',
+            width:"7vw",
             key: 'action',
             render: (text, record) => (
                 <Space size="middle">
