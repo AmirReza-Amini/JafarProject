@@ -42,7 +42,7 @@ class Viewer extends React.Component {
                 <div className="invoice-header">
                   <small className="col-md">
                     Seller:{" "}
-                    <strong className="text-inverse">Simin pars.co</strong>{" "}
+                    <strong className="text-inverse">Sina Port And Marine Services Company</strong>{" "}
                   </small>
                   <small className="col-md">
                     Address:{" "}
@@ -203,7 +203,7 @@ class Viewer extends React.Component {
                         </th>
                       </tr>
                     </tbody>
-                  </table>SOMCO
+                  </table>
                 </div>
                 <div className="invoice-price">
                   <div className="invoice-price-left">

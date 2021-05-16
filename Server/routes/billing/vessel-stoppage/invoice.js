@@ -47,6 +47,7 @@ router
         return SendResponse(req, res, "Voyage not found", false, 404);
 
       let discount = await db.query(queries.BILLING.COMMON.loadDiscount);
+      //console.log('for currency data load voyage:',voyage[0].ATA)
       if (!discount)
         return SendResponse(req, res, "Discount data not found", false, 404);
         let currency = (
@@ -54,9 +55,8 @@ router
             date:voyage[0].ATA
           })
           )[0];
-          //console.log('for currency data load:',currency)
           if (!currency)
-          return SendResponse(req, res, "Currency data not found", false, 404);
+          return SendResponse(req, res, "Currency data not found", false);
 
       voyage.voyageId = req.body.voyageId;
       let GcInvoice = await CalculateGcInvoice(voyage, currency, discount);

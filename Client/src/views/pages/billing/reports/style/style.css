@@ -12,6 +12,7 @@ body {
 .invoice {
   background: #fff;
   padding: 20px;
+  border: 2px;
 }
 
 .invoice-company {
