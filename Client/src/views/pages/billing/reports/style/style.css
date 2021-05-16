@@ -1,7 +1,10 @@
 body {
   margin-top: 20px;
-  background: #eee;
+  background: rgb(247, 244, 244);
+  
+  display: contents;
 }
+
 
 .header {
   font-size: xx-large;
@@ -11,19 +14,20 @@ body {
 
 .invoice {
   background: #fff;
-  padding: 20px;
-  border: 2px;
+  padding: 20px;  
 }
 
 .invoice-company {
   font-size: 20px;
+  
 }
 
 .invoice-header {
-  margin: 0 -20px;
+  margin: 0px 5px 0px 5px;
   background: #bcbebe3a;
-  padding: 20px;
+  padding: 10px;
   font-size: 17px;
+  border: 1px solid black;
 }
 
 .invoice-date,
@@ -78,7 +82,9 @@ body {
   font-weight: 400;
   display: block;
 }
-
+.invoice-content {
+  border: 1px solid black;
+}
 .invoice-price .invoice-price-row {
   display: table;
   float: right;

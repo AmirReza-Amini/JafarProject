@@ -10,7 +10,7 @@ class Viewer extends React.Component {
      return (
       <React.Fragment>
         <div className="container">
-          <div id="print-area" className="col-md-12">
+          
             <div className="invoice">
               <div className="invoice-company text-inverse f-w-600">
                 <img src={logo}></img>
@@ -32,12 +32,7 @@ class Viewer extends React.Component {
                       {invoiceData.InvoiceCoverDate}
                     </strong>{" "}
                   </small>
-                  <small className="col-md">
-                    Dollar Rate:{" "}
-                    <strong className="text-inverse">{invoiceData.Rate}</strong>{" "}
-                  </small>
-                </div>
-                <col />
+                </div>                
                 <col />
                 <div className="invoice-header">
                   <small className="col-md">
@@ -58,7 +53,6 @@ class Viewer extends React.Component {
                     <strong className="text-inverse">411-1135-5887 </strong>{" "}
                   </small>
                 </div>
-                <col />
                 <col className="invoice-from" />
                 <div className="invoice-header">
                   <small className="col-md">
@@ -88,7 +82,7 @@ class Viewer extends React.Component {
                 </div>
                 <col />
               </row>
-              <div className="row">
+              <div className="row invoice-header">
                 <div className="invoice-detail col">
                   Vessel/voyage: {invoiceData.VoyageVessel}
                 </div>
@@ -221,13 +215,11 @@ class Viewer extends React.Component {
 
               </div>
               <div className="invoice-note">
-                * Make all cheques payable to SIMIN PARS <br />* Payment is due
-                within 30 days
+                Issued By Mahmoudian
               </div>
             </div>
-          </div>
+          
         </div>
-        <br />
       </React.Fragment>
     );
   }
