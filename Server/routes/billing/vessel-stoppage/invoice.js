@@ -22,7 +22,7 @@ router
           invoiceId: req.params.id,
         })
       )[0];
-      ConvertProperties(invoice, ["InvoiceDate", "ATA", "ATD"], ToPersian);
+      ConvertProperties(invoice, ["InvoiceCoverDate", "ATA", "ATD"], ToPersian);
       ConvertProperties(invoice, ["PriceD", "PriceR", "Rate"], FormatNumber);
 
       return SendResponse(req, res, invoice);
@@ -31,7 +31,7 @@ router
       queries.BILLING.VESSEL_STOPPAGE.loadAllbills
     );
     invoiceList.forEach((invoice) => {
-      ConvertProperties(invoice, ["InvoiceDate", "ATA", "ATD"], ToPersian);
+      ConvertProperties(invoice, ["InvoiceCoverDate", "ATA", "ATD"], ToPersian);
       ConvertProperties(invoice, ["PriceD", "PriceR", "Rate"], FormatNumber);
     });
     return SendResponse(req, res, invoiceList);

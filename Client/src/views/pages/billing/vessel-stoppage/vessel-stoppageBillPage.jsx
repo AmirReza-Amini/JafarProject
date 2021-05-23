@@ -5,7 +5,7 @@ import { Tag } from "antd";
 import { Formik, Form } from "formik";
 import { toast } from "react-toastify";
 import FormikControl from "../../../../components/common/formik/FormikControl";
-
+import {ToPersianDate} from "../../../../utility/tools";
 import style from "./style/style.css";
 import * as vss from "../../../../services/vesselStoppageService";
 import * as vs from "../../../../services/voyageService";
@@ -111,12 +111,19 @@ const VesselStoppagePage = (props) => {
     let response = await vs.getVoyageDetail(voyageId);
     console.log("response", response);
     if (response.data.result)
+    {
+      response.data.data[0].ETAP = ToPersianDate(response.data.data[0].ETA)
+      response.data.data[0].ATAP = ToPersianDate(response.data.data[0].ATA)
+      response.data.data[0].ETDP = ToPersianDate(response.data.data[0].ETD)
+      response.data.data[0].ATDP = ToPersianDate(response.data.data[0].ATD)
+
       setState((ps) => ({ ...ps, voyageData: response.data.data[0] }));
+    }
     else toast.error(response.data.data[0]);
   };
 
   let { voyageData, ListOfVoyages, issuedBill } = state;
-
+  
   return (
     <React.Fragment>
       <Formik initialValues={initialValues}>
@@ -258,19 +265,19 @@ const VesselStoppagePage = (props) => {
                 <div className="row details">
                   <div className="col-3">
                     Estimated arrival time:{" "}
-                    {<span className="invoiceItem">{voyageData.ETA}</span>}
+                    {<span className="invoiceItem">{voyageData.ETAP}</span>}
                   </div>
                   <div className="col-3">
                     Estimated departure time:{" "}
-                    {<span className="invoiceItem">{voyageData.ETD}</span>}
+                    {<span className="invoiceItem">{voyageData.ETDP}</span>}
                   </div>
                   <div className="col-3">
                     Actual arrival time:{" "}
-                    {<span className="invoiceItem">{voyageData.ATA}</span>}
+                    {<span className="invoiceItem">{voyageData.ATAP}</span>}
                   </div>
                   <div className="col-3">
                     Actual departure time:{" "}
-                    {<span className="invoiceItem">{voyageData.ATD}</span>}
+                    {<span className="invoiceItem">{voyageData.ATDP}</span>}
                   </div>
                 </div>
 

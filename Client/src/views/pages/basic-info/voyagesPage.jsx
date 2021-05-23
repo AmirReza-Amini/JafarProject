@@ -323,16 +323,21 @@ const VoyagesPage = (props) => {
       .then((res) => {
          //console.log('response', res.data.data)
         if (res.data.result) {
-          const tempList = res.data.data.map((item) => {
+          const tempList = res.data.data.map((item) => { 
             return {
               key: item.voyageId,
               voyageId: item.voyageId,
               incomingVoyageNo: item.incomingVoyageNo,
               outgoingVoyageNo: item.outgoingVoyageNo,
-              estimatedTimeArrival: ToPersianDate( item.estimatedTimeArrival),
-              actualTimeArrival: ToPersianDate(item.actualTimeArrival),
-              estimatedTimeDeparture: ToPersianDate(item.estimatedTimeDeparture),
-              actualTimeDeparture: ToPersianDate(item.actualTimeDeparture),
+
+              estimatedTimeArrivalp: ToPersianDate( item.estimatedTimeArrival),
+              actualTimeArrivalp: ToPersianDate(item.actualTimeArrival),
+              estimatedTimeDeparturep: ToPersianDate(item.estimatedTimeDeparture),
+              actualTimeDeparturep: ToPersianDate(item.actualTimeDeparture),
+              estimatedTimeArrival:item.estimatedTimeArrival,
+              actualTimeArrival:item.actualTimeArrival,
+              estimatedTimeDeparture:item.estimatedTimeDeparture,
+              actualTimeDeparture:item.actualTimeDeparture,
               agentId: item.agentId,
               agentName: item.agentName,
               ownerId: item.ownerId,

@@ -23,7 +23,7 @@ router.route('/:id?')
             if (req.params.id) {
                 let result = (await db.query(queries.VOYAGE.loadVoyageDataById, { voyageId: req.params.id }))[0]
               
-                ConvertProperties(result, ['ETA', 'ATA', 'ETD', 'ATD', 'gcInvoiceDate', 'vsInvoiceDate'], ToPersian);
+                ConvertProperties(result, ['gcInvoiceDate', 'vsInvoiceDate'], ToPersian);
                 ConvertProperties(result, ['gcPriceR', 'PriceD', 'vsPriceR', 'vsPriceD', 'GrossTonage', 'VesselLength'], FormatNumber);
                 return SendResponse(req, res, result);
             }
@@ -43,7 +43,7 @@ router.route('/:id?')
         if (check.result) {
             try {
                 const data = req.body
-                //console.log('befouerr', data)
+                console.log('befouerr', data)
                 let query = await db.query(queries.VOYAGE.insertVoyage, {
                     vesselId: data.vesselId,
                     voyageNoIn: data.incomingVoyageNo,
@@ -82,7 +82,7 @@ router.route('/:id?')
         if (check.result) {
             try {
                 const data = req.body
-                //console.log('befor', data)
+                console.log('befor', data)
                 let query = await db.query(queries.VOYAGE.updateVoyage, {
                     vesselId: data.vesselId,
                     voyageNoIn: data.voyageNoIn,
